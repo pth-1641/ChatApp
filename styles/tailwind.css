@@ -1,0 +1,33 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+    .flex-center {
+        @apply flex items-center justify-center;
+    }
+    .flex-between {
+        @apply flex items-center justify-between;
+    }
+    .btn {
+        @apply px-4 py-2 rounded flex justify-center items-center gap-2 font-medium;
+    }
+    .input-dark {
+        @apply bg-lightDark px-4 py-2 rounded-xl w-full outline-none;
+    }
+    .avatar {
+        @apply rounded-full w-16 aspect-square;
+    }
+    .active {
+        @apply bg-lightDark;
+    }
+    .friend-message {
+        @apply bg-lightDark rounded-xl text-white p-2 px-3 w-max max-w-xl;
+    }
+    .my-message {
+        @apply bg-blue-600 rounded-xl text-white p-2 px-3 w-max max-w-xl;
+    }
+    .image {
+        @apply w-screen rounded-xl;
+    }
+}
