@@ -2,6 +2,10 @@
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif !important;
 }
 
+img {
+    user-select: none;
+}
+
 ::-webkit-scrollbar {
     width: 8px;
 }

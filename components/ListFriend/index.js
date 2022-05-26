@@ -1,10 +1,12 @@
 import SeachInput from './SeachInput';
+import Header from './Header';
 
 function FriendsList() {
     return (
         <>
+            <Header />
             <SeachInput />
-            <ul className='grid gap-2 mt-6'>
+            <ul className='grid gap-1'>
                 <li className='active py-2 px-3 rounded-xl hover:bg-lightDark'>
                     <a className='flex items-center gap-3'>
                         <img

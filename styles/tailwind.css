@@ -30,4 +30,7 @@
     .image {
         @apply w-screen rounded-xl;
     }
+    .dark-hover {
+        @apply rounded-xl hover:bg-lightDark;
+    }
 }

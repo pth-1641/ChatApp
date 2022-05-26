@@ -1,17 +1,26 @@
-import { signInWithPopup } from 'firebase/auth';
-import { auth, googleProvider, facebookProvider } from '../firebase';
-import useStore from '../store';
+import { useEffect } from 'react';
+import { useRouter } from 'next/router';
+import { signInWithPopup, onAuthStateChanged } from 'firebase/auth';
+import { auth, googleProvider, facebookProvider } from '../firebase/config';
 import { FcGoogle } from 'react-icons/fc';
 import { BsFacebook } from 'react-icons/bs';
 
 function Login() {
-    const setUser = useStore((state) => state.setUser);
+    const router = useRouter();
+
+    useEffect(() => {
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                router.push('/');
+            } else {
+                router.push('/login');
+            }
+        });
+    }, []);
 
     const handleLogin = async (provider) => {
         try {
-            const result = await signInWithPopup(auth, provider);
-            localStorage.setItem('userInfo', JSON.stringify(result.user));
-            setUser(result.user);
+            const user = await signInWithPopup(auth, provider);
         } catch (error) {
             console.log(error);
         }
