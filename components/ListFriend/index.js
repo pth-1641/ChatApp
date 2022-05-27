@@ -20,7 +20,7 @@ function FriendsList() {
                                     Guy Hawkins
                                 </h4>
                                 <p className='text-gray-400'>
-                                    Let's meet today?
+                                    Let{"'"}s meet today?
                                 </p>
                             </div>
                             <div className='text-gray-400'>
@@ -42,7 +42,7 @@ function FriendsList() {
                                     Guy Hawkins
                                 </h4>
                                 <p className='text-gray-400'>
-                                    Let's meet today?
+                                    Let{"'"}s meet today?
                                 </p>
                             </div>
                             <div className='text-gray-400'>
@@ -64,7 +64,7 @@ function FriendsList() {
                                     Guy Hawkins
                                 </h4>
                                 <p className='text-gray-400'>
-                                    Let's meet today?
+                                    Let{"'"}s meet today?
                                 </p>
                             </div>
                             <div className='text-gray-400'>

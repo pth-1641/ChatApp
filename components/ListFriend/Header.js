@@ -1,12 +1,9 @@
 import { useState, useEffect } from 'react';
 import { onAuthStateChanged } from 'firebase/auth';
 import { useRouter } from 'next/router';
-import {
-    IoLogOutOutline,
-    MdDarkMode,
-    MdLightMode,
-    FaUserCircle,
-} from 'react-icons/all';
+import { IoLogOutOutline } from 'react-icons/io5';
+import { MdDarkMode, MdLightMode } from 'react-icons/md';
+import { FaUserCircle } from 'react-icons/fa';
 import ModalInfo from './ModalInfo';
 import ModalSignOut from './ModalSignOut';
 import { auth } from '../../firebase/config';
