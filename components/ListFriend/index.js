@@ -10,7 +10,7 @@ function FriendsList() {
                 <li className='active py-2 px-3 rounded-xl hover:bg-lightDark'>
                     <a className='flex items-center gap-3'>
                         <img
-                            src='https://scontent.fsgn5-1.fna.fbcdn.net/v/t39.30808-6/280201421_1120129068546160_1844680744182291277_n.jpg?_nc_cat=107&ccb=1-7&_nc_sid=09cbfe&_nc_ohc=RUiXLwF5WnMAX_-MvQY&_nc_ht=scontent.fsgn5-1.fna&oh=00_AT9cvFPQVKCYOAeCNxcKiGKUhjr1zAyKFV6YQhBZQyXZvA&oe=628F05E0'
+                            src='https://scontent.fhan5-3.fna.fbcdn.net/v/t39.30808-6/282206190_1130470397512027_1785203650365955963_n.jpg?_nc_cat=106&ccb=1-7&_nc_sid=09cbfe&_nc_ohc=dfmEKP7N0YwAX_VuB9z&_nc_oc=AQnCVKrsVK92MJsnnag4cjgj5ja0ceQdKnc0SrKVaUa-UbLP8woRMy-ZArW-7R6gooQem3vK7xAjK9Q4frLaJUbZ&_nc_ht=scontent.fhan5-3.fna&oh=00_AT_sC-vH65LIYRslbyspNuRHe9VCAiJHm4cOvTIcYCExeQ&oe=62950428'
                             alt=''
                             className='avatar'
                         />
@@ -32,7 +32,7 @@ function FriendsList() {
                 <li className='py-2 px-3 rounded-xl hover:bg-lightDark'>
                     <a className='flex items-center gap-3'>
                         <img
-                            src='https://scontent.fsgn5-1.fna.fbcdn.net/v/t39.30808-6/280201421_1120129068546160_1844680744182291277_n.jpg?_nc_cat=107&ccb=1-7&_nc_sid=09cbfe&_nc_ohc=RUiXLwF5WnMAX_-MvQY&_nc_ht=scontent.fsgn5-1.fna&oh=00_AT9cvFPQVKCYOAeCNxcKiGKUhjr1zAyKFV6YQhBZQyXZvA&oe=628F05E0'
+                            src='https://scontent.fhan5-3.fna.fbcdn.net/v/t39.30808-6/282206190_1130470397512027_1785203650365955963_n.jpg?_nc_cat=106&ccb=1-7&_nc_sid=09cbfe&_nc_ohc=dfmEKP7N0YwAX_VuB9z&_nc_oc=AQnCVKrsVK92MJsnnag4cjgj5ja0ceQdKnc0SrKVaUa-UbLP8woRMy-ZArW-7R6gooQem3vK7xAjK9Q4frLaJUbZ&_nc_ht=scontent.fhan5-3.fna&oh=00_AT_sC-vH65LIYRslbyspNuRHe9VCAiJHm4cOvTIcYCExeQ&oe=62950428'
                             alt=''
                             className='avatar'
                         />
@@ -54,7 +54,7 @@ function FriendsList() {
                 <li className='py-2 px-3 rounded-xl hover:bg-lightDark'>
                     <a className='flex items-center gap-3'>
                         <img
-                            src='https://scontent.fsgn5-1.fna.fbcdn.net/v/t39.30808-6/280201421_1120129068546160_1844680744182291277_n.jpg?_nc_cat=107&ccb=1-7&_nc_sid=09cbfe&_nc_ohc=RUiXLwF5WnMAX_-MvQY&_nc_ht=scontent.fsgn5-1.fna&oh=00_AT9cvFPQVKCYOAeCNxcKiGKUhjr1zAyKFV6YQhBZQyXZvA&oe=628F05E0'
+                            src='https://scontent.fhan5-3.fna.fbcdn.net/v/t39.30808-6/282206190_1130470397512027_1785203650365955963_n.jpg?_nc_cat=106&ccb=1-7&_nc_sid=09cbfe&_nc_ohc=dfmEKP7N0YwAX_VuB9z&_nc_oc=AQnCVKrsVK92MJsnnag4cjgj5ja0ceQdKnc0SrKVaUa-UbLP8woRMy-ZArW-7R6gooQem3vK7xAjK9Q4frLaJUbZ&_nc_ht=scontent.fhan5-3.fna&oh=00_AT_sC-vH65LIYRslbyspNuRHe9VCAiJHm4cOvTIcYCExeQ&oe=62950428'
                             alt=''
                             className='avatar'
                         />

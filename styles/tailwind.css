@@ -33,4 +33,7 @@
     .dark-hover {
         @apply rounded-xl hover:bg-lightDark;
     }
+    .modal-btn {
+        @apply bg-gray-700 hover:bg-gray-800 min-w-[112px] py-2 px-4 rounded-lg;
+    }
 }

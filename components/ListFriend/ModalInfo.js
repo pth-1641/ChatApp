@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { BsClipboard, BsClipboardCheck } from 'react-icons/bs';
-import { MdClose } from 'react-icons/md';
+import Modal from '../Modal';
 
-function ModalInfo({ user, setDisplayModal }) {
+function ModalInfo({ user, setDisplayModalInfo }) {
     const [copied, setCopied] = useState(false);
 
     const handleCopyId = () => {
@@ -11,14 +11,8 @@ function ModalInfo({ user, setDisplayModal }) {
     };
 
     return (
-        <div className='fixed inset-0 bg-[rgba(0,0,0,0.75)] z-20 flex-center'>
-            <span
-                className='bg-[#171616] hover:bg-lightDark absolute top-2 right-2 text-3xl p-2 rounded-full cursor-pointer'
-                onClick={() => setDisplayModal(false)}
-            >
-                <MdClose />
-            </span>
-            <div className='bg-lightDark p-8 rounded-xl flex-center gap-5'>
+        <Modal setDisplayModalInfo={setDisplayModalInfo}>
+            <div className='flex-center gap-5'>
                 <img
                     src={user.photoURL}
                     alt={user.displayName}
@@ -37,7 +31,7 @@ function ModalInfo({ user, setDisplayModal }) {
                         <strong className='text-base'>Phone: </strong>
                         {user.phoneNumber ?? 'N/A'}
                     </p>
-                    <p className='text-sm flex-center gap-1'>
+                    <p className='text-sm flex-center gap-x-1'>
                         <strong className='text-base'>ID: </strong>
                         {user.uid ?? 'N/A'}
                         <span
@@ -51,7 +45,7 @@ function ModalInfo({ user, setDisplayModal }) {
                     </p>
                 </div>
             </div>
-        </div>
+        </Modal>
     );
 }
 

@@ -1,9 +1,10 @@
 import { useEffect } from 'react';
-import { useRouter } from 'next/router';
 import { signInWithPopup, onAuthStateChanged } from 'firebase/auth';
 import { auth, googleProvider, facebookProvider } from '../firebase/config';
 import { FcGoogle } from 'react-icons/fc';
 import { BsFacebook } from 'react-icons/bs';
+import { getUser, addUser } from '../firebase/dbInteract';
+import { useRouter } from 'next/router';
 
 function Login() {
     const router = useRouter();
@@ -18,9 +19,17 @@ function Login() {
         });
     }, []);
 
+    const checkUser = async (user) => {
+        const result = await getUser(user.uid);
+        if (result.size === 0) {
+            addUser(user);
+        }
+    };
+
     const handleLogin = async (provider) => {
         try {
-            const user = await signInWithPopup(auth, provider);
+            const account = await signInWithPopup(auth, provider);
+            checkUser(account.user);
         } catch (error) {
             console.log(error);
         }
