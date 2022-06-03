@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { signInWithPopup, onAuthStateChanged } from 'firebase/auth';
+import { signInWithPopup, onAuthStateChanged } from '@firebase/auth';
 import { auth, googleProvider, facebookProvider } from '../firebase/config';
 import { FcGoogle } from 'react-icons/fc';
 import { BsFacebook } from 'react-icons/bs';
@@ -28,8 +28,8 @@ function Login() {
 
     const handleLogin = async (provider) => {
         try {
-            const account = await signInWithPopup(auth, provider);
-            checkUser(account.user);
+            const { user } = await signInWithPopup(auth, provider);
+            checkUser(user);
         } catch (error) {
             console.log(error);
         }

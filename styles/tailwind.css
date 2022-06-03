@@ -15,9 +15,6 @@
     .input-dark {
         @apply bg-lightDark px-4 py-2 rounded-xl w-full outline-none;
     }
-    .avatar {
-        @apply rounded-full w-16 aspect-square;
-    }
     .active {
         @apply bg-lightDark;
     }

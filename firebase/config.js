@@ -1,10 +1,10 @@
-import { initializeApp } from 'firebase/app';
-import { getFirestore } from 'firebase/firestore/lite';
+import { initializeApp } from '@firebase/app';
+import { getFirestore } from '@firebase/firestore/lite';
 import {
     getAuth,
     GoogleAuthProvider,
     FacebookAuthProvider,
-} from 'firebase/auth';
+} from '@firebase/auth';
 
 const firebaseConfig = {
     apiKey: 'AIzaSyDmGtZyoeOoyPs3Snt5cj3m3q20qrmFd7M',

@@ -12,8 +12,8 @@ function Home() {
                 <div className='col-span-3'>
                     <ChatList />
                 </div>
-                <div className='col-span-9 flex-center text-gray-300 text-xl'>
-                    <h1>Select a conversation and start chatting now!</h1>
+                <div className='col-span-9'>
+                    <ChatContent />
                 </div>
             </div>
         </>

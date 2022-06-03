@@ -10,7 +10,7 @@ function MyDocument() {
                     type='image/x-icon'
                 />
             </Head>
-            <body className='scroll-smooth antialiased font-serif overflow-x-hidden'>
+            <body className='scroll-smooth antialiased overflow-hidden'>
                 <Main />
                 <NextScript />
             </body>

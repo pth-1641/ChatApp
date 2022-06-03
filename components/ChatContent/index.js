@@ -1,16 +1,26 @@
+import { useState, useEffect } from 'react';
+import Header from './Header';
 import Input from './Input';
+import { useRouter } from 'next/router';
+import { getRoom } from '../../firebase/dbInteract';
 
 function ChatContent() {
+    const router = useRouter();
+    const { roomId } = router.query;
+
+    const [detail, setDetail] = useState({});
+
+    useEffect(() => {
+        async function fetchRoomDetail() {
+            const res = await getRoom(roomId);
+            res.forEach((doc) => setDetail(doc.data()));
+        }
+        fetchRoomDetail();
+    }, [roomId]);
+
     return (
         <div className='h-full ml-10 relative'>
-            <header className='w-full flex items-center gap-3 pb-2 absolute top-0'>
-                <img
-                    src='https://scontent.fhan5-3.fna.fbcdn.net/v/t39.30808-6/282206190_1130470397512027_1785203650365955963_n.jpg?_nc_cat=106&ccb=1-7&_nc_sid=09cbfe&_nc_ohc=dfmEKP7N0YwAX_VuB9z&_nc_oc=AQnCVKrsVK92MJsnnag4cjgj5ja0ceQdKnc0SrKVaUa-UbLP8woRMy-ZArW-7R6gooQem3vK7xAjK9Q4frLaJUbZ&_nc_ht=scontent.fhan5-3.fna&oh=00_AT_sC-vH65LIYRslbyspNuRHe9VCAiJHm4cOvTIcYCExeQ&oe=62950428'
-                    alt=''
-                    className='avatar h-14 w-14'
-                />
-                <h4 className='text-white font-medium'>Guy Hawkins</h4>
-            </header>
+            <Header detail={detail} />
             <div className='w-full pr-2 absolute top-16 bottom-16 overflow-y-scroll'>
                 <div className='flex gap-3 mt-5'>
                     <img

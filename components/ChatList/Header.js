@@ -1,31 +1,15 @@
-import { useState, useEffect } from 'react';
-import { onAuthStateChanged } from 'firebase/auth';
-import { useRouter } from 'next/router';
+import { useState } from 'react';
 import { IoLogOutOutline } from 'react-icons/io5';
 import { MdDarkMode, MdLightMode } from 'react-icons/md';
 import { FaUserCircle } from 'react-icons/fa';
 import ModalInfo from './ModalInfo';
 import ModalSignOut from './ModalSignOut';
-import { auth } from '../../firebase/config';
 
-function Header() {
-    const router = useRouter();
-
-    const [user, setUser] = useState(null);
+function Header({ user }) {
     const [displaySetting, setDisplaySetting] = useState(false);
     const [displayModalInfo, setDisplayModalInfo] = useState(false);
     const [displayModalSignOut, setDisplayModalSignOut] = useState(false);
     const [darkMode, setDarkMode] = useState(true);
-
-    useEffect(() => {
-        onAuthStateChanged(auth, (user) => {
-            if (user) {
-                setUser(user);
-            } else {
-                router.push('/login');
-            }
-        });
-    }, []);
 
     const toggleTheme = (e) => {
         e.stopPropagation();

@@ -1,9 +1,9 @@
-import { useState } from 'react';
+import { useState, memo } from 'react';
 import { FiSearch } from 'react-icons/fi';
 import { BsChat } from 'react-icons/bs';
 import ModalConversation from './ModalConversation';
 
-function Seach() {
+function SearchInput() {
     const [displayNewConversation, setDisplayNewConversation] = useState(false);
     const handleAddNewChat = () => {
         setDisplayNewConversation(true);
@@ -36,4 +36,4 @@ function Seach() {
     );
 }
 
-export default Seach;
+export default memo(SearchInput);

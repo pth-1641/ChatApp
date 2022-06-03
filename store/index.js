@@ -1,6 +1,6 @@
 import create from 'zustand';
 
-const createStore = create((set) => ({
-    currentUser: null,
-    setUser: (user) => set({ currentUser: user }),
+export const useStore = create((set) => ({
+    user: null,
+    setUser: (user) => set({ user: user }),
 }));
