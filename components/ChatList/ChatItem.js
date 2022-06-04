@@ -21,7 +21,7 @@ function ChatItem({ roomData }) {
                         {chatAvatar ? (
                             <img src={chatAvatar} alt='' />
                         ) : (
-                            <span className='text-white text-3xl'>
+                            <span className='text-white text-3xl select-none'>
                                 {roomName[0]}
                             </span>
                         )}

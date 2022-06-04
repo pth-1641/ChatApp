@@ -58,12 +58,18 @@ export const updateRoomToUser = (uid, roomID, type) => {
     });
 };
 
-// async function fetchData() {
-//     const ref = collection(db, 'users');
-//     const users = [];
-//     const result = await getDocs(ref);
-//     result.forEach((doc) => users.push(doc.data()));
-//     console.log(users);
-// }
+export const updateRoomChatContent = (roomID, chatContent, type) => {
+    const roomRef = doc(db, 'rooms', roomID);
+    return updateDoc(roomRef, {
+        chat:
+            type === 'add' ? arrayUnion(chatContent) : arrayRemove(chatContent),
+    });
+};
+
+async function fetchData() {
+    return updateDoc(roomRef, {
+        chat: type === 'add' ? arrayUnion('123') : '',
+    });
+}
 
 // fetchData();
