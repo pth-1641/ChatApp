@@ -6,9 +6,8 @@ import ModalInfo from './ModalInfo';
 import ModalSignOut from './ModalSignOut';
 
 function Header({ user }) {
+    const [displayModal, setDisplayModal] = useState('');
     const [displaySetting, setDisplaySetting] = useState(false);
-    const [displayModalInfo, setDisplayModalInfo] = useState(false);
-    const [displayModalSignOut, setDisplayModalSignOut] = useState(false);
     const [darkMode, setDarkMode] = useState(true);
 
     const toggleTheme = (e) => {
@@ -32,7 +31,7 @@ function Header({ user }) {
                     <div className='h-max absolute bg-dark w-48 p-2 rounded-xl right-0 border-gray-600 border mt-3 grid gap-1 select-none'>
                         <div
                             className='flex items-center gap-2 dark-hover p-2'
-                            onClick={() => setDisplayModalInfo(true)}
+                            onClick={() => setDisplayModal('info')}
                         >
                             <span className='text-xl bg-lightDark p-1 rounded-full'>
                                 <FaUserCircle />
@@ -50,7 +49,7 @@ function Header({ user }) {
                         </div>
                         <div
                             className='flex items-center gap-2 dark-hover p-2'
-                            onClick={() => setDisplayModalSignOut(true)}
+                            onClick={() => setDisplayModal('logout')}
                         >
                             <span className='text-xl bg-lightDark p-1 rounded-full'>
                                 <IoLogOutOutline />
@@ -60,17 +59,11 @@ function Header({ user }) {
                     </div>
                 )}
             </div>
-            {displayModalInfo && (
-                <ModalInfo
-                    user={user}
-                    setDisplayModalInfo={setDisplayModalInfo}
-                />
+            {displayModal === 'info' && (
+                <ModalInfo user={user} setDisplayModal={setDisplayModal} />
             )}
-            {displayModalSignOut && (
-                <ModalSignOut
-                    user={user}
-                    setDisplayModalSignOut={setDisplayModalSignOut}
-                />
+            {displayModal === 'logout' && (
+                <ModalSignOut user={user} setDisplayModal={setDisplayModal} />
             )}
         </div>
     );

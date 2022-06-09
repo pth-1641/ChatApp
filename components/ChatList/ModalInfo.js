@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { BsClipboard, BsClipboardCheck } from 'react-icons/bs';
 import Modal from '../Modal';
 
-function ModalInfo({ user, setDisplayModalInfo }) {
+function ModalInfo({ user, setDisplayModal }) {
     const [copied, setCopied] = useState(false);
 
     const handleCopyId = () => {
@@ -11,7 +11,7 @@ function ModalInfo({ user, setDisplayModalInfo }) {
     };
 
     return (
-        <Modal setDisplayModalInfo={setDisplayModalInfo}>
+        <Modal setDisplayModal={setDisplayModal}>
             <div className='flex-center gap-5'>
                 <img
                     src={user.photoURL}

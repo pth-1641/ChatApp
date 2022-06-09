@@ -5,13 +5,13 @@ import {
     query,
     addDoc,
     updateDoc,
+    setDoc,
     arrayUnion,
     arrayRemove,
     documentId,
-    doc,
     getDocs,
-} from '@firebase/firestore/lite';
-import { onSnapshot } from '@firebase/firestore';
+    doc,
+} from '@firebase/firestore';
 import { generateRandomColor } from '../constant/colors';
 
 export const getUser = (uid = '') => {
@@ -20,7 +20,19 @@ export const getUser = (uid = '') => {
     return getDocs(q);
 };
 
-export const addUser = ({ displayName, phoneNumber, email, photoURL, uid }) => {
+export const getRoom = (id) => {
+    const ref = collection(db, 'rooms');
+    const q = query(ref, where(documentId(), '==', id));
+    return getDocs(q);
+};
+
+export const addNewUser = ({
+    displayName,
+    phoneNumber,
+    email,
+    photoURL,
+    uid,
+}) => {
     const ref = collection(db, 'users');
     return addDoc(ref, {
         displayName,
@@ -28,26 +40,33 @@ export const addUser = ({ displayName, phoneNumber, email, photoURL, uid }) => {
         phoneNumber,
         photoURL,
         uid,
-        rooms: [],
     });
 };
 
-export const getRoom = (id = '0') => {
-    const ref = collection(db, 'rooms');
-    const q = query(ref, where(documentId(), '==', id));
-    return getDocs(q);
-};
-
-export const addRoom = (roomName, members, chatType, chatAvatar) => {
+export const addRoom = ({ roomName, members, chatType }) => {
     const ref = collection(db, 'rooms');
     return addDoc(ref, {
         roomName,
         members,
-        chat: [],
-        theme: 'blue',
-        chatAvatar,
+        theme: '#3b82f6',
+        chatAvatar: '',
         avatarBgColor: generateRandomColor(),
         chatType,
+        updatedAt: new Date().getTime(),
+        photos: [],
+        videos: [],
+        links: [],
+    });
+};
+
+export const addMessage = ({ roomId, chatContent, uid, time, id }) => {
+    const ref = doc(db, 'messages', String(new Date().getTime()));
+    return setDoc(ref, {
+        id,
+        roomId,
+        uid,
+        chatContent,
+        time,
     });
 };
 
@@ -58,18 +77,10 @@ export const updateRoomToUser = (uid, roomID, type) => {
     });
 };
 
-export const updateRoomChatContent = (roomID, chatContent, type) => {
-    const roomRef = doc(db, 'rooms', roomID);
-    return updateDoc(roomRef, {
-        chat:
-            type === 'add' ? arrayUnion(chatContent) : arrayRemove(chatContent),
-    });
-};
-
 async function fetchData() {
-    return updateDoc(roomRef, {
-        chat: type === 'add' ? arrayUnion('123') : '',
-    });
+    const ref = collection('');
 }
 
 // fetchData();
+
+// console.log(fetchData());

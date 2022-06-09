@@ -3,7 +3,7 @@ import { signInWithPopup, onAuthStateChanged } from '@firebase/auth';
 import { auth, googleProvider, facebookProvider } from '../firebase/config';
 import { FcGoogle } from 'react-icons/fc';
 import { BsFacebook } from 'react-icons/bs';
-import { getUser, addUser } from '../firebase/dbInteract';
+import { getUser, addNewUser } from '../firebase/dbInteract';
 import { useRouter } from 'next/router';
 
 function Login() {
@@ -22,7 +22,7 @@ function Login() {
     const checkUser = async (user) => {
         const result = await getUser(user.uid);
         if (result.size === 0) {
-            addUser(user);
+            addNewUser(user);
         }
     };
 

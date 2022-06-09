@@ -4,17 +4,12 @@ import { BsChat } from 'react-icons/bs';
 import ModalConversation from './ModalConversation';
 
 function SearchInput() {
-    const [displayNewConversation, setDisplayNewConversation] = useState(false);
-    const handleAddNewChat = () => {
-        setDisplayNewConversation(true);
-    };
+    const [displayModal, setDisplayModal] = useState('');
 
     return (
         <>
-            {displayNewConversation && (
-                <ModalConversation
-                    setDisplayNewConversation={setDisplayNewConversation}
-                />
+            {displayModal === 'newChat' && (
+                <ModalConversation setDisplayModal={setDisplayModal} />
             )}
 
             <div className='input-dark flex-center gap-2 text-white mt-4'>
@@ -27,7 +22,7 @@ function SearchInput() {
             </div>
             <div
                 className='text-white text-lg flex mt-3 mb-4 gap-2 cursor-pointer w-max'
-                onClick={handleAddNewChat}
+                onClick={() => setDisplayModal('newChat')}
             >
                 <BsChat />
                 <span className='text-sm'>New Conversation</span>

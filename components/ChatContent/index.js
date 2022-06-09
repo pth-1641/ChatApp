@@ -2,80 +2,62 @@ import { useState, useEffect } from 'react';
 import Header from './Header';
 import Input from './Input';
 import { useRouter } from 'next/router';
-import { getRoom } from '../../firebase/dbInteract';
 import Message from './Message';
+import {
+    collection,
+    where,
+    documentId,
+    onSnapshot,
+    query,
+} from '@firebase/firestore';
+import db from '../../firebase/config';
+import Setting from './Setting';
 
 function ChatContent() {
     const router = useRouter();
     const { roomId } = router.query;
 
     const [detail, setDetail] = useState({});
+    const [displaySetting, setDisplaySetting] = useState(false);
 
     useEffect(() => {
         async function fetchRoomDetail() {
-            const res = await getRoom(roomId);
-            res.forEach((doc) => setDetail(doc.data()));
+            const ref = collection(db, 'rooms');
+            const q = query(ref, where(documentId(), '==', roomId ?? '0'));
+            onSnapshot(q, (querySnapshot) =>
+                querySnapshot.forEach((doc) => {
+                    setDetail(doc.data());
+                })
+            );
         }
         fetchRoomDetail();
     }, [roomId]);
 
     return (
-        <div className='h-full ml-10 relative'>
-            <Header detail={detail} />
-            <div className='w-full pr-2 absolute top-16 bottom-16 overflow-y-scroll text-white'>
-                <Message chat={detail.chat} />
-                {/* <div className='flex gap-3 mt-5'>
-                    <img
-                        src='https://scontent.fhan5-3.fna.fbcdn.net/v/t39.30808-6/282206190_1130470397512027_1785203650365955963_n.jpg?_nc_cat=106&ccb=1-7&_nc_sid=09cbfe&_nc_ohc=dfmEKP7N0YwAX_VuB9z&_nc_oc=AQnCVKrsVK92MJsnnag4cjgj5ja0ceQdKnc0SrKVaUa-UbLP8woRMy-ZArW-7R6gooQem3vK7xAjK9Q4frLaJUbZ&_nc_ht=scontent.fhan5-3.fna&oh=00_AT_sC-vH65LIYRslbyspNuRHe9VCAiJHm4cOvTIcYCExeQ&oe=62950428'
-                        alt=''
-                        className='avatar h-7 w-7'
-                    />
-                    <ul className='grid gap-1'>
-                        <li className='friend-message'>
-                            It was a great vacation. I was in Paris
-                        </li>
-                        <li className='friend-message'>
-                            Lorem ipsum dolor sit amet consectetur adipisicing
-                            elit. Amet corporis eius excepturi illo expedita
-                            earum perspiciatis consequuntur cumque accusamus in
-                            nam eaque molestias ab consequatur assumenda quis,
-                            iure, adipisci placeat.
-                        </li>
-                        <li className='friend-message'>
-                            It was a great vacation. I was in Paris
-                        </li>
-                    </ul>
+        <div className='h-full flex gap-3'>
+            <div className='flex flex-col flex-1'>
+                <Header
+                    detail={detail}
+                    displaySetting={displaySetting}
+                    setDisplaySetting={setDisplaySetting}
+                />
+                <div className='relative flex-1'>
+                    {/* <div className='w-full pr-2 absolute top-16 bottom-16 overflow-y-scroll text-white'> */}
+                    <Message members={detail.members} />
+                    {/* </div> */}
                 </div>
-                <div className='flex justify-end gap-3 mt-5'>
-                    <ul className='flex flex-col items-end gap-1'>
-                        <li className='my-message'>
-                            It was a great vacation. I was in Paris
-                        </li>
-                        <li className='my-message'>
-                            Lorem ipsum dolor sit amet consectetur adipisicing
-                            elit. Amet corporis eius excepturi illo expedita
-                            earum perspiciatis consequuntur cumque accusamus in
-                            nam eaque molestias ab consequatur assumenda quis,
-                            iure, adipisci placeat.
-                        </li>
-                        <li className='my-message p-0'>
-                            <img
-                                src='https://cdn.dribbble.com/userupload/2764151/file/original-06e67f20bfda63f5dff851fcd8232ee5.png?compress=1&resize=320x240&vertical=top'
-                                alt=''
-                                className='image'
-                            />
-                        </li>
-                        <li className='my-message p-0'>
-                            <img
-                                src='https://cdn.dribbble.com/userupload/2764151/file/original-06e67f20bfda63f5dff851fcd8232ee5.png?compress=1&resize=320x240&vertical=top'
-                                alt=''
-                                className='image'
-                            />
-                        </li>
-                    </ul>
-                </div> */}
+                <div className='relative'>
+                    <Input roomId={roomId} />
+                </div>
             </div>
-            <Input roomId={roomId} />
+            {displaySetting && (
+                <div className='max-w-[340px] h-full flex-1 relative overflow-auto'>
+                    <Setting
+                        setDisplaySetting={setDisplaySetting}
+                        detail={detail}
+                    />
+                </div>
+            )}
         </div>
     );
 }

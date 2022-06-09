@@ -6,12 +6,13 @@ import { auth } from '../../firebase/config';
 import { useStore } from '../../store';
 import { onAuthStateChanged } from '@firebase/auth';
 import { useRouter } from 'next/router';
-import { getRoom, getUser } from '../../firebase/dbInteract';
+import { collection, where, onSnapshot, query } from '@firebase/firestore';
+import db from '../../firebase/config';
 
 function Chat() {
     const router = useRouter();
 
-    const [rooms, setRooms] = useState([]);
+    const [roomsID, setRoomsID] = useState([]);
 
     const user = useStore((state) => state.user);
     const setUser = useStore((state) => state.setUser);
@@ -27,20 +28,15 @@ function Chat() {
     }, []);
 
     useEffect(() => {
-        async function fetchRooms() {
-            // get rooms id of current user
-            const roomListID = [];
-            const result = await getUser(user?.uid);
-            result.forEach((doc) => roomListID.push(...doc.data().rooms));
-            // get room detail by id
-            const roomListDetail = [];
-            for (let i = 0; i < roomListID.length; ++i) {
-                const roomDetail = await getRoom(roomListID[i]);
-                roomDetail.forEach((doc) =>
-                    roomListDetail.push({ id: doc.id, ...doc.data() })
-                );
-            }
-            setRooms(roomListDetail);
+        function fetchRooms() {
+            //get room's id of current user
+            const ref = collection(db, 'users');
+            const q = query(ref, where('uid', '==', user?.uid || ''));
+            onSnapshot(q, (snapshot) => {
+                const listRooms = [];
+                snapshot.forEach((doc) => listRooms.push(...doc.data().rooms));
+                setRoomsID(listRooms);
+            });
         }
         fetchRooms();
     }, [user]);
@@ -49,9 +45,9 @@ function Chat() {
         <>
             <Header user={user} />
             <SeachInput />
-            <ul className='grid gap-1'>
-                {rooms.map((room) => (
-                    <ChatItem key={room.id} roomData={room} />
+            <ul className='grid gap-1 text-white absolute top-36 bottom-0 overflow-y-scroll w-full pr-2'>
+                {roomsID.map((id) => (
+                    <ChatItem key={id} roomId={id} />
                 ))}
             </ul>
         </>

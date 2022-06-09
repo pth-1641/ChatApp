@@ -3,14 +3,14 @@ import { IoSend } from 'react-icons/io5';
 import { BsImages } from 'react-icons/bs';
 import { MdEmojiEmotions } from 'react-icons/md';
 import { useStore } from '../../store';
+import { addMessage } from '../../firebase/dbInteract';
 import moment from 'moment';
-import { updateRoomChatContent } from '../../firebase/dbInteract';
 
 function Input({ roomId }) {
     const [displayEmoji, setDisplayEmoji] = useState(false);
     const [chatContent, setChatContent] = useState('');
 
-    // const { uid } = useStore((state) => state.user);
+    const { uid } = useStore((state) => state.user) ?? '';
 
     const handleChooseEmoji = (e) => {
         e.stopPropagation();
@@ -19,16 +19,13 @@ function Input({ roomId }) {
     const handleSubmit = (e) => {
         e.preventDefault();
         if (chatContent) {
-            updateRoomChatContent(
+            addMessage({
+                id: new Date().getTime(),
                 roomId,
-                {
-                    id: new Date().getTime(),
-                    uid,
-                    content: chatContent.trim(),
-                    time: moment().toArray(),
-                },
-                'add'
-            );
+                uid,
+                chatContent: chatContent.trim(),
+                time: moment().toArray(),
+            });
             setChatContent('');
         }
     };

@@ -2,6 +2,10 @@
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif !important;
 }
 
+html {
+    font-family: 'Archivo', sans-serif;
+}
+
 img {
     user-select: none;
 }

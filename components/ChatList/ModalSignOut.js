@@ -1,10 +1,14 @@
 import Modal from '../Modal';
 import { signOut } from 'firebase/auth';
 import { auth } from '../../firebase/config';
+import { useStore } from '../../store';
 
-function ModalSignOut({ setDisplayModalSignOut }) {
+function ModalSignOut({ setDisplayModal }) {
+    const logOut = useStore((state) => state.logOut);
+
     const handleSignOut = async () => {
         try {
+            logOut();
             signOut(auth);
         } catch (error) {
             console.log(error);
@@ -12,12 +16,12 @@ function ModalSignOut({ setDisplayModalSignOut }) {
     };
 
     return (
-        <Modal setDisplayModalSignOut={setDisplayModalSignOut}>
+        <Modal setDisplayModal={setDisplayModal}>
             <h3 className='text-2xl font-semibold text-center'>Log Out?</h3>
             <div className='flex-center gap-3 mt-7'>
                 <button
                     className='modal-btn'
-                    onClick={() => setDisplayModalSignOut(false)}
+                    onClick={() => setDisplayModal('')}
                 >
                     No
                 </button>

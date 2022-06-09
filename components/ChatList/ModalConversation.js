@@ -4,7 +4,7 @@ import { IoClose } from 'react-icons/io5';
 import { getUser, addRoom, updateRoomToUser } from '../../firebase/dbInteract';
 import { useStore } from '../../store';
 
-function ModalConversation({ setDisplayNewConversation }) {
+function ModalConversation({ setDisplayModal }) {
     const { displayName, photoURL, uid } = useStore((state) => state.user);
 
     const [roomName, setRoomName] = useState('');
@@ -25,35 +25,22 @@ function ModalConversation({ setDisplayNewConversation }) {
             setMessage('Need at least 2 members to create conversation!');
             return;
         }
-        let roomID = null;
-        if (chatType === 'friend') {
-            const { id } = await addRoom(
-                roomName,
-                members,
-                chatType,
-                members[1].photoURL
-            );
-            roomID = id;
-        } else {
-            const { id } = await addRoom(roomName, members, chatType, '');
-            roomID = id;
-        }
-        console.log(roomID);
+        const { id } = await addRoom({ roomName, members, chatType });
         members.forEach(async (member) => {
             const { uid } = member;
             const user = await getUser(uid);
-            user.forEach((doc) => updateRoomToUser(doc.id, roomID, 'add'));
+            user.forEach((doc) => updateRoomToUser(doc.id, id, 'add'));
         });
-        setDisplayNewConversation(false);
+        setDisplayModal('');
     };
 
     const handleAddMember = async () => {
-        if (chatType === 'friend' && members.length === 2 && friendID) {
-            setMessage('If you want more than 2 members, please select group!');
-            return;
-        }
         if (!(await getUser(friendID)).size && friendID) {
             setMessage('This ID does not exist!');
+            return;
+        }
+        if (chatType === 'friend' && members.length === 2 && friendID) {
+            setMessage('If you want more than 2 members, please select group!');
             return;
         }
         if (members.length > 30) {
@@ -96,11 +83,14 @@ function ModalConversation({ setDisplayNewConversation }) {
 
     const handleFriendType = () => {
         setChatType('friend');
-        members.length = 2;
+        members[1] ? setRoomName(members[1].displayName) : setRoomName('');
+        if (members.length > 1) {
+            members.length = 2;
+        }
     };
 
     return (
-        <Modal setDisplayNewConversation={setDisplayNewConversation}>
+        <Modal setDisplayModal={setDisplayModal}>
             <div className='flex-center justify-around border-b border-gray-500 mb-3'>
                 <button
                     type='button'
@@ -179,7 +169,7 @@ function ModalConversation({ setDisplayNewConversation }) {
                     <button
                         className='modal-btn bg-red-500 hover:bg-red-600'
                         type='button'
-                        onClick={() => setDisplayNewConversation(false)}
+                        onClick={() => setDisplayModal('')}
                     >
                         Cancel
                     </button>

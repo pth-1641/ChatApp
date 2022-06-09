@@ -8,11 +8,11 @@ function Home() {
             <Head>
                 <title>Messenger</title>
             </Head>
-            <div className='w-screen h-screen bg-dark grid grid-cols-12 p-5'>
-                <div className='col-span-3'>
+            <div className='w-screen h-screen bg-dark flex-center p-4 gap-6'>
+                <div className='max-w-[340px] h-full flex-1 relative'>
                     <ChatList />
                 </div>
-                <div className='col-span-9 flex-center text-gray-300 text-xl'>
+                <div className='flex-center text-gray-300 text-xl flex-1'>
                     <h1>Select a conversation and start chatting now!</h1>
                 </div>
             </div>
