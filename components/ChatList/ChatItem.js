@@ -1,9 +1,18 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, memo } from 'react';
 import Link from 'next/link';
 import { useStore } from '../../store';
 import { getRoom } from '../../firebase/dbInteract';
 import { formatTime } from '../../constant/moment';
 import { useRouter } from 'next/router';
+import db from '../../firebase/config';
+import {
+    collection,
+    query,
+    limit,
+    onSnapshot,
+    where,
+    orderBy,
+} from 'firebase/firestore';
 
 function ChatItem({ roomId }) {
     const { uid } = useStore((state) => state.user);
@@ -15,6 +24,7 @@ function ChatItem({ roomId }) {
         {}
     );
     const [friend, setFriend] = useState({});
+    const [lastMessage, setLastMessage] = useState(null);
 
     useEffect(() => {
         async function fetchRoomData() {
@@ -22,6 +32,23 @@ function ChatItem({ roomId }) {
             res.forEach((doc) => setRoom(doc.data()));
         }
         fetchRoomData();
+    }, [lastMessage]);
+
+    useEffect(() => {
+        async function fetchLastMessage() {
+            const ref = collection(db, 'messages');
+            const q = query(
+                ref,
+                where('roomId', '==', roomId),
+                where('id', '!=', ''),
+                orderBy('id', 'desc'),
+                limit(1)
+            );
+            onSnapshot(q, (snapshot) => {
+                snapshot.forEach((doc) => setLastMessage(doc.data()));
+            });
+        }
+        fetchLastMessage();
     }, []);
 
     useEffect(() => {
@@ -34,7 +61,7 @@ function ChatItem({ roomId }) {
     return (
         <Link href={'/' + roomId}>
             <li
-                className={`py-2 px-3 rounded-xl hover:bg-lightDark duration-200 cursor-pointer ${
+                className={`h-max py-2 px-3 rounded-xl hover:bg-lightDark duration-200 cursor-pointer ${
                     roomId === id && 'active'
                 }`}
             >
@@ -51,15 +78,23 @@ function ChatItem({ roomId }) {
                             </span>
                         )}
                     </div>
-                    <div className='flex-between flex-1'>
-                        <div>
+                    <div className='flex-between flex-1 gap-3'>
+                        <div className='w-36'>
                             <h4 className='text-white font-medium'>
                                 {roomName}
                             </h4>
-                            <p className='text-gray-400 text-sm'>No message</p>
+                            <p className='text-gray-400 text-sm truncate'>
+                                {lastMessage
+                                    ? lastMessage.chatContent
+                                    : 'No message'}
+                            </p>
                         </div>
                         <div className='text-gray-400'>
-                            <time className='text-xs'></time>
+                            <time className='text-xs'>
+                                {lastMessage
+                                    ? formatTime(lastMessage?.time)
+                                    : ''}
+                            </time>
                         </div>
                     </div>
                 </a>
@@ -68,4 +103,4 @@ function ChatItem({ roomId }) {
     );
 }
 
-export default ChatItem;
+export default memo(ChatItem);

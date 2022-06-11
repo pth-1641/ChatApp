@@ -41,13 +41,11 @@ function ChatContent() {
                     displaySetting={displaySetting}
                     setDisplaySetting={setDisplaySetting}
                 />
-                <div className='relative flex-1'>
-                    {/* <div className='w-full pr-2 absolute top-16 bottom-16 overflow-y-scroll text-white'> */}
-                    <Message members={detail.members} />
-                    {/* </div> */}
+                <div className='relative flex-1 overflow-auto pr-2'>
+                    <Message members={detail.members} theme={detail.theme} />
                 </div>
-                <div className='relative'>
-                    <Input roomId={roomId} />
+                <div className=''>
+                    <Input roomId={roomId} theme={detail.theme} />
                 </div>
             </div>
             {displaySetting && (

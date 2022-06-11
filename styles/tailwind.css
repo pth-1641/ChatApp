@@ -19,10 +19,10 @@
         @apply bg-lightDark;
     }
     .friend-message {
-        @apply bg-lightDark rounded-xl text-white p-2 px-3 w-max max-w-xl;
+        @apply bg-lightDark rounded-xl text-white p-2 px-3 w-max max-w-lg text-[15px];
     }
     .my-message {
-        @apply bg-blue-600 rounded-xl text-white p-2 px-3 w-max max-w-xl;
+        @apply rounded-xl text-white p-2 px-3 w-max max-w-lg text-[15px];
     }
     .dark-hover {
         @apply rounded-xl hover:bg-lightDark;
@@ -35,5 +35,8 @@
     }
     .setting-media {
         @apply rounded-xl aspect-square h-24 object-cover;
+    }
+    .tooltip {
+        @apply invisible bg-[rgba(255,255,255,0.75)] text-slate-800 absolute z-10 opacity-0 duration-300 px-2 py-1 rounded-md bottom-1/2 translate-y-1/2 group-hover:visible group-hover:opacity-100 delay-300 w-max text-xs;
     }
 }

@@ -9,7 +9,7 @@ function Home() {
                 <title>Messenger</title>
             </Head>
             <div className='w-screen h-screen bg-dark flex-center p-4 gap-6'>
-                <div className='max-w-[340px] h-full flex-1 relative'>
+                <div className='max-w-[340px] h-full flex flex-col flex-1'>
                     <ChatList />
                 </div>
                 <div className='flex-center text-gray-300 text-xl flex-1'>

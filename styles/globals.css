@@ -1,9 +1,5 @@
 * {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif !important;
-}
-
-html {
-    font-family: 'Archivo', sans-serif;
+    font-family: sans-serif;
 }
 
 img {
@@ -25,4 +21,9 @@ img {
 
 ::-webkit-scrollbar-thumb:hover {
     background: #888;
+}
+
+/* cursor file upload */
+::-webkit-file-upload-button {
+    cursor: pointer;
 }

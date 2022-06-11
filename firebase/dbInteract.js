@@ -77,8 +77,32 @@ export const updateRoomToUser = (uid, roomID, type) => {
     });
 };
 
+export const updateTheme = (roomId, color) => {
+    const ref = doc(db, 'rooms', roomId);
+    return updateDoc(ref, {
+        theme: color,
+    });
+};
+
+export const updateNickname = async (roomId, oldNickname, newNickname) => {
+    const ref = doc(db, 'rooms', roomId);
+    await updateDoc(ref, {
+        members: arrayUnion(newNickname),
+    });
+    await updateDoc(ref, {
+        members: arrayRemove(oldNickname),
+    });
+};
+
 async function fetchData() {
-    const ref = collection('');
+    const ref = collection(db, 'rooms');
+    const q = query(
+        ref,
+        where('uid', 'array-contains', '5alNHxlyziVZH8ZZpDoP3TIxPHD2'),
+        where(documentId(), '==', 'ONIa0exejoLpoGVw8R2Y')
+    );
+    const a = await getDocs(q);
+    a.forEach((doc) => console.log(doc.data()));
 }
 
 // fetchData();
