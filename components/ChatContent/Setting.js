@@ -1,14 +1,14 @@
 import { IoCloseOutline, IoImageOutline, IoText } from 'react-icons/io5';
 import { FaUserFriends } from 'react-icons/fa';
 import { TbLogout } from 'react-icons/tb';
-import { MdColorLens } from 'react-icons/md';
+import { MdColorLens, MdPlayCircleOutline, MdOutlineCloudDownload } from 'react-icons/md';
 import { useState } from 'react';
 import ThemeSetting from './ThemeSetting';
 import ModalRole from './ModalRole';
-import ModalNickname from './ModalNickname';
+import ModalNickname from './Modal/ModalNickname';
 
 function Setting({ setDisplaySetting, detail }) {
-    const { theme, members } = detail;
+    const { theme, members, images, videos, files } = detail;
 
     const [displayModal, setDisplayModal] = useState('');
     const [showTheme, setShowTheme] = useState(false);
@@ -61,43 +61,10 @@ function Setting({ setDisplaySetting, detail }) {
                         <h3>Shared Photos</h3>
                         <span className='underline text-gray-500'>See all</span>
                     </div>
-                    <ul className='flex flex-wrap justify-center gap-2'>
-                        <li>
-                            <img
-                                src='https://scontent.fhan2-3.fna.fbcdn.net/v/t1.15752-9/282759267_436704168282018_7831753338243500396_n.jpg?_nc_cat=107&ccb=1-7&_nc_sid=ae9488&_nc_ohc=o5GpChHRt2kAX-tYoXU&_nc_ht=scontent.fhan2-3.fna&oh=03_AVIu-cFp2a-lBbheVa2bG8MV7x74tHIkw0QVHWQfWSWkrQ&oe=62C830AD'
-                                className='setting-media'
-                            />
-                        </li>
-                        <li>
-                            <img
-                                src='https://scontent.fhan2-3.fna.fbcdn.net/v/t1.15752-9/282759267_436704168282018_7831753338243500396_n.jpg?_nc_cat=107&ccb=1-7&_nc_sid=ae9488&_nc_ohc=o5GpChHRt2kAX-tYoXU&_nc_ht=scontent.fhan2-3.fna&oh=03_AVIu-cFp2a-lBbheVa2bG8MV7x74tHIkw0QVHWQfWSWkrQ&oe=62C830AD'
-                                className='setting-media'
-                            />
-                        </li>
-                        <li>
-                            <img
-                                src='https://scontent.fhan2-3.fna.fbcdn.net/v/t1.15752-9/282759267_436704168282018_7831753338243500396_n.jpg?_nc_cat=107&ccb=1-7&_nc_sid=ae9488&_nc_ohc=o5GpChHRt2kAX-tYoXU&_nc_ht=scontent.fhan2-3.fna&oh=03_AVIu-cFp2a-lBbheVa2bG8MV7x74tHIkw0QVHWQfWSWkrQ&oe=62C830AD'
-                                className='setting-media'
-                            />
-                        </li>
-                        <li>
-                            <img
-                                src='https://scontent.fhan2-3.fna.fbcdn.net/v/t1.15752-9/282759267_436704168282018_7831753338243500396_n.jpg?_nc_cat=107&ccb=1-7&_nc_sid=ae9488&_nc_ohc=o5GpChHRt2kAX-tYoXU&_nc_ht=scontent.fhan2-3.fna&oh=03_AVIu-cFp2a-lBbheVa2bG8MV7x74tHIkw0QVHWQfWSWkrQ&oe=62C830AD'
-                                className='setting-media'
-                            />
-                        </li>
-                        <li>
-                            <img
-                                src='https://scontent.fhan2-3.fna.fbcdn.net/v/t1.15752-9/282759267_436704168282018_7831753338243500396_n.jpg?_nc_cat=107&ccb=1-7&_nc_sid=ae9488&_nc_ohc=o5GpChHRt2kAX-tYoXU&_nc_ht=scontent.fhan2-3.fna&oh=03_AVIu-cFp2a-lBbheVa2bG8MV7x74tHIkw0QVHWQfWSWkrQ&oe=62C830AD'
-                                className='setting-media'
-                            />
-                        </li>
-                        <li>
-                            <img
-                                src='https://scontent.fhan2-3.fna.fbcdn.net/v/t1.15752-9/282759267_436704168282018_7831753338243500396_n.jpg?_nc_cat=107&ccb=1-7&_nc_sid=ae9488&_nc_ohc=o5GpChHRt2kAX-tYoXU&_nc_ht=scontent.fhan2-3.fna&oh=03_AVIu-cFp2a-lBbheVa2bG8MV7x74tHIkw0QVHWQfWSWkrQ&oe=62C830AD'
-                                className='setting-media'
-                            />
-                        </li>
+                    <ul className='flex flex-wrap gap-2'>
+                        {images.map(image => <li key={images}>
+                            <img src={image} alt="" className='setting-media'/>
+                        </li>)}
                     </ul>
                 </div>
                 <div className='mt-6'>
@@ -105,78 +72,24 @@ function Setting({ setDisplaySetting, detail }) {
                         <h3>Shared Videos</h3>
                         <span className='underline text-gray-500'>See all</span>
                     </div>
-                    <ul className='flex flex-wrap justify-center gap-2'>
-                        <li className='h-20 aspect-video relative rounded-xl overflow-hidden'>
-                            <iframe
-                                src='https://streamable.com/e/0u87hx?loop=0&nocontrols=1'
-                                frameBorder='0'
-                                allowFullScreen
-                                className='w-full h-full absolute inset-0'
-                            />
-                            <div className='absolute inset-0 cursor-pointer'></div>
-                        </li>
-                        <li className='h-20 aspect-video relative rounded-xl overflow-hidden'>
-                            <iframe
-                                src='https://streamable.com/e/0u87hx?loop=0&nocontrols=1'
-                                frameBorder='0'
-                                allowFullScreen
-                                className='w-full h-full absolute inset-0'
-                            />
-                            <div className='absolute inset-0 cursor-pointer'></div>
-                        </li>
-                        <li className='h-20 aspect-video relative rounded-xl overflow-hidden'>
-                            <iframe
-                                src='https://streamable.com/e/0u87hx?loop=0&nocontrols=1'
-                                frameBorder='0'
-                                allowFullScreen
-                                className='w-full h-full absolute inset-0'
-                            />
-                            <div className='absolute inset-0 cursor-pointer'></div>
-                        </li>
-                        <li className='h-20 aspect-video relative rounded-xl overflow-hidden'>
-                            <iframe
-                                src='https://streamable.com/e/0u87hx?loop=0&nocontrols=1'
-                                frameBorder='0'
-                                allowFullScreen
-                                className='w-full h-full absolute inset-0'
-                            />
-                            <div className='absolute inset-0 cursor-pointer'></div>
-                        </li>
+                    <ul className='flex flex-wrap gap-2'>
+                        {videos.map(video => <li key={video} className='relative'><video src={video} className='setting-media'/>
+                        <span className='absolute inset-0 bg-[rgba(0,0,0,0.5)] text-white text-5xl flex-center rounded-xl'><MdPlayCircleOutline/></span>
+                        </li>)}
                     </ul>
                 </div>
                 <div className='mt-6'>
                     <div className='flex-between mb-2'>
-                        <h3>Shared Links</h3>
+                        <h3>Shared Files</h3>
                         <span className='underline text-gray-500'>See all</span>
                     </div>
-                    <ul>
-                        <li className='text-blue-500 underline'>
-                            <a
-                                href='https://google.com'
-                                target='_blank'
-                                rel='noreferrer'
-                            >
-                                https://google.com
+                    <ul className='text-sm'>
+                        {files.map(file=> <li key={file.link}>
+                            <a href={file.link} download className='underline flex-between hover:bg-lightDark rounded-lg px-4 py-2 duration-200'>{file.fileName}
+                            <span className='text-2xl'><MdOutlineCloudDownload/></span>
                             </a>
-                        </li>
-                        <li className='text-blue-500 underline'>
-                            <a
-                                href='https://google.com'
-                                target='_blank'
-                                rel='noreferrer'
-                            >
-                                https://google.com
-                            </a>
-                        </li>
-                        <li className='text-blue-500 underline'>
-                            <a
-                                href='https://google.com'
-                                target='_blank'
-                                rel='noreferrer'
-                            >
-                                https://google.com
-                            </a>
-                        </li>
+                            
+                        </li>)}
                     </ul>
                 </div>
             </div>

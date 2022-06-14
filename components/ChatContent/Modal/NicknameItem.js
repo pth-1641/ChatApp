@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { AiFillEdit, AiOutlineCheck } from 'react-icons/ai';
 import { useRouter } from 'next/router';
-import { updateNickname } from '../../firebase/dbInteract';
+import { updateNickname } from '../../../firebase/dbInteract';
 
 function NicknameItem({ member, setDisplayModal }) {
     const { displayName, nickname, photoURL } = member;
@@ -13,7 +13,12 @@ function NicknameItem({ member, setDisplayModal }) {
     const [newNickname, setNewNickname] = useState(nickname);
 
     const handleUpdateNickname = () => {
-        updateNickname(roomId, member, { ...member, nickname: newNickname });
+        if (member.nickname !== newNickname) {
+            updateNickname(roomId, member, {
+                ...member,
+                nickname: newNickname,
+            });
+        }
         setDisplayModal('');
     };
 

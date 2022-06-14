@@ -74,14 +74,14 @@ function ChatItem({ roomId }) {
                             <img src={friend.photoURL} alt='' />
                         ) : (
                             <span className='text-white text-3xl select-none'>
-                                {roomName ? roomName[0] : ''}
+                                {roomName ? roomName[0]:'' }
                             </span>
                         )}
                     </div>
                     <div className='flex-between flex-1 gap-3'>
                         <div className='w-36'>
                             <h4 className='text-white font-medium'>
-                                {roomName}
+                                {chatType ==='group' ? roomName : friend.nickname !== '' ?friend.nickname : friend.displayName }
                             </h4>
                             <p className='text-gray-400 text-sm truncate'>
                                 {lastMessage

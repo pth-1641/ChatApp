@@ -1,4 +1,4 @@
-import Modal from '../Modal';
+import Modal from '../../Modal';
 import NicknameItem from './NicknameItem';
 
 function ModalNickname({ setDisplayModal, members }) {

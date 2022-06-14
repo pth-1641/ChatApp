@@ -1,14 +1,18 @@
 import { useStore } from '../../store';
 import { formatDate } from '../../constant/moment';
+import { MdFileDownload } from 'react-icons/md';
 import { useRef, useEffect, useState } from 'react';
 import { collection, where, onSnapshot, query } from '@firebase/firestore';
 import db from '../../firebase/config';
 import { useRouter } from 'next/router';
+import ModalShowImage from './Modal/ModalShowImage';
 
 function Message({ members, theme }) {
     const { uid } = useStore((state) => state.user) ?? '';
 
     const [chats, setChats] = useState([]);
+    const [showImage, setShowImage] = useState(false);
+    const [link, setLink] = useState('');
 
     const router = useRouter();
     const { roomId } = router.query;
@@ -32,8 +36,16 @@ function Message({ members, theme }) {
         fetchMessages();
     }, [roomId]);
 
+    const showFullImage = (link) => {
+        setShowImage(true);
+        setLink(link);
+    };
+
     return (
         <>
+            {showImage && (
+                <ModalShowImage link={link} setShowImage={setShowImage} />
+            )}
             {chats?.map((chat, i, array) => (
                 <div key={chat.id}>
                     {chat.uid === uid ? (
@@ -43,16 +55,47 @@ function Message({ members, theme }) {
                                     {formatDate(chat.time)}
                                 </time>
                             )}
-
-                            <p
-                                className='my-message relative group'
-                                style={{ backgroundColor: theme }}
-                            >
-                                {chat.chatContent}
-                                <span className='tooltip right-[calc(100%+5px)]'>
+                            <div className='group relative'>
+                                {chat.type === 'images' ? (
+                                    <img
+                                        src={chat.chatContent}
+                                        alt=''
+                                        className='my-image'
+                                        onClick={() =>
+                                            showFullImage(chat.chatContent)
+                                        }
+                                    />
+                                ) : chat.type === 'videos' ? (
+                                    <video
+                                        src={chat.chatContent}
+                                        controls
+                                        muted
+                                        className='my-video'
+                                    />
+                                ) : chat.type === 'files' ? (
+                                    <a
+                                        className='my-message flex-center underline'
+                                        style={{ backgroundColor: theme }}
+                                        href={chat.chatContent}
+                                        download
+                                    >
+                                        {chat.fileName}
+                                        <span className='text-2xl ml-2'>
+                                            <MdFileDownload />
+                                        </span>
+                                    </a>
+                                ) : (
+                                    <p
+                                        className='my-message'
+                                        style={{ backgroundColor: theme }}
+                                    >
+                                        {chat.chatContent}
+                                    </p>
+                                )}
+                                <span className='tooltip right-[calc(100%+5px)] pointer-events-none'>
                                     {formatDate(chat.time)}
                                 </span>
-                            </p>
+                            </div>
                         </div>
                     ) : (
                         <div className='mt-0.5 flex items-start gap-2'>

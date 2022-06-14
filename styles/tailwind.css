@@ -24,6 +24,12 @@
     .my-message {
         @apply rounded-xl text-white p-2 px-3 w-max max-w-lg text-[15px];
     }
+    .my-image {
+        @apply max-w-lg rounded-xl cursor-pointer;
+    }
+    .my-video {
+        @apply max-w-lg rounded-xl cursor-pointer;
+    }
     .dark-hover {
         @apply rounded-xl hover:bg-lightDark;
     }

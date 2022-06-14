@@ -1,4 +1,5 @@
 import db from './config';
+import { storage } from './config';
 import {
     collection,
     where,
@@ -52,14 +53,21 @@ export const addRoom = ({ roomName, members, chatType }) => {
         chatAvatar: '',
         avatarBgColor: generateRandomColor(),
         chatType,
-        updatedAt: new Date().getTime(),
-        photos: [],
+        images: [],
         videos: [],
-        links: [],
+        files: [],
     });
 };
 
-export const addMessage = ({ roomId, chatContent, uid, time, id }) => {
+export const addMessage = ({
+    roomId,
+    chatContent,
+    uid,
+    time,
+    id,
+    type,
+    fileName,
+}) => {
     const ref = doc(db, 'messages', String(new Date().getTime()));
     return setDoc(ref, {
         id,
@@ -67,13 +75,18 @@ export const addMessage = ({ roomId, chatContent, uid, time, id }) => {
         uid,
         chatContent,
         time,
+        fileName,
+        type,
     });
 };
 
-export const updateRoomToUser = (uid, roomID, type) => {
+export const updateRoomToUser = (uid, roomId, type) => {
     const userRef = doc(db, 'users', uid);
     return updateDoc(userRef, {
-        rooms: type === 'add' ? arrayUnion(roomID) : arrayRemove(roomID),
+        rooms:
+            type === 'add'
+                ? arrayUnion({ roomId, updateAt: new Date().getTime() })
+                : arrayRemove({ roomId, updateAt: new Date().getTime() }),
     });
 };
 
@@ -94,15 +107,54 @@ export const updateNickname = async (roomId, oldNickname, newNickname) => {
     });
 };
 
+export const updateMedia = (roomId, mediaType ,link, fileName, type)=>{
+    const ref = doc(db, 'rooms', roomId);
+    if(mediaType === 'files'){
+        return updateDoc(ref, {
+            files:
+                type === 'add'
+                    ? arrayUnion({link, fileName})
+                    : arrayRemove({link, fileName}),
+        })
+    }
+    return updateDoc(ref, {
+        [mediaType]:
+            type === 'add'
+                ? arrayUnion(link)
+                : arrayRemove(link),
+    });
+}
+
+export const updateTime = (uid, oldTime, newTime) => {
+    // await updateDoc(ref, {
+    //     rooms: arrayUnion(newTime),
+    // });
+    // await updateDoc(ref, {
+    //     members: arrayRemove(oldTime),
+    // });
+};
+
+// export const uploadFile = (file, type) => {
+//     if (!file) return;
+//     const storageRef = ref(storage, `/${type}/${file.name}`);
+//     const uploadTask = uploadBytesResumable(storageRef, file);
+
+//     uploadTask.on(
+//         'state_changed',
+//         (snapshot) => {
+//             const prog = Math.round(
+//                 (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+//             );console.log()
+//         },
+//         (err) => console.log(err),
+//         () => {
+//             getDownloadURL(uploadTask.snapshot.ref).then((url) => url);
+//         }
+//     );
+// };
+
 async function fetchData() {
-    const ref = collection(db, 'rooms');
-    const q = query(
-        ref,
-        where('uid', 'array-contains', '5alNHxlyziVZH8ZZpDoP3TIxPHD2'),
-        where(documentId(), '==', 'ONIa0exejoLpoGVw8R2Y')
-    );
-    const a = await getDocs(q);
-    a.forEach((doc) => console.log(doc.data()));
+    console.log(res);
 }
 
 // fetchData();

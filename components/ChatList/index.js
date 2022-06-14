@@ -46,8 +46,8 @@ function Chat() {
             <Header user={user} />
             <SeachInput />
             <ul className='grid gap-1 text-white pr-2 overflow-auto'>
-                {roomsID.map((id) => (
-                    <ChatItem key={id} roomId={id} />
+                {roomsID.map((room) => (
+                    <ChatItem key={room.roomId} roomId={room.roomId} />
                 ))}
             </ul>
         </>
