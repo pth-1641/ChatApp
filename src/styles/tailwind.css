@@ -19,7 +19,7 @@
         @apply bg-lightDark;
     }
     .friend-message {
-        @apply bg-lightDark rounded-xl text-white p-2 px-3 w-max max-w-lg text-[15px] break-all;
+        @apply flex flex-col bg-lightDark rounded-xl text-white p-2 px-3 w-max max-w-lg text-[15px] break-all;
     }
     .my-message {
         @apply rounded-xl text-white p-2 px-3 w-max max-w-lg text-[15px] break-all;
@@ -34,7 +34,7 @@
         @apply rounded-xl hover:bg-lightDark;
     }
     .modal-btn {
-        @apply bg-gray-700 hover:bg-gray-800 min-w-[112px] py-2 px-4 rounded-lg;
+        @apply bg-gray-700 hover:bg-gray-800 min-w-[112px] py-2 px-4 rounded-lg duration-150;
     }
     .setting-btn {
         @apply p-3 rounded-xl bg-lightDark text-white text-2xl;
@@ -42,7 +42,10 @@
     .setting-media {
         @apply rounded-xl aspect-square h-20 object-cover;
     }
-    .tooltip {
-        @apply invisible bg-[rgba(255,255,255,0.75)] text-slate-800 absolute z-10 opacity-0 duration-300 px-2 py-1 rounded-md bottom-1/2 translate-y-1/2 group-hover:visible group-hover:opacity-100 delay-300 w-max text-xs;
+    .message-option {
+        @apply invisible group-hover:visible opacity-0 group-hover:opacity-100 duration-100;
+    }
+    .files {
+        @apply flex-between underline hover:bg-lightDark rounded-lg px-3 py-2 duration-200 cursor-pointer gap-1 w-full;
     }
 }

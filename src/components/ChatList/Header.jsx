@@ -1,12 +1,14 @@
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import { IoLogOutOutline } from 'react-icons/io5';
 import { MdDarkMode, MdLightMode } from 'react-icons/md';
 import { FaUserCircle } from 'react-icons/fa';
 import ModalInfo from './Modal/ModalInfo';
 import ModalSignOut from './Modal/ModalSignOut';
+import { ModalContext } from '../../App';
 
 function Header({ user }) {
-    const [displayModal, setDisplayModal] = useState('');
+    const { displayModal, setDisplayModal } = useContext(ModalContext);
+
     const [displaySetting, setDisplaySetting] = useState(false);
     const [darkMode, setDarkMode] = useState(true);
 
@@ -55,12 +57,8 @@ function Header({ user }) {
                     </div>
                 )}
             </div>
-            {displayModal === 'info' && (
-                <ModalInfo user={user} setDisplayModal={setDisplayModal} />
-            )}
-            {displayModal === 'logout' && (
-                <ModalSignOut user={user} setDisplayModal={setDisplayModal} />
-            )}
+            {displayModal === 'info' && <ModalInfo user={user} />}
+            {displayModal === 'logout' && <ModalSignOut />}
         </div>
     );
 }

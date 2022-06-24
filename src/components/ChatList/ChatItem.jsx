@@ -1,62 +1,42 @@
 import { useState, useEffect } from 'react';
 import { useStore } from '../../store';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { getRoom } from '../../firebase/functionHandler';
-import db from '../../firebase/config';
-import {
-    collection,
-    query,
-    limit,
-    onSnapshot,
-    where,
-    orderBy,
-} from 'firebase/firestore';
 import { formatTime } from '../../constants/moment';
+import useRoomData from '../../hooks/useRoomData';
 
 function ChatItem({ roomId }) {
-    const { uid } = useStore((state) => state.user);
-
     const navigate = useNavigate();
     const location = useLocation();
     const id = location.pathname.slice(1);
 
+    const { uid } = useStore((state) => state.user);
+
     const [friend, setFriend] = useState({});
-    const [lastMessage, setLastMessage] = useState(null);
-    const [{ members, avatarBgColor, chatType, roomName }, setRoom] = useState(
-        {}
-    );
+    const [sender, setSender] = useState('');
+    const { lastMessage, roomInfo } = useRoomData(roomId, 1);
 
-    useEffect(() => {
-        async function fetchRoomData() {
-            const res = await getRoom(roomId);
-            res.forEach((doc) => setRoom(doc.data()));
-        }
-        fetchRoomData();
-    }, [lastMessage]);
-
-    useEffect(() => {
-        async function fetchLastMessage() {
-            const ref = collection(db, 'messages');
-            const q = query(
-                ref,
-                where('roomId', '==', roomId),
-                where('id', '!=', ''),
-                orderBy('id', 'desc'),
-                limit(1)
-            );
-            onSnapshot(q, (snapshot) => {
-                snapshot.forEach((doc) => setLastMessage(doc.data()));
-            });
-        }
-        fetchLastMessage();
-    }, []);
+    const { chatContent, time, type } = lastMessage ?? {};
+    const { members, avatarBgColor, chatType, roomName, chatAvatar } = roomInfo;
 
     useEffect(() => {
         if (chatType === 'friend') {
             const index = members.findIndex((mem) => mem.uid != uid);
             setFriend(members[index]);
         }
-    }, [chatType]);
+    }, [roomInfo]);
+
+    useEffect(() => {
+        if (lastMessage?.uid === uid) {
+            setSender('You');
+        } else {
+            const memberSender = members?.find(
+                (mem) => mem.uid === lastMessage?.uid
+            );
+            memberSender?.nickname
+                ? setSender(memberSender?.nickname)
+                : setSender(memberSender?.displayName.split(' ')[0]);
+        }
+    }, [lastMessage, roomInfo]);
 
     return (
         <li
@@ -72,6 +52,12 @@ function ChatItem({ roomId }) {
                 >
                     {chatType === 'friend' ? (
                         <img src={friend.photoURL} alt='' />
+                    ) : chatAvatar ? (
+                        <img
+                            src={chatAvatar}
+                            alt=''
+                            className='h-full w-full object-cover'
+                        />
                     ) : (
                         <span className='text-white text-3xl select-none'>
                             {roomName ? roomName[0] : ''}
@@ -88,14 +74,21 @@ function ChatItem({ roomId }) {
                                 : friend.displayName}
                         </h4>
                         <p className='text-gray-400 text-sm truncate'>
-                            {lastMessage
-                                ? lastMessage.chatContent
+                            {sender}
+                            {chatContent === ''
+                                ? ' unsent a message'
+                                : type === 'images'
+                                ? ' sent an image'
+                                : type === 'videos'
+                                ? ' sent a video'
+                                : chatContent
+                                ? `: ${chatContent}`
                                 : 'No message'}
                         </p>
                     </div>
                     <div className='text-gray-400'>
                         <time className='text-xs'>
-                            {lastMessage ? formatTime(lastMessage?.time) : ''}
+                            {time?.length && formatTime(time)}
                         </time>
                     </div>
                 </div>

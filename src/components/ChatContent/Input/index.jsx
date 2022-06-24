@@ -1,116 +1,46 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { IoSend } from 'react-icons/io5';
-import { BsImages } from 'react-icons/bs';
-import { MdEmojiEmotions, MdSlowMotionVideo } from 'react-icons/md';
-import { ImAttachment } from 'react-icons/im';
-import { AiOutlineGif } from 'react-icons/ai';
+import { MdEmojiEmotions } from 'react-icons/md';
 import { useStore } from '../../../store';
-import { addMessage, updateMedia } from '../../../firebase/functionHandler';
+import { addMessage } from '../../../firebase/functionHandler';
 import moment from 'moment';
-import { getDownloadURL, ref, uploadBytesResumable } from '@firebase/storage';
-import { storage } from '../../../firebase/config';
+import { Picker, Emoji } from 'emoji-mart';
+import 'emoji-mart/css/emoji-mart.css';
+import FileMedia from './FileMedia';
 
-function Input({ roomId, theme }) {
+function Input({ roomId, theme, emoji, reply, setDisplayReply, setReply }) {
     const [displayEmoji, setDisplayEmoji] = useState(false);
     const [chatContent, setChatContent] = useState('');
 
     const { uid } = useStore((state) => state.user) ?? '';
 
-    const handleChooseEmoji = (e) => {
-        e.stopPropagation();
-    };
-
-    const handleSendMessage = (e) => {
+    const handleSendMessage = (e, chatContent) => {
         e.preventDefault();
         if (chatContent) {
             addMessage({
-                id: new Date().getTime(),
                 roomId,
                 uid,
                 chatContent: chatContent.trim(),
                 time: moment().toArray(),
                 type: 'message',
                 fileName: '',
+                replyId: reply.id || null,
             });
-            // updateTime(uid, {roomId, updateAt: new Date().getTime()});
             setChatContent('');
+            setDisplayReply(false);
+            setReply({});
         }
     };
 
-    const uploadFile = (file, type) => {
-        if (!file) return;
-        const storageRef = ref(storage, `/${type}/${file.name}`);
-        const uploadTask = uploadBytesResumable(storageRef, file);
-
-        uploadTask.on(
-            'state_changed',
-            (snapshot) => snapshot,
-            (err) => console.log(err),
-            () => {
-                getDownloadURL(uploadTask.snapshot.ref).then((url) => {
-                    addMessage({
-                        id: new Date().getTime(),
-                        roomId,
-                        uid,
-                        chatContent: url,
-                        time: moment().toArray(),
-                        type,
-                        fileName: type === 'files' ? file.name : '',
-                    });
-                    updateMedia(roomId, type, url, file.name, 'add');
-                });
-            }
-        );
-    };
-    const [emojiPicker, setEmojiPicker] = useState(null);
-
     return (
         <form
-            className='w-full flex-center gap-3 pt-5'
-            onSubmit={handleSendMessage}
+            className='w-full flex-center gap-3'
+            onSubmit={(e) => handleSendMessage(e, chatContent)}
         >
             <div className='flex-center input-dark py-0'>
-                <ul
-                    className='flex-center gap-2 text-xl'
-                    style={{ color: theme }}
-                >
-                    <li className='flex-center relative'>
-                        <ImAttachment />
-                        <input
-                            type='file'
-                            className='absolute inset-0 opacity-0'
-                            accept='.pdf, text/plain, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel'
-                            onChange={(e) =>
-                                uploadFile(e.target.files[0], 'files')
-                            }
-                        />
-                    </li>
-                    <li className='flex-center relative'>
-                        <MdSlowMotionVideo />
-                        <input
-                            type='file'
-                            className='absolute inset-0 opacity-0'
-                            accept='video/*'
-                            onChange={(e) =>
-                                uploadFile(e.target.files[0], 'videos')
-                            }
-                        />
-                    </li>
-                    <li className='flex-center relative'>
-                        <BsImages />
-                        <input
-                            type='file'
-                            className='absolute inset-0 opacity-0'
-                            accept='image/*'
-                            onChange={(e) =>
-                                uploadFile(e.target.files[0], 'images')
-                            }
-                        />
-                    </li>
-                    <li>
-                        <AiOutlineGif />
-                    </li>
-                </ul>
+                {!chatContent && (
+                    <FileMedia theme={theme} roomId={roomId} uid={uid} />
+                )}
                 <input
                     type='text'
                     className='input-dark text-white'
@@ -127,14 +57,43 @@ function Input({ roomId, theme }) {
                     {displayEmoji && (
                         <span
                             className='absolute right-0 bottom-12'
-                            onClick={handleChooseEmoji}
-                        ></span>
+                            onClick={(e) => e.stopPropagation()}
+                        >
+                            <Picker
+                                set='facebook'
+                                theme='dark'
+                                showPreview={false}
+                                useButton={false}
+                                title='pth-1641'
+                                emoji='heart'
+                                sheetSize={32}
+                                onClick={(emoji) =>
+                                    setChatContent(chatContent + emoji.native)
+                                }
+                            />
+                        </span>
                     )}
                 </span>
             </div>
-            <button type='submit' className='text-2xl' style={{ color: theme }}>
-                <IoSend />
-            </button>
+            <div type='button' className='text-2xl' style={{ color: theme }}>
+                {chatContent ? (
+                    <button type='submit' className='flex-center'>
+                        <IoSend />
+                    </button>
+                ) : (
+                    <span className='cursor-pointer'>
+                        <Emoji
+                            set='facebook'
+                            size={26}
+                            emoji={emoji?.id ?? '+1'}
+                            skin={emoji?.skin ?? 1}
+                            onClick={(emoji, event) =>
+                                handleSendMessage(event, emoji.native)
+                            }
+                        />
+                    </span>
+                )}
+            </div>
         </form>
     );
 }

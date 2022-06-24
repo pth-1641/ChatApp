@@ -1,19 +1,6 @@
 import { MdClose } from 'react-icons/md';
-import { getRoom } from '../../../firebase/functionHandler';
-import { useEffect, useState } from 'react';
 
-function ModalShowImage({ link, setShowImage, roomId }) {
-    const [listImage, setListImage] = useState([]);
-    const [imageLink, setImageLink] = useState(link);
-
-    useEffect(() => {
-        async function fetchImages() {
-            const res = await getRoom(roomId);
-            res.forEach((doc) => setListImage(doc.data().images));
-        }
-        fetchImages();
-    }, [roomId]);
-
+function ModalShowImage({ link, setShowImage }) {
     return (
         <div className='fixed inset-0 z-20 text-white backdrop-blur-lg px-10 flex flex-col gap-2'>
             <span
@@ -23,25 +10,10 @@ function ModalShowImage({ link, setShowImage, roomId }) {
                 <MdClose />
             </span>
             <img
-                src={imageLink}
+                src={link}
                 alt=''
-                className='flex-1 h-1/2 w-fit mx-auto rounded-lg'
+                className='flex-1 h-1/2 mx-auto rounded-lg'
             />
-            <ul className='h-12 flex items-center gap-2 max-w-5xl mx-auto'>
-                {listImage.map((image) => (
-                    <li
-                        className='h-full cursor-pointer'
-                        onClick={() => setImageLink(image)}
-                    >
-                        <img
-                            src={image}
-                            alt=''
-                            className='h-full setting-media'
-                            style={{ opacity: image === imageLink ? 1 : 0.5 }}
-                        />
-                    </li>
-                ))}
-            </ul>
         </div>
     );
 }

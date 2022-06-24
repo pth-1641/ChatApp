@@ -1,8 +1,16 @@
 import { formatDate } from '../../../constants/moment';
-import { MdFileDownload } from 'react-icons/md';
+import { MdFileDownload, MdReply, MdOutlineContentCopy } from 'react-icons/md';
 
-function FriendMessage({ messages, members, index, chat, showFullImage }) {
-    const { chatContent, fileName, type, time, uid } = chat;
+function FriendMessage({
+    message,
+    members,
+    index,
+    listMessages,
+    showFullImage,
+    setReply,
+    setDisplayReply,
+}) {
+    const { chatContent, fileName, type, time, uid } = message;
 
     const sender = (uid) => {
         return members?.find((mem) => mem.uid === uid);
@@ -16,24 +24,25 @@ function FriendMessage({ messages, members, index, chat, showFullImage }) {
                 className='w-10 aspect-square rounded-full'
                 style={{
                     visibility:
-                        messages[index - 1]?.uid !== uid ? 'visible' : 'hidden',
+                        listMessages[index - 1]?.uid !== uid
+                            ? 'visible'
+                            : 'hidden',
                 }}
             />
-            <div className='text-white'>
-                {messages[index - 1]?.uid !== uid && (
-                    <div className='flex gap-2 items-end'>
-                        <span className='text-sm'>
-                            {sender(uid)?.nickname
-                                ? sender(uid)?.nickname
-                                : sender(uid)?.displayName}
-                        </span>
-                        <time className='text-xs text-gray-500'>
-                            {formatDate(time)}
-                        </time>
+            <div className='text-white w-full'>
+                {listMessages[index - 1]?.uid !== uid && (
+                    <div className='flex gap-2 items-end text-sm'>
+                        {sender(uid)?.nickname
+                            ? sender(uid)?.nickname
+                            : sender(uid)?.displayName}
                     </div>
                 )}
-                <div className='relative group'>
-                    {type === 'images' ? (
+                <div className='flex group'>
+                    {chatContent === '' ? (
+                        <div className='text-gray-400 rounded-xl border border-gray-600 px-4 py-2'>
+                            Removed Message
+                        </div>
+                    ) : type === 'images' ? (
                         <img
                             src={chatContent}
                             alt=''
@@ -59,11 +68,34 @@ function FriendMessage({ messages, members, index, chat, showFullImage }) {
                             </span>
                         </a>
                     ) : (
-                        <p className='friend-message'>{chatContent}</p>
+                        <p className='friend-message'>
+                            <time className='text-gray-400 text-xs'>
+                                {formatDate(time)}
+                            </time>
+                            {chatContent}
+                        </p>
                     )}
-                    <span className='tooltip left-[calc(100%+5px)] pointer-events-none'>
-                        {formatDate(time)}
-                    </span>
+                    <div className='flex-center gap-2 text-lg ml-1 message-option'>
+                        <span
+                            className='cursor-pointer'
+                            onClick={() => {
+                                setReply(message);
+                                setDisplayReply(true);
+                            }}
+                        >
+                            <MdReply />
+                        </span>
+                        {type === 'message' && (
+                            <span
+                                className='cursor-pointer'
+                                onClick={() =>
+                                    navigator.clipboard.writeText(chatContent)
+                                }
+                            >
+                                <MdOutlineContentCopy />
+                            </span>
+                        )}
+                    </div>
                 </div>
             </div>
         </div>

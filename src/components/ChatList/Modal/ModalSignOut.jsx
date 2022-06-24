@@ -1,22 +1,26 @@
 import Modal from '../../Modal';
-import { signOut } from 'firebase/auth';
+import { signOut } from '@firebase/auth';
 import { auth } from '../../../firebase/config';
 import { useStore } from '../../../store';
+import { ModalContext } from '../../../App';
+import { useContext } from 'react';
 
-function ModalSignOut({ setDisplayModal }) {
-    const logOut = useStore((state) => state.logOut);
+function ModalSignOut() {
+    const setUser = useStore((state) => state.setUser);
+    const { setDisplayModal } = useContext(ModalContext);
 
     const handleSignOut = async () => {
         try {
-            logOut();
+            setUser({});
             signOut(auth);
         } catch (error) {
             console.log(error);
         }
+        setDisplayModal('');
     };
 
     return (
-        <Modal setDisplayModal={setDisplayModal}>
+        <Modal>
             <h3 className='text-2xl font-semibold text-center'>Log Out?</h3>
             <div className='flex-center gap-3 mt-7'>
                 <button

@@ -1,42 +1,29 @@
 import { useStore } from '../../../store';
-import { useRef, useEffect, useState } from 'react';
-import { collection, where, onSnapshot, query } from '@firebase/firestore';
-import db from '../../../firebase/config';
+import { useState, useEffect, useRef } from 'react';
 import { useLocation } from 'react-router-dom';
 import ModalShowMedia from '../Modal/ModalShowMedia';
 import MyMessage from './MyMessage';
 import FriendMessage from './FriendMessage';
+import useReply from '../../../hooks/useReply';
 
-function Message({ members, theme }) {
+function Message({ members, theme, messages, setReply, setDisplayReply }) {
     const { uid } = useStore((state) => state.user) ?? '';
-    const endRef = useRef();
 
-    const [chats, setChats] = useState([]);
+    const lastMessageRef = useRef();
     const [showImage, setShowImage] = useState(false);
     const [link, setLink] = useState('');
 
     const location = useLocation();
     const roomId = location.pathname.slice(1);
 
-    useEffect(() => {
-        async function fetchMessages() {
-            const ref = collection(db, 'messages');
-            const q = query(ref, where('roomId', '==', roomId ?? ''));
-            onSnapshot(q, (querySnapshot) => {
-                const messages = [];
-                querySnapshot.forEach((doc) => {
-                    messages.push(doc.data());
-                });
-                setChats(messages);
-            });
-        }
-        fetchMessages();
-    }, [roomId]);
-
     const showFullImage = (link) => {
         setShowImage(true);
         setLink(link);
     };
+
+    useEffect(() => {
+        lastMessageRef.current.scrollIntoView({ behavior: 'smooth' });
+    }, [messages]);
 
     return (
         <>
@@ -47,28 +34,34 @@ function Message({ members, theme }) {
                     roomId={roomId}
                 />
             )}
-            {chats?.map((chat, i, messages) => (
-                <div key={chat.id} className='overflow-x-hidden'>
-                    {chat.uid === uid ? (
+            {messages.map((message, index, listMessages) => (
+                <div key={message.id} className='overflow-x-hidden'>
+                    {message.uid === uid ? (
                         <MyMessage
-                            messages={messages}
-                            index={i}
-                            chat={chat}
+                            setReply={setReply}
+                            listMessages={listMessages}
+                            index={index}
+                            message={message}
                             theme={theme}
                             showFullImage={showFullImage}
+                            setDisplayReply={setDisplayReply}
+                            useReply={useReply}
                         />
                     ) : (
                         <FriendMessage
+                            setReply={setReply}
                             members={members}
-                            messages={messages}
-                            index={i}
-                            chat={chat}
+                            listMessages={listMessages}
+                            index={index}
+                            message={message}
                             showFullImage={showFullImage}
+                            setDisplayReply={setDisplayReply}
+                            useReply={useReply}
                         />
                     )}
                 </div>
             ))}
-            <div ref={endRef}></div>
+            <p ref={lastMessageRef}></p>
         </>
     );
 }

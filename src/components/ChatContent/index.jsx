@@ -1,56 +1,72 @@
 import { useState, useEffect } from 'react';
-import db from '../../firebase/config';
-import { useLocation } from 'react-router-dom';
-import {
-    collection,
-    where,
-    documentId,
-    onSnapshot,
-    query,
-} from '@firebase/firestore';
+import { useLocation, useNavigate } from 'react-router-dom';
+import useRoomData from '../../hooks/useRoomData';
 import Header from './Header';
 import Message from './Message';
+import Reply from './Reply';
 import Input from './Input';
 import Setting from './Setting';
+import { useStore } from '../../store';
 
 function ChatContent() {
+    const navigate = useNavigate();
     const location = useLocation();
     const roomId = location.pathname.slice(1);
 
-    const [detail, setDetail] = useState({});
+    const user = useStore((state) => state.user);
+
     const [displaySetting, setDisplaySetting] = useState(false);
+    const [reply, setReply] = useState({});
+    const [displayReply, setDisplayReply] = useState(false);
+
+    const { roomInfo } = useRoomData(roomId);
+    let { messages } = useRoomData(roomId, 50);
 
     useEffect(() => {
-        async function fetchRoomDetail() {
-            const ref = collection(db, 'rooms');
-            const q = query(ref, where(documentId(), '==', roomId ?? '0'));
-            onSnapshot(q, (querySnapshot) =>
-                querySnapshot.forEach((doc) => {
-                    setDetail(doc.data());
-                })
-            );
+        if (!user?.rooms.includes(roomId)) {
+            navigate('/error/404');
         }
-        fetchRoomDetail();
     }, [roomId]);
 
     return (
         <div className='h-full flex gap-3'>
             <div className='flex flex-col flex-1'>
                 <Header
-                    detail={detail}
+                    roomInfo={roomInfo}
                     displaySetting={displaySetting}
                     setDisplaySetting={setDisplaySetting}
                 />
                 <div className='relative flex-1 overflow-auto pr-2'>
-                    <Message members={detail.members} theme={detail.theme} />
+                    <Message
+                        members={roomInfo.members}
+                        theme={roomInfo.theme}
+                        messages={messages}
+                        setReply={setReply}
+                        setDisplayReply={setDisplayReply}
+                    />
                 </div>
-                <Input roomId={roomId} theme={detail.theme} />
+                <Reply
+                    reply={reply}
+                    members={roomInfo.members}
+                    currentUser={user}
+                    displayReply={displayReply}
+                    setDisplayReply={setDisplayReply}
+                    setReply={setReply}
+                />
+                <Input
+                    roomId={roomId}
+                    theme={roomInfo.theme}
+                    emoji={roomInfo.emoji}
+                    reply={reply}
+                    setDisplayReply={setDisplayReply}
+                    setReply={setReply}
+                />
             </div>
             {displaySetting && (
                 <div className='max-w-[300px] h-full flex-1 relative overflow-auto'>
                     <Setting
                         setDisplaySetting={setDisplaySetting}
-                        detail={detail}
+                        roomInfo={roomInfo}
                     />
                 </div>
             )}

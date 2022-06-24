@@ -1,15 +1,21 @@
 import Modal from '../../Modal';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import { IoClose } from 'react-icons/io5';
 import {
     getUser,
     addRoom,
     updateRoomToUser,
+    isCreateRoom,
 } from '../../../firebase/functionHandler';
 import { useStore } from '../../../store';
+import { useNavigate } from 'react-router-dom';
+import { ModalContext } from '../../../App';
 
-function ModalConversation({ setDisplayModal }) {
+function ModalConversation() {
+    const { setDisplayModal } = useContext(ModalContext);
+
     const { displayName, photoURL, uid } = useStore((state) => state.user);
+    const navigate = useNavigate();
 
     const [roomName, setRoomName] = useState('');
     const [friendID, setFriendID] = useState('');
@@ -29,12 +35,18 @@ function ModalConversation({ setDisplayModal }) {
             setMessage('Need at least 2 members to create conversation!');
             return;
         }
-        const { id } = await addRoom({ roomName, members, chatType });
-        members.forEach(async (member) => {
-            const { uid } = member;
-            const user = await getUser(uid);
-            user.forEach((doc) => updateRoomToUser(doc.id, id, 'add'));
-        });
+        const isCreate = await isCreateRoom(members[1]);
+        if (chatType === 'friend' && isCreate.size) {
+            isCreate.forEach((doc) => navigate('/' + doc.id));
+            setDisplayModal('');
+        } else {
+            const { id } = await addRoom({ roomName, members, chatType });
+            members.forEach(async (member) => {
+                const { uid } = member;
+                const user = await getUser(uid);
+                user.forEach((doc) => updateRoomToUser(doc.id, id, 'add'));
+            });
+        }
         setDisplayModal('');
     };
 
@@ -51,8 +63,8 @@ function ModalConversation({ setDisplayModal }) {
             setMessage('The maximum number of members has been reached!');
             return;
         }
-        const isAdd = members.some((member) => member.uid === friendID);
-        if (isAdd) {
+        const isAdded = members.some((member) => member.uid === friendID);
+        if (isAdded) {
             setMessage('This member has been added!');
             return;
         } else {
@@ -88,17 +100,17 @@ function ModalConversation({ setDisplayModal }) {
     const handleFriendType = () => {
         setChatType('friend');
         members[1] ? setRoomName(members[1].displayName) : setRoomName('');
-        if (members.length > 1) {
+        if (members.length > 2) {
             members.length = 2;
         }
     };
 
     return (
-        <Modal setDisplayModal={setDisplayModal}>
+        <Modal>
             <div className='flex-center justify-around border-b border-gray-500 mb-3'>
                 <button
                     type='button'
-                    className={`w-full py-2 ${
+                    className={`flex-1 py-2 ${
                         chatType === 'friend' && 'bg-lightDark'
                     }`}
                     onClick={handleFriendType}
@@ -107,7 +119,7 @@ function ModalConversation({ setDisplayModal }) {
                 </button>
                 <button
                     type='button'
-                    className={`w-full py-2 ${
+                    className={`flex-1 py-2 ${
                         chatType === 'group' && 'bg-lightDark'
                     }`}
                     onClick={() => setChatType('group')}

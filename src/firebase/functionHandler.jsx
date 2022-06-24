@@ -1,5 +1,4 @@
 import db from './config';
-import { storage } from './config';
 import {
     collection,
     where,
@@ -9,21 +8,16 @@ import {
     setDoc,
     arrayUnion,
     arrayRemove,
-    documentId,
     getDocs,
     doc,
+    onSnapshot,
+    limit,
 } from '@firebase/firestore';
 import { generateRandomColor } from '../constants/colors';
 
 export const getUser = (uid = '') => {
     const ref = collection(db, 'users');
     const q = query(ref, where('uid', '==', uid));
-    return getDocs(q);
-};
-
-export const getRoom = (id) => {
-    const ref = collection(db, 'rooms');
-    const q = query(ref, where(documentId(), '==', id));
     return getDocs(q);
 };
 
@@ -49,44 +43,55 @@ export const addRoom = ({ roomName, members, chatType }) => {
     return addDoc(ref, {
         roomName,
         members,
-        theme: '#3b82f6',
+        theme: '#2563eb',
         chatAvatar: '',
         avatarBgColor: generateRandomColor(),
         chatType,
         images: [],
         videos: [],
         files: [],
+        emoji: { id: '+1', skin: 1 },
     });
 };
 
-export const addMessage = ({
-    roomId,
-    chatContent,
-    uid,
-    time,
-    id,
-    type,
-    fileName,
-}) => {
+export const updateMembers = (roomId, memberInfo, type) => {
+    const { displayName, photoURL, uid, nickname, isAdmin } = memberInfo;
+    const ref = doc(db, 'rooms', roomId);
+    return updateDoc(ref, {
+        members:
+            type === 'add'
+                ? arrayUnion({
+                      displayName,
+                      photoURL,
+                      uid,
+                      nickname: '',
+                      isAdmin: false,
+                  })
+                : arrayRemove(memberInfo),
+    });
+};
+
+export const addMessage = (data) => {
     const ref = doc(db, 'messages', String(new Date().getTime()));
     return setDoc(ref, {
-        id,
-        roomId,
-        uid,
-        chatContent,
-        time,
-        fileName,
-        type,
+        ...data,
+    });
+};
+
+export const updateAdmin = async (roomId, mem) => {
+    const ref = doc(db, 'rooms', roomId);
+    await updateDoc(ref, {
+        members: arrayRemove({ ...mem }),
+    });
+    await updateDoc(ref, {
+        members: arrayUnion({ ...mem, isAdmin: true }),
     });
 };
 
 export const updateRoomToUser = (uid, roomId, type) => {
     const userRef = doc(db, 'users', uid);
     return updateDoc(userRef, {
-        rooms:
-            type === 'add'
-                ? arrayUnion({ roomId, updateAt: new Date().getTime() })
-                : arrayRemove({ roomId, updateAt: new Date().getTime() }),
+        rooms: type === 'add' ? arrayUnion(roomId) : arrayRemove(roomId),
     });
 };
 
@@ -109,33 +114,85 @@ export const updateNickname = async (roomId, oldNickname, newNickname) => {
 
 export const updateMedia = (roomId, mediaType, link, fileName, type) => {
     const ref = doc(db, 'rooms', roomId);
-    if (mediaType === 'files') {
-        return updateDoc(ref, {
-            files:
-                type === 'add'
-                    ? arrayUnion({ link, fileName })
-                    : arrayRemove({ link, fileName }),
-        });
-    }
     return updateDoc(ref, {
-        [mediaType]: type === 'add' ? arrayUnion(link) : arrayRemove(link),
+        [mediaType]:
+            type === 'add'
+                ? arrayUnion({ link, fileName })
+                : arrayRemove({ link, fileName }),
     });
 };
 
-export const updateTime = (uid, oldTime, newTime) => {
-    // await updateDoc(ref, {
-    //     rooms: arrayUnion(newTime),
-    // });
-    // await updateDoc(ref, {
-    //     members: arrayRemove(oldTime),
-    // });
+export const updateGroupAvatar = (roomId, link) => {
+    const ref = doc(db, 'rooms', roomId);
+    return updateDoc(ref, {
+        chatAvatar: link,
+    });
+};
+
+export const updateGroupName = (roomId, groupName) => {
+    const ref = doc(db, 'rooms', roomId);
+    return updateDoc(ref, {
+        roomName: groupName,
+    });
+};
+
+export const updateGroupMembers = (
+    roomId,
+    { displayName, isAdmin, nickname, photoURL, uid }
+) => {
+    const ref = doc(db, 'rooms', roomId);
+    return updateDoc(ref, {
+        members: arrayRemove({
+            displayName,
+            isAdmin,
+            nickname,
+            photoURL,
+            uid,
+        }),
+    });
+};
+
+export const updateEmoji = (roomId, { id, skin }) => {
+    const ref = doc(db, 'rooms', roomId);
+    return updateDoc(ref, {
+        emoji: {
+            id,
+            skin,
+        },
+    });
+};
+
+export const isCreateRoom = (member) => {
+    const ref = collection(db, 'rooms');
+    const q = query(
+        ref,
+        where('chatType', '==', 'friend'),
+        where('members', 'array-contains', member)
+    );
+    return getDocs(q);
+};
+
+export const removeMessage = (id) => {
+    const ref = doc(db, 'messages', String(id));
+    return updateDoc(ref, {
+        chatContent: '',
+    });
 };
 
 async function fetchData() {
-    const cityRef = doc(db, 'cities', 'poIaZ6eGli8TGpKWKTO');
-    setDoc(cityRef, { capital: true }, { merge: true });
+    const ref = collection(db, 'messages');
+    const q = query(
+        ref,
+        where('type', '==', 'images'),
+        where('chatContent', '!=', ''),
+        where('roomId', '==', '6LdyjsoQcmX8KQX6rGQt'),
+        limit(2)
+    );
+    onSnapshot(q, (snapshot) => {
+        snapshot.forEach((doc) => console.log(doc.data()));
+    });
 }
 
-// fetchData();
+fetchData();
 
 // console.log(fetchData());

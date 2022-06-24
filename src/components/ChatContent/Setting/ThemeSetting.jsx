@@ -1,6 +1,6 @@
-import { colors } from '../../constants/colors';
+import { colors } from '../../../constants/colors';
 import { MdCheck } from 'react-icons/md';
-import { updateTheme } from '../../firebase/functionHandler';
+import { updateTheme } from '../../../firebase/functionHandler';
 import { useLocation } from 'react-router-dom';
 
 function ThemeSetting({ currentTheme }) {
@@ -12,9 +12,10 @@ function ThemeSetting({ currentTheme }) {
     };
 
     return (
-        <ul className='flex flex-wrap mt-3 gap-1'>
+        <ul className='flex flex-wrap mt-2 gap-1'>
             {colors.map((color) => (
                 <li
+                    key={color}
                     className='rounded-full p-5 relative'
                     style={{ backgroundColor: color }}
                     onClick={() => handleUpdateTheme(color)}

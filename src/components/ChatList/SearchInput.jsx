@@ -1,17 +1,15 @@
-import { useState, memo } from 'react';
+import { useContext } from 'react';
 import { FiSearch } from 'react-icons/fi';
 import { BsChat } from 'react-icons/bs';
 import ModalConversation from './Modal/ModalConversation';
+import { ModalContext } from '../../App';
 
 function SearchInput() {
-    const [displayModal, setDisplayModal] = useState('');
+    const { displayModal, setDisplayModal } = useContext(ModalContext);
 
     return (
         <>
-            {displayModal === 'newChat' && (
-                <ModalConversation setDisplayModal={setDisplayModal} />
-            )}
-
+            {displayModal === 'newChat' && <ModalConversation />}
             <div className='input-dark flex-center gap-2 text-white mt-4'>
                 <FiSearch />
                 <input
@@ -31,4 +29,4 @@ function SearchInput() {
     );
 }
 
-export default memo(SearchInput);
+export default SearchInput;
