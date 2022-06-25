@@ -4,9 +4,10 @@ import Modal from '../../Modal';
 
 function ModalInfo({ user }) {
     const [copied, setCopied] = useState(false);
+    const { photoURL, displayName, email, phoneNumber, uid } = user;
 
     const handleCopyId = () => {
-        navigator.clipboard.writeText(user.uid);
+        navigator.clipboard.writeText(uid);
         setCopied(true);
     };
 
@@ -14,26 +15,26 @@ function ModalInfo({ user }) {
         <Modal>
             <div className='flex-center gap-5'>
                 <img
-                    src={user.photoURL}
-                    alt={user.displayName}
+                    src={photoURL}
+                    alt={displayName}
                     className='rounded-full'
                 />
                 <div>
                     <p className='text-sm'>
                         <strong className='text-base'>Name: </strong>
-                        {user.displayName ?? 'N/A'}
+                        {displayName ?? 'N/A'}
                     </p>
                     <p className='text-sm'>
                         <strong className='text-base'>Email: </strong>
-                        {user.email ?? 'N/A'}
+                        {email ?? 'N/A'}
                     </p>
                     <p className='text-sm'>
                         <strong className='text-base'>Phone: </strong>
-                        {user.phoneNumber ?? 'N/A'}
+                        {phoneNumber ?? 'N/A'}
                     </p>
                     <p className='text-sm flex-center gap-x-1'>
                         <strong className='text-base'>ID: </strong>
-                        {user.uid ?? 'N/A'}
+                        {uid ?? 'N/A'}
                         <span
                             className={`bg-gray-600 p-2 rounded cursor-pointer border ml-3 ${
                                 copied ? 'border-emerald-500' : ''

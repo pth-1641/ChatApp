@@ -1,9 +1,6 @@
 import Modal from '../../Modal';
 import { useStore } from '../../../store';
-import {
-    updateRoomToUser,
-    updateGroupMembers,
-} from '../../../firebase/functionHandler';
+import { removeGroupMember } from '../../../firebase/functionHandler';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useContext } from 'react';
 import { ModalContext } from '../../../App';
@@ -19,8 +16,7 @@ function ModalLeaveGroup({ members }) {
     const roomId = location.pathname.slice(1);
 
     const handleLeaveGroup = () => {
-        updateRoomToUser(user.docId, roomId, 'remove');
-        updateGroupMembers(roomId, currentMem, 'remove');
+        removeGroupMember(roomId, currentMem);
         navigate('/');
         setDisplayModal('');
     };

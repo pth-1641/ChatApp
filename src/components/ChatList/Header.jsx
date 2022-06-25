@@ -47,7 +47,7 @@ function Header({ user }) {
                         </div>
                         <div
                             className='flex items-center gap-2 dark-hover p-2'
-                            onClick={() => setDisplayModal('logout')}
+                            onClick={() => setDisplayModal('log-out')}
                         >
                             <span className='text-xl bg-lightDark p-1 rounded-full'>
                                 <IoLogOutOutline />
@@ -58,7 +58,7 @@ function Header({ user }) {
                 )}
             </div>
             {displayModal === 'info' && <ModalInfo user={user} />}
-            {displayModal === 'logout' && <ModalSignOut />}
+            {displayModal === 'log-out' && <ModalSignOut />}
         </div>
     );
 }

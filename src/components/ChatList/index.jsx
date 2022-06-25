@@ -14,7 +14,7 @@ function ChatList() {
     const user = useStore((state) => state.user);
     const setUser = useStore((state) => state.setUser);
 
-    const { listRoomsId, userDocId } = useListRooms(user?.uid ?? []);
+    const { listRoomsId, userDocId } = useListRooms(user?.uid ?? '');
 
     useEffect(() => {
         onAuthStateChanged(auth, (user) => {

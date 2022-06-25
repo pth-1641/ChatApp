@@ -2,7 +2,7 @@ import Modal from '../../Modal';
 import { useState, useEffect } from 'react';
 import {
     getUser,
-    updateMembers,
+    addMembers,
     updateAdmin,
 } from '../../../firebase/functionHandler';
 import { BsThreeDots } from 'react-icons/bs';
@@ -37,9 +37,7 @@ function ModalNickname({ members, roomId }) {
             if (!resUser.size && newMemberId) {
                 setMessage('This ID does not exist!');
             } else {
-                resUser.forEach((doc) =>
-                    updateMembers(roomId, doc.data(), 'add')
-                );
+                resUser.forEach((doc) => addMembers(roomId, doc.data(), 'add'));
                 setNewMemberId('');
                 setMessage('');
             }
@@ -122,7 +120,7 @@ function ModalNickname({ members, roomId }) {
                                         <li
                                             className='duration-150 rounded p-1 px-2 hover:bg-gray-600'
                                             onClick={() =>
-                                                updateMembers(
+                                                addMembers(
                                                     roomId,
                                                     mem,
                                                     'remove'

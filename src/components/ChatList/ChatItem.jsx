@@ -3,6 +3,7 @@ import { useStore } from '../../store';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { formatTime } from '../../constants/moment';
 import useRoomData from '../../hooks/useRoomData';
+import useMessages from '../../hooks/useMessages';
 
 function ChatItem({ roomId }) {
     const navigate = useNavigate();
@@ -13,9 +14,10 @@ function ChatItem({ roomId }) {
 
     const [friend, setFriend] = useState({});
     const [sender, setSender] = useState('');
-    const { lastMessage, roomInfo } = useRoomData(roomId, 1);
+    const roomInfo = useRoomData(roomId);
+    const messages = useMessages(roomId, 1);
 
-    const { chatContent, time, type } = lastMessage ?? {};
+    const { chatContent, time, type } = messages[0] ?? {};
     const { members, avatarBgColor, chatType, roomName, chatAvatar } = roomInfo;
 
     useEffect(() => {
@@ -26,17 +28,17 @@ function ChatItem({ roomId }) {
     }, [roomInfo]);
 
     useEffect(() => {
-        if (lastMessage?.uid === uid) {
+        if (messages[0]?.uid === uid) {
             setSender('You');
         } else {
             const memberSender = members?.find(
-                (mem) => mem.uid === lastMessage?.uid
+                (mem) => mem.uid === messages?.uid
             );
             memberSender?.nickname
                 ? setSender(memberSender?.nickname)
                 : setSender(memberSender?.displayName.split(' ')[0]);
         }
-    }, [lastMessage, roomInfo]);
+    }, [messages, roomInfo]);
 
     return (
         <li
@@ -69,7 +71,7 @@ function ChatItem({ roomId }) {
                         <h4 className='text-white font-medium'>
                             {chatType === 'group'
                                 ? roomName
-                                : friend.nickname !== ''
+                                : friend.nickname
                                 ? friend.nickname
                                 : friend.displayName}
                         </h4>

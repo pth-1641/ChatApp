@@ -3,8 +3,8 @@ import { useState, useEffect, useContext } from 'react';
 import { IoClose } from 'react-icons/io5';
 import {
     getUser,
-    addRoom,
-    updateRoomToUser,
+    addNewRoom,
+    addRoomIdToUser,
     isCreateRoom,
 } from '../../../firebase/functionHandler';
 import { useStore } from '../../../store';
@@ -40,11 +40,11 @@ function ModalConversation() {
             isCreate.forEach((doc) => navigate('/' + doc.id));
             setDisplayModal('');
         } else {
-            const { id } = await addRoom({ roomName, members, chatType });
+            const { id } = await addNewRoom({ roomName, members, chatType });
             members.forEach(async (member) => {
                 const { uid } = member;
                 const user = await getUser(uid);
-                user.forEach((doc) => updateRoomToUser(doc.id, id, 'add'));
+                user.forEach((doc) => addRoomIdToUser(doc.id, id));
             });
         }
         setDisplayModal('');
@@ -139,7 +139,7 @@ function ModalConversation() {
                     readOnly={chatType === 'friend'}
                 />
                 <label>
-                    {chatType === 'friend' ? "Friend's ID" : 'Members'}
+                    {chatType === 'friend' ? "Friend's ID" : "Member's ID"}
                 </label>
                 <div className='flex-center gap-2 mt-1 mb-3'>
                     <input

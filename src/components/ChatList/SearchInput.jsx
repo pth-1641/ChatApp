@@ -9,7 +9,7 @@ function SearchInput() {
 
     return (
         <>
-            {displayModal === 'newChat' && <ModalConversation />}
+            {displayModal === 'new-chat' && <ModalConversation />}
             <div className='input-dark flex-center gap-2 text-white mt-4'>
                 <FiSearch />
                 <input
@@ -20,7 +20,7 @@ function SearchInput() {
             </div>
             <div
                 className='text-white text-lg flex mt-3 mb-4 gap-2 cursor-pointer w-max'
-                onClick={() => setDisplayModal('newChat')}
+                onClick={() => setDisplayModal('new-chat')}
             >
                 <BsChat />
                 <span className='text-sm'>New Conversation</span>

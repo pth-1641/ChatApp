@@ -10,64 +10,41 @@ import {
     arrayRemove,
     getDocs,
     doc,
-    onSnapshot,
-    limit,
 } from '@firebase/firestore';
 import { generateRandomColor } from '../constants/colors';
 
+// ---------------------READ----------------------- //
 export const getUser = (uid = '') => {
-    const ref = collection(db, 'users');
-    const q = query(ref, where('uid', '==', uid));
+    const q = query(collection(db, 'users'), where('uid', '==', uid));
     return getDocs(q);
 };
 
-export const addNewUser = ({
-    displayName,
-    phoneNumber,
-    email,
-    photoURL,
-    uid,
-}) => {
-    const ref = collection(db, 'users');
-    return addDoc(ref, {
-        displayName,
-        email,
-        phoneNumber,
-        photoURL,
-        uid,
+export const isCreateRoom = (member) => {
+    const ref = collection(db, 'rooms');
+    const q = query(
+        ref,
+        where('chatType', '==', 'friend'),
+        where('members', 'array-contains', member)
+    );
+    return getDocs(q);
+};
+
+// ---------------------CREATE----------------------- //
+export const addNewUser = (userInfo) => {
+    return addDoc(collection(db, 'users'), {
+        ...userInfo,
     });
 };
 
-export const addRoom = ({ roomName, members, chatType }) => {
-    const ref = collection(db, 'rooms');
-    return addDoc(ref, {
+export const addNewRoom = ({ roomName, members, chatType }) => {
+    return addDoc(collection(db, 'rooms'), {
         roomName,
         members,
         theme: '#2563eb',
         chatAvatar: '',
         avatarBgColor: generateRandomColor(),
         chatType,
-        images: [],
-        videos: [],
-        files: [],
         emoji: { id: '+1', skin: 1 },
-    });
-};
-
-export const updateMembers = (roomId, memberInfo, type) => {
-    const { displayName, photoURL, uid, nickname, isAdmin } = memberInfo;
-    const ref = doc(db, 'rooms', roomId);
-    return updateDoc(ref, {
-        members:
-            type === 'add'
-                ? arrayUnion({
-                      displayName,
-                      photoURL,
-                      uid,
-                      nickname: '',
-                      isAdmin: false,
-                  })
-                : arrayRemove(memberInfo),
     });
 };
 
@@ -78,6 +55,26 @@ export const addMessage = (data) => {
     });
 };
 
+export const addMembers = (roomId, memberInfo) => {
+    const { displayName, photoURL, uid } = memberInfo;
+    return updateDoc(doc(db, 'rooms', roomId), {
+        members: arrayUnion({
+            displayName,
+            photoURL,
+            uid,
+            nickname: '',
+            isAdmin: false,
+        }),
+    });
+};
+
+export const addRoomIdToUser = (uid, roomId) => {
+    return updateDoc(doc(db, 'users', uid), {
+        rooms: arrayUnion(roomId),
+    });
+};
+
+// ---------------------UPDATE----------------------- //
 export const updateAdmin = async (roomId, mem) => {
     const ref = doc(db, 'rooms', roomId);
     await updateDoc(ref, {
@@ -88,16 +85,8 @@ export const updateAdmin = async (roomId, mem) => {
     });
 };
 
-export const updateRoomToUser = (uid, roomId, type) => {
-    const userRef = doc(db, 'users', uid);
-    return updateDoc(userRef, {
-        rooms: type === 'add' ? arrayUnion(roomId) : arrayRemove(roomId),
-    });
-};
-
 export const updateTheme = (roomId, color) => {
-    const ref = doc(db, 'rooms', roomId);
-    return updateDoc(ref, {
+    return updateDoc(doc(db, 'rooms', roomId), {
         theme: color,
     });
 };
@@ -112,36 +101,39 @@ export const updateNickname = async (roomId, oldNickname, newNickname) => {
     });
 };
 
-export const updateMedia = (roomId, mediaType, link, fileName, type) => {
-    const ref = doc(db, 'rooms', roomId);
-    return updateDoc(ref, {
-        [mediaType]:
-            type === 'add'
-                ? arrayUnion({ link, fileName })
-                : arrayRemove({ link, fileName }),
-    });
-};
-
 export const updateGroupAvatar = (roomId, link) => {
-    const ref = doc(db, 'rooms', roomId);
-    return updateDoc(ref, {
+    return updateDoc(doc(db, 'rooms', roomId), {
         chatAvatar: link,
     });
 };
 
 export const updateGroupName = (roomId, groupName) => {
-    const ref = doc(db, 'rooms', roomId);
-    return updateDoc(ref, {
+    return updateDoc(doc(db, 'rooms', roomId), {
         roomName: groupName,
     });
 };
 
-export const updateGroupMembers = (
+export const updateEmoji = (roomId, { id, skin }) => {
+    return updateDoc(doc(db, 'rooms', roomId), {
+        emoji: {
+            id,
+            skin,
+        },
+    });
+};
+
+export const updateChatContent = (messageId) => {
+    return updateDoc(doc(db, 'messages', String(messageId)), {
+        chatContent: '',
+    });
+};
+
+// --------------------DELETE------------------------ //
+export const removeGroupMember = (
     roomId,
     { displayName, isAdmin, nickname, photoURL, uid }
 ) => {
-    const ref = doc(db, 'rooms', roomId);
-    return updateDoc(ref, {
+    return updateDoc(doc(db, 'rooms', roomId), {
         members: arrayRemove({
             displayName,
             isAdmin,
@@ -152,47 +144,12 @@ export const updateGroupMembers = (
     });
 };
 
-export const updateEmoji = (roomId, { id, skin }) => {
-    const ref = doc(db, 'rooms', roomId);
-    return updateDoc(ref, {
-        emoji: {
-            id,
-            skin,
-        },
-    });
-};
-
-export const isCreateRoom = (member) => {
-    const ref = collection(db, 'rooms');
-    const q = query(
-        ref,
-        where('chatType', '==', 'friend'),
-        where('members', 'array-contains', member)
-    );
-    return getDocs(q);
-};
-
-export const removeMessage = (id) => {
-    const ref = doc(db, 'messages', String(id));
-    return updateDoc(ref, {
-        chatContent: '',
-    });
-};
-
 async function fetchData() {
-    const ref = collection(db, 'messages');
-    const q = query(
-        ref,
-        where('type', '==', 'images'),
-        where('chatContent', '!=', ''),
-        where('roomId', '==', '6LdyjsoQcmX8KQX6rGQt'),
-        limit(2)
-    );
-    onSnapshot(q, (snapshot) => {
-        snapshot.forEach((doc) => console.log(doc.data()));
+    return updateDoc(doc(db, 'users', 'LfRlsqzGD0Rflg6uaIj2'), {
+        rooms: arrayUnion('123'),
     });
 }
 
-fetchData();
+// fetchData();
 
 // console.log(fetchData());

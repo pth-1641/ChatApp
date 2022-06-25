@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import { formatDate } from '../../../constants/moment';
 import {
     MdFileDownload,
@@ -6,17 +6,14 @@ import {
     MdOutlineContentCopy,
     MdOutlineRemoveCircleOutline,
 } from 'react-icons/md';
+import { ImReply } from 'react-icons/im';
 import ModalRemoveMessage from '../Modal/ModalRemoveMessage';
+import { ReplyContext } from '../index';
 
-function MyMessage({
-    message,
-    theme,
-    showFullImage,
-    setReply,
-    setDisplayReply,
-    useReply,
-}) {
-    const { chatContent, fileName, type, time, id, replyId } = message;
+function MyMessage({ message, theme, showFullImage, useReply }) {
+    const { chatContent, fileName, type, time, replyId } = message;
+    const { setReply, setDisplayReply } = useContext(ReplyContext);
+
     const [displayRemoveMessage, setDisplayRemoveMessage] = useState(false);
     const replyMessage = replyId ? useReply(replyId) : null;
 
@@ -91,18 +88,20 @@ function MyMessage({
                         </a>
                     </div>
                 ) : (
-                    <div className='text-white relative'>
-                        {replyMessage !== null && (
-                            <p className='bg-lightDark px-3 py-2 rounded-lg w-max relative top-2 ml-auto max-w-md truncate text-gray-400'>
-                                {replyMessage
-                                    ? replyMessage
-                                    : 'Removed Message'}
-                            </p>
+                    <div className='flex flex-col items-end gap-0.5'>
+                        {replyMessage && (
+                            <div className='flex-center gap-2'>
+                                <p className='px-3 py-2 rounded-lg w-max max-w-md truncate text-gray-400 border-2 border-gray-600'>
+                                    {replyMessage
+                                        ? replyMessage
+                                        : 'Removed Message'}
+                                </p>
+                                <span className='text-white text-lg'>
+                                    <ImReply />
+                                </span>
+                            </div>
                         )}
-                        <p
-                            className='my-message flex flex-col items-end relative ml-auto'
-                            style={{ backgroundColor: theme }}
-                        >
+                        <p className='my-message' style={{ background: theme }}>
                             <time className='text-xs text-gray-300'>
                                 {formatDate(time)}
                             </time>

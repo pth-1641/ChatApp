@@ -1,5 +1,5 @@
 import Modal from '../../Modal';
-import { removeMessage, updateMedia } from '../../../firebase/functionHandler';
+import { updateChatContent } from '../../../firebase/functionHandler';
 
 function ModalRemoveMessage({ message, setDisplayRemoveMessage }) {
     const { id, fileName, chatContent, roomId, type } = message;
@@ -19,14 +19,7 @@ function ModalRemoveMessage({ message, setDisplayRemoveMessage }) {
                 <button
                     className='modal-btn bg-red-500 hover:bg-red-600'
                     onClick={() => {
-                        removeMessage(id);
-                        updateMedia(
-                            roomId,
-                            type,
-                            chatContent,
-                            fileName,
-                            'remove'
-                        );
+                        updateChatContent(id);
                         setDisplayRemoveMessage(false);
                     }}
                 >

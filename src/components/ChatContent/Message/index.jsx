@@ -5,8 +5,9 @@ import ModalShowMedia from '../Modal/ModalShowMedia';
 import MyMessage from './MyMessage';
 import FriendMessage from './FriendMessage';
 import useReply from '../../../hooks/useReply';
+import useMessages from '../../../hooks/useMessages';
 
-function Message({ members, theme, messages, setReply, setDisplayReply }) {
+function Message({ members, theme }) {
     const { uid } = useStore((state) => state.user) ?? '';
 
     const lastMessageRef = useRef();
@@ -21,9 +22,12 @@ function Message({ members, theme, messages, setReply, setDisplayReply }) {
         setLink(link);
     };
 
+    const messages = useMessages(roomId, 50);
+    messages.sort((a, b) => a.id - b.id);
+
     useEffect(() => {
         lastMessageRef.current.scrollIntoView({ behavior: 'smooth' });
-    }, [messages]);
+    }, [roomId, messages]);
 
     return (
         <>
@@ -38,30 +42,26 @@ function Message({ members, theme, messages, setReply, setDisplayReply }) {
                 <div key={message.id} className='overflow-x-hidden'>
                     {message.uid === uid ? (
                         <MyMessage
-                            setReply={setReply}
                             listMessages={listMessages}
                             index={index}
                             message={message}
                             theme={theme}
                             showFullImage={showFullImage}
-                            setDisplayReply={setDisplayReply}
                             useReply={useReply}
                         />
                     ) : (
                         <FriendMessage
-                            setReply={setReply}
                             members={members}
                             listMessages={listMessages}
                             index={index}
                             message={message}
                             showFullImage={showFullImage}
-                            setDisplayReply={setDisplayReply}
                             useReply={useReply}
                         />
                     )}
                 </div>
             ))}
-            <p ref={lastMessageRef}></p>
+            <div ref={lastMessageRef}></div>
         </>
     );
 }

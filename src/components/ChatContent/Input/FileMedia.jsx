@@ -3,7 +3,7 @@ import { MdSlowMotionVideo } from 'react-icons/md';
 import { BsImages } from 'react-icons/bs';
 import { getDownloadURL, ref, uploadBytesResumable } from '@firebase/storage';
 import { storage } from '../../../firebase/config';
-import { updateMedia, addMessage } from '../../../firebase/functionHandler';
+import { addMessage } from '../../../firebase/functionHandler';
 import moment from 'moment';
 import GiphyEmoji from './GiphyEmoji';
 
@@ -28,7 +28,6 @@ function FileMedia({ theme, roomId, uid }) {
                         type,
                         fileName: file.name,
                     });
-                    updateMedia(roomId, type, url, file.name, 'add');
                 });
             }
         );

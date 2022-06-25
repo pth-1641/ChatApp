@@ -22,7 +22,7 @@
         @apply flex flex-col bg-lightDark rounded-xl text-white p-2 px-3 w-max max-w-lg text-[15px] break-all;
     }
     .my-message {
-        @apply rounded-xl text-white p-2 px-3 w-max max-w-lg text-[15px] break-all;
+        @apply rounded-xl text-white p-2 px-3 w-max max-w-lg text-[15px] break-all flex flex-col items-end;
     }
     .chat-image {
         @apply max-w-xs rounded-xl cursor-pointer w-fit;

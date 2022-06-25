@@ -1,5 +1,9 @@
 import { formatDate } from '../../../constants/moment';
 import { MdFileDownload, MdReply, MdOutlineContentCopy } from 'react-icons/md';
+import { useContext } from 'react';
+import { ReplyContext } from '../index';
+import useReply from '../../../hooks/useReply';
+import { ImReply } from 'react-icons/im';
 
 function FriendMessage({
     message,
@@ -7,10 +11,10 @@ function FriendMessage({
     index,
     listMessages,
     showFullImage,
-    setReply,
-    setDisplayReply,
 }) {
-    const { chatContent, fileName, type, time, uid } = message;
+    const { chatContent, fileName, type, time, replyId, uid } = message;
+    const { setReply, setDisplayReply } = useContext(ReplyContext);
+    const replyMessage = replyId ? useReply(replyId) : null;
 
     const sender = (uid) => {
         return members?.find((mem) => mem.uid === uid);
@@ -68,12 +72,26 @@ function FriendMessage({
                             </span>
                         </a>
                     ) : (
-                        <p className='friend-message'>
-                            <time className='text-gray-400 text-xs'>
-                                {formatDate(time)}
-                            </time>
-                            {chatContent}
-                        </p>
+                        <div className='flex flex-col gap-0.5'>
+                            {replyMessage && (
+                                <div className='flex-center gap-2'>
+                                    <span className='text-white text-lg scale-x-[-1]'>
+                                        <ImReply />
+                                    </span>
+                                    <p className='px-3 py-2 rounded-lg w-max max-w-md truncate text-gray-400 border-2 border-gray-600'>
+                                        {replyMessage
+                                            ? replyMessage
+                                            : 'Removed Message'}
+                                    </p>
+                                </div>
+                            )}
+                            <p className='friend-message' X>
+                                <time className='text-xs text-gray-300'>
+                                    {formatDate(time)}
+                                </time>
+                                {chatContent}
+                            </p>
+                        </div>
                     )}
                     <div className='flex-center gap-2 text-lg ml-1 message-option'>
                         <span
