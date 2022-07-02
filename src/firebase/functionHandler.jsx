@@ -10,6 +10,7 @@ import {
     arrayRemove,
     getDocs,
     doc,
+    deleteDoc,
 } from '@firebase/firestore';
 import { generateRandomColor } from '../constants/colors';
 
@@ -145,9 +146,7 @@ export const removeGroupMember = (
 };
 
 async function fetchData() {
-    return updateDoc(doc(db, 'users', 'LfRlsqzGD0Rflg6uaIj2'), {
-        rooms: arrayUnion('123'),
-    });
+    return updateDoc(doc(db, 'users', 'LfRlsqzGD0Rflg6uaIj2'));
 }
 
 // fetchData();

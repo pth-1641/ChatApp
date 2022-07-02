@@ -67,6 +67,7 @@ function Input({ roomId, theme, emoji, reply, setDisplayReply, setReply }) {
                                 title='pth-1641'
                                 emoji='heart'
                                 sheetSize={32}
+                                emojiTooltip={true}
                                 onClick={(emoji) =>
                                     setChatContent(chatContent + emoji.native)
                                 }

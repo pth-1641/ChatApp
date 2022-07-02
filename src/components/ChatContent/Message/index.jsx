@@ -4,7 +4,6 @@ import { useLocation } from 'react-router-dom';
 import ModalShowMedia from '../Modal/ModalShowMedia';
 import MyMessage from './MyMessage';
 import FriendMessage from './FriendMessage';
-import useReply from '../../../hooks/useReply';
 import useMessages from '../../../hooks/useMessages';
 
 function Message({ members, theme }) {
@@ -42,12 +41,9 @@ function Message({ members, theme }) {
                 <div key={message.id} className='overflow-x-hidden'>
                     {message.uid === uid ? (
                         <MyMessage
-                            listMessages={listMessages}
-                            index={index}
                             message={message}
                             theme={theme}
                             showFullImage={showFullImage}
-                            useReply={useReply}
                         />
                     ) : (
                         <FriendMessage
@@ -56,7 +52,6 @@ function Message({ members, theme }) {
                             index={index}
                             message={message}
                             showFullImage={showFullImage}
-                            useReply={useReply}
                         />
                     )}
                 </div>

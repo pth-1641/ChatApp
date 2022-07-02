@@ -6,11 +6,11 @@ import {
     MdOutlineContentCopy,
     MdOutlineRemoveCircleOutline,
 } from 'react-icons/md';
-import { ImReply } from 'react-icons/im';
 import ModalRemoveMessage from '../Modal/ModalRemoveMessage';
 import { ReplyContext } from '../index';
+import useReply from '../../../hooks/useReply';
 
-function MyMessage({ message, theme, showFullImage, useReply }) {
+function MyMessage({ message, theme, showFullImage }) {
     const { chatContent, fileName, type, time, replyId } = message;
     const { setReply, setDisplayReply } = useContext(ReplyContext);
 
@@ -19,6 +19,14 @@ function MyMessage({ message, theme, showFullImage, useReply }) {
 
     return (
         <>
+            {replyMessage !== null && (
+                <p
+                    className='px-3 py-2 rounded-lg w-max max-w-md truncate text-gray-400 border-2 ml-auto mt-0.5'
+                    style={{ borderColor: theme }}
+                >
+                    {replyMessage ? replyMessage : 'Removed Message'}
+                </p>
+            )}
             <div className='flex justify-end group mt-0.5'>
                 {chatContent !== '' && (
                     <div className='flex-center gap-2 text-lg mr-1 message-option text-white'>
@@ -89,18 +97,6 @@ function MyMessage({ message, theme, showFullImage, useReply }) {
                     </div>
                 ) : (
                     <div className='flex flex-col items-end gap-0.5'>
-                        {replyMessage && (
-                            <div className='flex-center gap-2'>
-                                <p className='px-3 py-2 rounded-lg w-max max-w-md truncate text-gray-400 border-2 border-gray-600'>
-                                    {replyMessage
-                                        ? replyMessage
-                                        : 'Removed Message'}
-                                </p>
-                                <span className='text-white text-lg'>
-                                    <ImReply />
-                                </span>
-                            </div>
-                        )}
                         <p className='my-message' style={{ background: theme }}>
                             <time className='text-xs text-gray-300'>
                                 {formatDate(time)}
@@ -112,7 +108,7 @@ function MyMessage({ message, theme, showFullImage, useReply }) {
             </div>
             {displayRemoveMessage && (
                 <ModalRemoveMessage
-                    message={message}
+                    messageId={message.id}
                     setDisplayRemoveMessage={setDisplayRemoveMessage}
                 />
             )}

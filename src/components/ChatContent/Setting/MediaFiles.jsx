@@ -2,16 +2,18 @@ import { MdPlayCircleOutline, MdOutlineCloudDownload } from 'react-icons/md';
 import useMedia from '../../../hooks/useMedia';
 import { ModalContext } from '../../../App';
 import { useContext } from 'react';
+import ModalShowMedia from '../Modal/ModalShowMedia';
 
 function MediaFiles({ roomId }) {
     const images = useMedia(roomId, 'images', 6);
     const videos = useMedia(roomId, 'videos', 6);
     const files = useMedia(roomId, 'files', 6);
 
-    const { setDisplayModal } = useContext(ModalContext);
+    const { setDisplayModal, displayModal } = useContext(ModalContext);
 
     return (
         <>
+            {displayModal === 'show-media' && <ModalShowMedia />}
             <div className='mt-3'>
                 <div className='flex-between mb-2'>
                     <h3>Shared Photos</h3>
@@ -34,6 +36,9 @@ function MediaFiles({ roomId }) {
                                     src={image.chatContent}
                                     alt=''
                                     className='setting-media'
+                                    onClick={() =>
+                                        setDisplayModal('show-media')
+                                    }
                                 />
                             </li>
                         ))

@@ -32,8 +32,9 @@ function ChatItem({ roomId }) {
             setSender('You');
         } else {
             const memberSender = members?.find(
-                (mem) => mem.uid === messages?.uid
+                (mem) => mem.uid === messages[0]?.uid
             );
+
             memberSender?.nickname
                 ? setSender(memberSender?.nickname)
                 : setSender(memberSender?.displayName.split(' ')[0]);

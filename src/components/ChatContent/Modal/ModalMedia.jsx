@@ -40,14 +40,19 @@ function ModalMedia({ roomId }) {
                     Files
                 </button>
             </div>
-            <ul className='flex flex-wrap gap-1 mt-4'>
-                {mediaType === 'images' &&
+            <ul className='flex flex-wrap gap-1 mt-4 h-[320px] overflow-auto'>
+                {mediaType === 'images' ? (
                     images.map((image) => (
                         <img
                             className='setting-media'
                             src={image.chatContent}
                         />
-                    ))}
+                    ))
+                ) : (
+                    <h3 class='font-semibold text-xl text-gray-400 text-center w-full'>
+                        Empty
+                    </h3>
+                )}
                 {mediaType === 'videos' &&
                     videos.map((video) => <video src={video.chatContent} />)}
                 {mediaType === 'files' &&

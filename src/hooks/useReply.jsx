@@ -18,7 +18,7 @@ function useReply(messageId) {
             snapshot.forEach((doc) => {
                 const type = doc.data().type;
                 if (type !== 'message') {
-                    setReplyMessage(type[0].toUpperCase() + type.slice(1));
+                    setReplyMessage(type[0].toUpperCase() + type.slice(1, -1));
                 } else {
                     setReplyMessage(doc.data().chatContent);
                 }

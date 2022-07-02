@@ -4,9 +4,9 @@ import {
     query,
     where,
     limit,
-    onSnapshot,
     documentId,
     orderBy,
+    onSnapshot,
 } from '@firebase/firestore';
 import db from '../firebase/config';
 
@@ -16,18 +16,22 @@ function useMedia(roomId, type, amount) {
         const q = query(
             collection(db, 'messages'),
             where('type', '==', type),
+            where('chatContent', '!=', ''),
             where('roomId', '==', roomId),
-            orderBy(documentId(), 'desc'),
+            orderBy('chatContent', 'desc'),
             limit(amount)
         );
+
         onSnapshot(q, (snapshot) => {
             const listMedia = [];
-            snapshot.forEach((doc) => {
-                listMedia.push(doc.data());
-            });
+            if (snapshot.size) {
+                snapshot.forEach((doc) => {
+                    listMedia.push(doc.data());
+                });
+            }
             setMedia(listMedia);
         });
-    }, [type, amount]);
+    }, [roomId, type]);
 
     return media;
 }

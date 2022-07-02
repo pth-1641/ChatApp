@@ -3,7 +3,6 @@ import { MdFileDownload, MdReply, MdOutlineContentCopy } from 'react-icons/md';
 import { useContext } from 'react';
 import { ReplyContext } from '../index';
 import useReply from '../../../hooks/useReply';
-import { ImReply } from 'react-icons/im';
 
 function FriendMessage({
     message,
@@ -41,6 +40,11 @@ function FriendMessage({
                             : sender(uid)?.displayName}
                     </div>
                 )}
+                {replyMessage !== null && (
+                    <p className='px-3 py-2 rounded-lg w-max max-w-md truncate text-gray-400 border-2 mb-0.5'>
+                        {replyMessage ? replyMessage : 'Removed Message'}
+                    </p>
+                )}
                 <div className='flex group'>
                     {chatContent === '' ? (
                         <div className='text-gray-400 rounded-xl border border-gray-600 px-4 py-2'>
@@ -73,19 +77,7 @@ function FriendMessage({
                         </a>
                     ) : (
                         <div className='flex flex-col gap-0.5'>
-                            {replyMessage && (
-                                <div className='flex-center gap-2'>
-                                    <span className='text-white text-lg scale-x-[-1]'>
-                                        <ImReply />
-                                    </span>
-                                    <p className='px-3 py-2 rounded-lg w-max max-w-md truncate text-gray-400 border-2 border-gray-600'>
-                                        {replyMessage
-                                            ? replyMessage
-                                            : 'Removed Message'}
-                                    </p>
-                                </div>
-                            )}
-                            <p className='friend-message' X>
+                            <p className='friend-message'>
                                 <time className='text-xs text-gray-300'>
                                     {formatDate(time)}
                                 </time>
@@ -93,27 +85,31 @@ function FriendMessage({
                             </p>
                         </div>
                     )}
-                    <div className='flex-center gap-2 text-lg ml-1 message-option'>
-                        <span
-                            className='cursor-pointer'
-                            onClick={() => {
-                                setReply(message);
-                                setDisplayReply(true);
-                            }}
-                        >
-                            <MdReply />
-                        </span>
-                        {type === 'message' && (
+                    {chatContent !== '' && (
+                        <div className='flex-center gap-2 text-lg ml-1 message-option'>
                             <span
                                 className='cursor-pointer'
-                                onClick={() =>
-                                    navigator.clipboard.writeText(chatContent)
-                                }
+                                onClick={() => {
+                                    setReply(message);
+                                    setDisplayReply(true);
+                                }}
                             >
-                                <MdOutlineContentCopy />
+                                <MdReply />
                             </span>
-                        )}
-                    </div>
+                            {type === 'message' && (
+                                <span
+                                    className='cursor-pointer'
+                                    onClick={() =>
+                                        navigator.clipboard.writeText(
+                                            chatContent
+                                        )
+                                    }
+                                >
+                                    <MdOutlineContentCopy />
+                                </span>
+                            )}
+                        </div>
+                    )}
                 </div>
             </div>
         </div>
