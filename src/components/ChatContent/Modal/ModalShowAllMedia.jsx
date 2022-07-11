@@ -40,35 +40,36 @@ function ModalMedia({ roomId }) {
                     Files
                 </button>
             </div>
-            <ul className='flex flex-wrap gap-1 mt-4 h-[320px] overflow-auto'>
-                {mediaType === 'images' ? (
-                    images.map((image) => (
-                        <img
-                            className='setting-media'
-                            src={image.chatContent}
-                        />
-                    ))
-                ) : (
-                    <h3 class='font-semibold text-xl text-gray-400 text-center w-full'>
-                        Empty
-                    </h3>
-                )}
-                {mediaType === 'videos' &&
-                    videos.map((video) => <video src={video.chatContent} />)}
-                {mediaType === 'files' &&
-                    files.map((file) => (
-                        <a
-                            key={file.chatContent}
-                            href={file.chatContent}
-                            download
-                            target='_blank'
-                            className='files h-max'
-                        >
-                            {file.fileName}
-                            <IoMdDownload />
-                        </a>
-                    ))}
-            </ul>
+            <div className='mt-4 h-[320px] overflow-auto'>
+                <div className='flex flex-wrap gap-1 justify-center'>
+                    {mediaType === 'images'
+                        ? images.map((image) => (
+                              <img
+                                  className='setting-media'
+                                  src={image.chatContent}
+                                  alt=''
+                              />
+                          ))
+                        : mediaType === 'videos'
+                        ? videos.map((video) => (
+                              <video src={video.chatContent} />
+                          ))
+                        : mediaType === 'files'
+                        ? files.map((file) => (
+                              <a
+                                  key={file.chatContent}
+                                  href={file.chatContent}
+                                  download
+                                  target='_blank'
+                                  className='files h-max'
+                              >
+                                  {file.fileName}
+                                  <IoMdDownload />
+                              </a>
+                          ))
+                        : ''}
+                </div>
+            </div>
         </Modal>
     );
 }

@@ -50,7 +50,7 @@ function FriendMessage({
                         <div className='text-gray-400 rounded-xl border border-gray-600 px-4 py-2'>
                             Removed Message
                         </div>
-                    ) : type === 'images' ? (
+                    ) : type === 'images' || type === 'gifs' ? (
                         <img
                             src={chatContent}
                             alt=''

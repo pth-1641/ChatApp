@@ -126,6 +126,7 @@ export const updateEmoji = (roomId, { id, skin }) => {
 export const updateChatContent = (messageId) => {
     return updateDoc(doc(db, 'messages', String(messageId)), {
         chatContent: '',
+        replyId: '',
     });
 };
 

@@ -4,7 +4,7 @@ import ModalNickname from '../Modal/ModalNickname';
 import { useLocation } from 'react-router-dom';
 import SettingButtons from './SettingButtons';
 import MediaFiles from './MediaFiles';
-import ModalMedia from '../Modal/ModalMedia';
+import ModalShowAllMedia from '../Modal/ModalShowAllMedia';
 import ModalRenameGroupChat from '../Modal/ModalRenameGroupChat';
 import ModalLeaveGroup from '../Modal/ModalLeaveGroup';
 import { ModalContext } from '../../../App';
@@ -52,7 +52,7 @@ function Setting({ setDisplaySetting, roomInfo }) {
             {displayModal === 'leave-group' && (
                 <ModalLeaveGroup members={members} />
             )}
-            {displayModal === 'media' && <ModalMedia roomId={roomId} />}
+            {displayModal === 'media' && <ModalShowAllMedia roomId={roomId} />}
         </>
     );
 }

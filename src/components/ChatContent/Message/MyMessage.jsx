@@ -61,13 +61,15 @@ function MyMessage({ message, theme, showFullImage }) {
                     <div className='text-gray-400 rounded-xl border border-gray-600 px-4 py-2'>
                         Removed Message
                     </div>
-                ) : type === 'images' ? (
-                    <img
-                        src={chatContent}
-                        alt=''
-                        className='chat-image'
-                        onClick={() => showFullImage(chatContent)}
-                    />
+                ) : type === 'message' ? (
+                    <div className='flex flex-col items-end gap-0.5'>
+                        <p className='my-message' style={{ background: theme }}>
+                            <time className='text-xs text-gray-300'>
+                                {formatDate(time)}
+                            </time>
+                            {chatContent}
+                        </p>
+                    </div>
                 ) : type === 'videos' ? (
                     <video
                         src={chatContent}
@@ -96,14 +98,12 @@ function MyMessage({ message, theme, showFullImage }) {
                         </a>
                     </div>
                 ) : (
-                    <div className='flex flex-col items-end gap-0.5'>
-                        <p className='my-message' style={{ background: theme }}>
-                            <time className='text-xs text-gray-300'>
-                                {formatDate(time)}
-                            </time>
-                            {chatContent}
-                        </p>
-                    </div>
+                    <img
+                        src={chatContent}
+                        alt=''
+                        className='chat-image'
+                        onClick={() => showFullImage(chatContent)}
+                    />
                 )}
             </div>
             {displayRemoveMessage && (

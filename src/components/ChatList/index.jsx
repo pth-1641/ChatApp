@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { auth } from '../../firebase/config';
 import { onAuthStateChanged } from '@firebase/auth';
 import { useNavigate } from 'react-router-dom';
@@ -15,6 +15,7 @@ function ChatList() {
     const setUser = useStore((state) => state.setUser);
 
     const { listRoomsId, userDocId } = useListRooms(user?.uid ?? '');
+    const [listRoomsName, setListRoomsName] = useState([]);
 
     useEffect(() => {
         onAuthStateChanged(auth, (user) => {
@@ -32,7 +33,11 @@ function ChatList() {
             <SearchInput />
             <ul className='grid gap-1 text-white pr-2 overflow-auto'>
                 {listRoomsId?.map((roomId) => (
-                    <ChatItem key={roomId} roomId={roomId} />
+                    <ChatItem
+                        key={roomId}
+                        roomId={roomId}
+                        setListRoomsName={setListRoomsName}
+                    />
                 ))}
             </ul>
         </>

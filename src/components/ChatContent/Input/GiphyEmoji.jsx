@@ -29,7 +29,7 @@ function GiphyEmoji({ roomId, uid }) {
             uid,
             chatContent: url,
             time: moment().toArray(),
-            type: 'images',
+            type: 'gifs',
             fileName: '',
         });
     };

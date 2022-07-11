@@ -5,7 +5,7 @@ import { formatTime } from '../../constants/moment';
 import useRoomData from '../../hooks/useRoomData';
 import useMessages from '../../hooks/useMessages';
 
-function ChatItem({ roomId }) {
+function ChatItem({ roomId, setListRoomsName }) {
     const navigate = useNavigate();
     const location = useLocation();
     const id = location.pathname.slice(1);
@@ -25,6 +25,11 @@ function ChatItem({ roomId }) {
             const index = members.findIndex((mem) => mem.uid != uid);
             setFriend(members[index]);
         }
+    }, [roomInfo]);
+
+    useEffect(() => {
+        Object.keys(roomInfo).length &&
+            setListRoomsName((prev) => [...prev, roomName]);
     }, [roomInfo]);
 
     useEffect(() => {
