@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { BsClipboard, BsClipboardCheck } from 'react-icons/bs';
-import Modal from '../../Modal';
+import ModalTemplate from '../../ModalTemplate';
 
 function ModalInfo({ user }) {
     const [copied, setCopied] = useState(false);
@@ -12,7 +12,7 @@ function ModalInfo({ user }) {
     };
 
     return (
-        <Modal>
+        <ModalTemplate>
             <div className='flex-center gap-5'>
                 <img
                     src={photoURL}
@@ -46,7 +46,7 @@ function ModalInfo({ user }) {
                     </p>
                 </div>
             </div>
-        </Modal>
+        </ModalTemplate>
     );
 }
 

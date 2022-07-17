@@ -1,25 +1,27 @@
 import { MdPlayCircleOutline, MdOutlineCloudDownload } from 'react-icons/md';
-import useMedia from '../../../hooks/useMedia';
-import { ModalContext } from '../../../App';
-import { useContext } from 'react';
-import ModalShowMedia from '../Modal/ModalShowMedia';
+import { useMedia } from '../../../hooks';
+import { useStore } from '../../../store';
 
-function MediaFiles({ roomId }) {
+function MediaFiles({ roomId, setLink }) {
     const images = useMedia(roomId, 'images', 6);
     const videos = useMedia(roomId, 'videos', 6);
     const files = useMedia(roomId, 'files', 6);
 
-    const { setDisplayModal, displayModal } = useContext(ModalContext);
+    const setModalName = useStore((state) => state.setModalName);
+
+    const handleShowFullScreen = (type, link) => {
+        setLink({ type, link });
+        setModalName('show-full-screen');
+    };
 
     return (
         <>
-            {displayModal === 'show-media' && <ModalShowMedia />}
             <div className='mt-3'>
                 <div className='flex-between mb-2'>
                     <h3>Shared Photos</h3>
                     <span
                         className='underline text-gray-500 cursor-pointer'
-                        onClick={() => setDisplayModal('media')}
+                        onClick={() => setModalName('media')}
                     >
                         See all
                     </span>
@@ -37,7 +39,10 @@ function MediaFiles({ roomId }) {
                                     alt=''
                                     className='setting-media'
                                     onClick={() =>
-                                        setDisplayModal('show-media')
+                                        handleShowFullScreen(
+                                            'image',
+                                            image.chatContent
+                                        )
                                     }
                                 />
                             </li>
@@ -50,7 +55,7 @@ function MediaFiles({ roomId }) {
                     <h3>Shared Videos</h3>
                     <span
                         className='underline text-gray-500 cursor-pointer'
-                        onClick={() => setDisplayModal('media')}
+                        onClick={() => setModalName('media')}
                     >
                         See all
                     </span>
@@ -67,7 +72,15 @@ function MediaFiles({ roomId }) {
                                     src={video.chatContent}
                                     className='setting-media'
                                 />
-                                <span className='absolute inset-0 bg-[rgba(0,0,0,0.5)] text-white text-5xl flex-center rounded-xl'>
+                                <span
+                                    className='absolute inset-0 bg-[rgba(0,0,0,0.5)] text-white text-5xl flex-center rounded-xl cursor-pointer'
+                                    onClick={() =>
+                                        handleShowFullScreen(
+                                            'video',
+                                            video.chatContent
+                                        )
+                                    }
+                                >
                                     <MdPlayCircleOutline />
                                 </span>
                             </li>
@@ -80,7 +93,7 @@ function MediaFiles({ roomId }) {
                     <h3>Shared Files</h3>
                     <span
                         className='underline text-gray-500 cursor-pointer'
-                        onClick={() => setDisplayModal('media')}
+                        onClick={() => setModalName('media')}
                     >
                         See all
                     </span>

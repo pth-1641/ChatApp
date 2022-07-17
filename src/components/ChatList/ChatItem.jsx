@@ -2,10 +2,9 @@ import { useState, useEffect } from 'react';
 import { useStore } from '../../store';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { formatTime } from '../../constants/moment';
-import useRoomData from '../../hooks/useRoomData';
-import useMessages from '../../hooks/useMessages';
+import { useRoomData, useMessages } from '../../hooks';
 
-function ChatItem({ roomId, setListRoomsName }) {
+function ChatItem({ roomId }) {
     const navigate = useNavigate();
     const location = useLocation();
     const id = location.pathname.slice(1);
@@ -25,11 +24,6 @@ function ChatItem({ roomId, setListRoomsName }) {
             const index = members.findIndex((mem) => mem.uid != uid);
             setFriend(members[index]);
         }
-    }, [roomInfo]);
-
-    useEffect(() => {
-        Object.keys(roomInfo).length &&
-            setListRoomsName((prev) => [...prev, roomName]);
     }, [roomInfo]);
 
     useEffect(() => {
@@ -89,6 +83,8 @@ function ChatItem({ roomId, setListRoomsName }) {
                                 ? ' sent an image'
                                 : type === 'videos'
                                 ? ' sent a video'
+                                : type === 'gifs'
+                                ? ' sent a GIF from GIPHY'
                                 : chatContent
                                 ? `: ${chatContent}`
                                 : 'No message'}

@@ -29,9 +29,13 @@ function Login() {
     };
 
     const checkUser = async (user) => {
-        const result = await getUser(user.uid);
-        if (result.size === 0) {
-            addNewUser(user);
+        try {
+            const result = await getUser(user.uid);
+            if (result.size === 0) {
+                addNewUser(user);
+            }
+        } catch (err) {
+            console.log(err);
         }
     };
 

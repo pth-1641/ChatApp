@@ -1,18 +1,9 @@
 import { IoCloseOutline } from 'react-icons/io5';
-import ModalRole from '../Modal/ModalRole';
-import ModalNickname from '../Modal/ModalNickname';
 import { useLocation } from 'react-router-dom';
 import SettingButtons from './SettingButtons';
 import MediaFiles from './MediaFiles';
-import ModalShowAllMedia from '../Modal/ModalShowAllMedia';
-import ModalRenameGroupChat from '../Modal/ModalRenameGroupChat';
-import ModalLeaveGroup from '../Modal/ModalLeaveGroup';
-import { ModalContext } from '../../../App';
-import { useContext } from 'react';
 
-function Setting({ setDisplaySetting, roomInfo }) {
-    const { displayModal } = useContext(ModalContext);
-
+function Setting({ setDisplaySetting, roomInfo, setLink }) {
     const { theme, members, roomName, chatType, emoji } = roomInfo;
 
     members.sort((a, b) => a.uid.localeCompare(b.uid));
@@ -40,19 +31,8 @@ function Setting({ setDisplaySetting, roomInfo }) {
                     emoji={emoji}
                 />
 
-                <MediaFiles roomId={roomId} />
+                <MediaFiles roomId={roomId} setLink={setLink} />
             </div>
-            {displayModal === 'role' && (
-                <ModalRole members={members} roomId={roomId} />
-            )}
-            {displayModal === 'nickname' && <ModalNickname members={members} />}
-            {displayModal === 'rename' && (
-                <ModalRenameGroupChat roomId={roomId} roomName={roomName} />
-            )}
-            {displayModal === 'leave-group' && (
-                <ModalLeaveGroup members={members} />
-            )}
-            {displayModal === 'media' && <ModalShowAllMedia roomId={roomId} />}
         </>
     );
 }

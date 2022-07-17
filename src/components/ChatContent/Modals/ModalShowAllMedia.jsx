@@ -1,16 +1,24 @@
-import Modal from '../../Modal';
+import ModalTemplate from '../../ModalTemplate';
 import { useState } from 'react';
 import { IoMdDownload } from 'react-icons/io';
-import useMedia from '../../../hooks/useMedia';
-function ModalMedia({ roomId }) {
+import { useMedia } from '../../../hooks';
+import { useStore } from '../../../store';
+
+function ModalShowAllMedia({ roomId, setLink }) {
     const [mediaType, setMediaType] = useState('images');
+    const setModalName = useStore((state) => state.setModalName);
 
     const images = useMedia(roomId, 'images', 30);
     const videos = useMedia(roomId, 'videos', 30);
     const files = useMedia(roomId, 'files', 30);
 
+    const handleShowFullScreen = (type, link) => {
+        setLink({ type, link });
+        setModalName('show-full-screen');
+    };
+
     return (
-        <Modal>
+        <ModalTemplate>
             <div className='flex border-b border-b-gray-500'>
                 <button
                     type='button'
@@ -41,18 +49,35 @@ function ModalMedia({ roomId }) {
                 </button>
             </div>
             <div className='mt-4 h-[320px] overflow-auto'>
-                <div className='flex flex-wrap gap-1 justify-center'>
+                <div className='flex flex-wrap gap-1 items-center'>
                     {mediaType === 'images'
                         ? images.map((image) => (
                               <img
+                                  key={image.chatContent}
                                   className='setting-media'
                                   src={image.chatContent}
                                   alt=''
+                                  onClick={() =>
+                                      handleShowFullScreen(
+                                          'image',
+                                          image.chatContent
+                                      )
+                                  }
                               />
                           ))
                         : mediaType === 'videos'
                         ? videos.map((video) => (
-                              <video src={video.chatContent} />
+                              <video
+                                  key={video.chatContent}
+                                  src={video.chatContent}
+                                  className='setting-media'
+                                  onClick={() =>
+                                      handleShowFullScreen(
+                                          'video',
+                                          video.chatContent
+                                      )
+                                  }
+                              />
                           ))
                         : mediaType === 'files'
                         ? files.map((file) => (
@@ -70,8 +95,8 @@ function ModalMedia({ roomId }) {
                         : ''}
                 </div>
             </div>
-        </Modal>
+        </ModalTemplate>
     );
 }
 
-export default ModalMedia;
+export default ModalShowAllMedia;

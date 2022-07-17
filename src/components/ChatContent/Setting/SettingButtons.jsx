@@ -1,4 +1,4 @@
-import { useState, useContext } from 'react';
+import { useState } from 'react';
 import { CgRename } from 'react-icons/cg';
 import { FaUserFriends } from 'react-icons/fa';
 import { TbLogout } from 'react-icons/tb';
@@ -12,10 +12,10 @@ import {
 } from '../../../firebase/functionHandler';
 import { getDownloadURL, ref, uploadBytesResumable } from '@firebase/storage';
 import { storage } from '../../../firebase/config';
-import { ModalContext } from '../../../App';
+import { useStore } from '../../../store';
 
 function SettingButtons({ theme, chatType, roomId, emoji }) {
-    const { setDisplayModal } = useContext(ModalContext);
+    const setModalName = useStore((state) => state.setModalName);
 
     const [displayTheme, setDisplayTheme] = useState(false);
     const [displayEmoji, setDisplayEmoji] = useState(false);
@@ -67,7 +67,7 @@ function SettingButtons({ theme, chatType, roomId, emoji }) {
             <button
                 type='button'
                 className='setting-btn'
-                onClick={() => setDisplayModal('nickname')}
+                onClick={() => setModalName('nickname')}
             >
                 <IoText />
             </button>
@@ -76,7 +76,7 @@ function SettingButtons({ theme, chatType, roomId, emoji }) {
                     <button
                         type='button'
                         className='setting-btn'
-                        onClick={() => setDisplayModal('role')}
+                        onClick={() => setModalName('role')}
                     >
                         <FaUserFriends />
                     </button>
@@ -94,7 +94,7 @@ function SettingButtons({ theme, chatType, roomId, emoji }) {
                     <button
                         type='button'
                         className='setting-btn'
-                        onClick={() => setDisplayModal('rename')}
+                        onClick={() => setModalName('rename')}
                     >
                         <CgRename />
                     </button>
@@ -102,7 +102,7 @@ function SettingButtons({ theme, chatType, roomId, emoji }) {
                     <button
                         type='button'
                         className='setting-btn text-red-500'
-                        onClick={() => setDisplayModal('leave-group')}
+                        onClick={() => setModalName('leave-group')}
                     >
                         <TbLogout />
                     </button>

@@ -6,16 +6,19 @@ import {
     MdOutlineContentCopy,
     MdOutlineRemoveCircleOutline,
 } from 'react-icons/md';
-import ModalRemoveMessage from '../Modal/ModalRemoveMessage';
+import ModalRemoveMessage from '../Modals/ModalRemoveMessage';
 import { ReplyContext } from '../index';
-import useReply from '../../../hooks/useReply';
+import { useReply } from '../../../hooks';
+import { useStore } from '../../../store';
 
-function MyMessage({ message, theme, showFullImage }) {
+function MyMessage({ message, theme, setLink }) {
     const { chatContent, fileName, type, time, replyId } = message;
     const { setReply, setDisplayReply } = useContext(ReplyContext);
 
     const [displayRemoveMessage, setDisplayRemoveMessage] = useState(false);
     const replyMessage = replyId ? useReply(replyId) : null;
+
+    const setModalName = useStore((state) => state.setModalName);
 
     return (
         <>
@@ -102,7 +105,10 @@ function MyMessage({ message, theme, showFullImage }) {
                         src={chatContent}
                         alt=''
                         className='chat-image'
-                        onClick={() => showFullImage(chatContent)}
+                        onClick={() => {
+                            setModalName('show-full-screen');
+                            setLink(chatContent);
+                        }}
                     />
                 )}
             </div>

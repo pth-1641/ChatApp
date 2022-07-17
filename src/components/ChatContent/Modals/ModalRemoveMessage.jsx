@@ -1,4 +1,4 @@
-import Modal from '../../Modal';
+import Modal from '../../ModalTemplate';
 import { updateChatContent } from '../../../firebase/functionHandler';
 
 function ModalRemoveMessage({ messageId, setDisplayRemoveMessage }) {

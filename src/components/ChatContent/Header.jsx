@@ -27,7 +27,7 @@ function Header({ roomInfo, setDisplaySetting, displaySetting }) {
                         <img src={friend.photoURL} alt='' />
                     ) : chatAvatar ? (
                         <img
-                            className='w-full h-full'
+                            className='w-full h-full object-cover'
                             src={chatAvatar}
                             alt=''
                         />

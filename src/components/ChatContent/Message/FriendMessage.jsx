@@ -2,18 +2,15 @@ import { formatDate } from '../../../constants/moment';
 import { MdFileDownload, MdReply, MdOutlineContentCopy } from 'react-icons/md';
 import { useContext } from 'react';
 import { ReplyContext } from '../index';
-import useReply from '../../../hooks/useReply';
+import { useReply } from '../../../hooks';
+import { useStore } from '../../../store';
 
-function FriendMessage({
-    message,
-    members,
-    index,
-    listMessages,
-    showFullImage,
-}) {
+function FriendMessage({ message, members, index, listMessages, setLink }) {
     const { chatContent, fileName, type, time, replyId, uid } = message;
     const { setReply, setDisplayReply } = useContext(ReplyContext);
     const replyMessage = replyId ? useReply(replyId) : null;
+
+    const setModalName = useStore((state) => state.setModalName);
 
     const sender = (uid) => {
         return members?.find((mem) => mem.uid === uid);
@@ -55,7 +52,10 @@ function FriendMessage({
                             src={chatContent}
                             alt=''
                             className='chat-image'
-                            onClick={() => showFullImage(chatContent)}
+                            onClick={() => {
+                                setModalName('show-full-screen');
+                                setLink(chatContent);
+                            }}
                         />
                     ) : type === 'videos' ? (
                         <video

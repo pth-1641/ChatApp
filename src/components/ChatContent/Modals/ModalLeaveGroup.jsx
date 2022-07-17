@@ -1,13 +1,13 @@
-import Modal from '../../Modal';
+import Modal from '../../ModalTemplate';
 import { useStore } from '../../../store';
-import { removeGroupMember } from '../../../firebase/functionHandler';
+import {
+    removeGroupMember,
+    removeRoom,
+} from '../../../firebase/functionHandler';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { useContext } from 'react';
-import { ModalContext } from '../../../App';
 
 function ModalLeaveGroup({ members }) {
-    const { setDisplayModal } = useContext(ModalContext);
-
+    const setModalName = useStore((state) => state.setModalName);
     const user = useStore((state) => state.user);
     const currentMem = members.find((member) => member.uid === user.uid);
 
@@ -17,8 +17,9 @@ function ModalLeaveGroup({ members }) {
 
     const handleLeaveGroup = () => {
         removeGroupMember(roomId, currentMem);
+        removeRoom(user.docId, roomId);
         navigate('/');
-        setDisplayModal('');
+        setModalName('');
     };
 
     return (
@@ -30,7 +31,7 @@ function ModalLeaveGroup({ members }) {
                 <button
                     type='button'
                     className='modal-btn'
-                    onClick={() => setDisplayModal('')}
+                    onClick={() => setModalName('')}
                 >
                     Cancel
                 </button>

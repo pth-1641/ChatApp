@@ -1,21 +1,21 @@
-import { useContext, useState } from 'react';
-import Modal from '../../Modal';
+import { useState } from 'react';
+import ModalTemplate from '../../ModalTemplate';
 import { updateGroupName } from '../../../firebase/functionHandler';
-import { ModalContext } from '../../../App';
+import { useStore } from '../../../store';
 
 function ModalRenameGroupChat({ roomId, roomName }) {
     const [newChatName, setNewChatName] = useState(roomName);
-    const { setDisplayModal } = useContext(ModalContext);
+    const setModalName = useStore((state) => state.setModalName);
 
     const handleUpdateGroupName = () => {
         if (newChatName !== roomName) {
             updateGroupName(roomId, newChatName);
         }
-        setDisplayModal('');
+        setModalName('');
     };
 
     return (
-        <Modal>
+        <ModalTemplate>
             <h2 className='text-center text-xl font-semibold border-b border-gray-600 pb-2'>
                 Change chat name
             </h2>
@@ -29,7 +29,7 @@ function ModalRenameGroupChat({ roomId, roomName }) {
                 <button
                     type='button'
                     className='modal-btn'
-                    onClick={() => setDisplayModal('')}
+                    onClick={() => setModalName('')}
                 >
                     Cancel
                 </button>
@@ -41,7 +41,7 @@ function ModalRenameGroupChat({ roomId, roomName }) {
                     Save
                 </button>
             </div>
-        </Modal>
+        </ModalTemplate>
     );
 }
 

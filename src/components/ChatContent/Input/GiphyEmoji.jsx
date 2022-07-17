@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect } from 'react';
 import { BiFace } from 'react-icons/bi';
 import { AiOutlineGif } from 'react-icons/ai';
-import useGiphy from '../../../hooks/useGiphy';
+import { useGiphy } from '../../../hooks';
 import { addMessage } from '../../../firebase/functionHandler';
 import moment from 'moment';
 

@@ -1,12 +1,12 @@
-import { useState, useContext } from 'react';
+import { useState } from 'react';
 import { AiFillEdit, AiOutlineCheck } from 'react-icons/ai';
 import { useLocation } from 'react-router-dom';
 import { updateNickname } from '../../../firebase/functionHandler';
-import { ModalContext } from '../../../App';
+import { useStore } from '../../../store';
 
 function NicknameItem({ member }) {
     const { displayName, nickname, photoURL } = member;
-    const { setDisplayModal } = useContext(ModalContext);
+    const setModalName = useStore((state) => state.setModalName);
 
     const location = useLocation();
     const roomId = location.pathname.slice(1);
@@ -21,7 +21,7 @@ function NicknameItem({ member }) {
                 nickname: newNickname,
             });
         }
-        setDisplayModal('');
+        setModalName('');
     };
 
     return (

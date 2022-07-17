@@ -1,16 +1,14 @@
-import { useState, useContext } from 'react';
+import { useState } from 'react';
 import { IoLogOutOutline } from 'react-icons/io5';
 import { MdDarkMode, MdLightMode } from 'react-icons/md';
 import { FaUserCircle } from 'react-icons/fa';
-import ModalInfo from './Modal/ModalInfo';
-import ModalSignOut from './Modal/ModalSignOut';
-import { ModalContext } from '../../App';
+import { useStore } from '../../store';
 
 function Header({ user }) {
-    const { displayModal, setDisplayModal } = useContext(ModalContext);
-
     const [displaySetting, setDisplaySetting] = useState(false);
     const [darkMode, setDarkMode] = useState(true);
+
+    const setModalName = useStore((state) => state.setModalName);
 
     const toggleTheme = (e) => {
         e.stopPropagation();
@@ -29,7 +27,7 @@ function Header({ user }) {
                     <div className='h-max absolute bg-dark w-48 p-2 rounded-xl right-0 border-gray-600 border mt-3 grid gap-1 select-none'>
                         <div
                             className='flex items-center gap-2 dark-hover p-2'
-                            onClick={() => setDisplayModal('info')}
+                            onClick={() => setModalName('user-info')}
                         >
                             <span className='text-xl bg-lightDark p-1 rounded-full'>
                                 <FaUserCircle />
@@ -47,7 +45,7 @@ function Header({ user }) {
                         </div>
                         <div
                             className='flex items-center gap-2 dark-hover p-2'
-                            onClick={() => setDisplayModal('log-out')}
+                            onClick={() => setModalName('log-out')}
                         >
                             <span className='text-xl bg-lightDark p-1 rounded-full'>
                                 <IoLogOutOutline />
@@ -57,8 +55,6 @@ function Header({ user }) {
                     </div>
                 )}
             </div>
-            {displayModal === 'info' && <ModalInfo user={user} />}
-            {displayModal === 'log-out' && <ModalSignOut />}
         </div>
     );
 }

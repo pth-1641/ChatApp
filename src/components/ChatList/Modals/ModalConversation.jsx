@@ -1,5 +1,5 @@
-import Modal from '../../Modal';
-import { useState, useEffect, useContext } from 'react';
+import ModalTemplate from '../../ModalTemplate';
+import { useState, useEffect } from 'react';
 import { IoClose } from 'react-icons/io5';
 import {
     getUser,
@@ -9,12 +9,11 @@ import {
 } from '../../../firebase/functionHandler';
 import { useStore } from '../../../store';
 import { useNavigate } from 'react-router-dom';
-import { ModalContext } from '../../../App';
 
 function ModalConversation() {
-    const { setDisplayModal } = useContext(ModalContext);
-
     const { displayName, photoURL, uid } = useStore((state) => state.user);
+    const setModalName = useStore((state) => state.setModalName);
+
     const navigate = useNavigate();
 
     const [roomName, setRoomName] = useState('');
@@ -47,7 +46,7 @@ function ModalConversation() {
                 user.forEach((doc) => addRoomIdToUser(doc.id, id));
             });
         }
-        setDisplayModal('');
+        setModalName('');
     };
 
     const handleAddMember = async () => {
@@ -106,7 +105,7 @@ function ModalConversation() {
     };
 
     return (
-        <Modal>
+        <ModalTemplate>
             <div className='flex-center justify-around border-b border-gray-500 mb-3'>
                 <button
                     type='button'
@@ -185,7 +184,7 @@ function ModalConversation() {
                     <button
                         className='modal-btn bg-red-500 hover:bg-red-600'
                         type='button'
-                        onClick={() => setDisplayModal('')}
+                        onClick={() => setModalName('')}
                     >
                         Cancel
                     </button>
@@ -197,7 +196,7 @@ function ModalConversation() {
                     </button>
                 </div>
             </form>
-        </Modal>
+        </ModalTemplate>
     );
 }
 

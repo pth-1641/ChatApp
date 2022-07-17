@@ -40,7 +40,7 @@
         @apply p-3 rounded-xl bg-lightDark text-white text-2xl;
     }
     .setting-media {
-        @apply rounded-xl aspect-square h-20 object-cover;
+        @apply rounded-xl aspect-square h-[5.5rem] object-cover cursor-pointer;
     }
     .message-option {
         @apply invisible group-hover:visible opacity-0 group-hover:opacity-100 duration-100;

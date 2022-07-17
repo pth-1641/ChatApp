@@ -1,4 +1,4 @@
-import Modal from '../../Modal';
+import Modal from '../../ModalTemplate';
 import { useState, useEffect } from 'react';
 import {
     getUser,

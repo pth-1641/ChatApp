@@ -5,12 +5,11 @@ import {
     query,
     addDoc,
     updateDoc,
-    setDoc,
     arrayUnion,
     arrayRemove,
     getDocs,
     doc,
-    deleteDoc,
+    setDoc,
 } from '@firebase/firestore';
 import { generateRandomColor } from '../constants/colors';
 
@@ -146,8 +145,17 @@ export const removeGroupMember = (
     });
 };
 
+export const removeRoom = (docId, roomId) => {
+    return updateDoc(doc(db, 'users', docId), {
+        rooms: arrayRemove(roomId),
+    });
+};
+
 async function fetchData() {
-    return updateDoc(doc(db, 'users', 'LfRlsqzGD0Rflg6uaIj2'));
+    const ref = doc(db, 'users', '5alNHxlyziVZH8ZZpDoP3TIxPHD2');
+    return updateDoc(ref, {
+        rooms: arrayRemove('4xoTrq42hcg729Tm8pAj'),
+    });
 }
 
 // fetchData();
