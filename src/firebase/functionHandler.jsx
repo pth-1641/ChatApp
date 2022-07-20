@@ -151,10 +151,23 @@ export const removeRoom = (docId, roomId) => {
     });
 };
 
+export const removeMember = (roomId, memberInfo) => {
+    return updateDoc(doc(db, 'rooms', roomId), {
+        members: arrayRemove(memberInfo),
+    });
+};
+
 async function fetchData() {
-    const ref = doc(db, 'users', '5alNHxlyziVZH8ZZpDoP3TIxPHD2');
+    const ref = doc(db, 'rooms', '17hxUeheBDT1wXKJbbo9');
     return updateDoc(ref, {
-        rooms: arrayRemove('4xoTrq42hcg729Tm8pAj'),
+        rooms: arrayRemove({
+            displayName: 'hung',
+            isAdmin: false,
+            nickname: '',
+            photoURL:
+                'https://images.unsplash.com/photo-1657998623149-8bb43c02e20d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=464&q=80',
+            uid: '123',
+        }),
     });
 }
 

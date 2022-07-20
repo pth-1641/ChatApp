@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react';
 import {
     getUser,
     addMembers,
+    removeMember,
     updateAdmin,
 } from '../../../firebase/functionHandler';
 import { BsThreeDots } from 'react-icons/bs';
@@ -120,11 +121,7 @@ function ModalNickname({ members, roomId }) {
                                         <li
                                             className='duration-150 rounded p-1 px-2 hover:bg-gray-600'
                                             onClick={() =>
-                                                addMembers(
-                                                    roomId,
-                                                    mem,
-                                                    'remove'
-                                                )
+                                                removeMember(roomId, mem)
                                             }
                                         >
                                             Remove

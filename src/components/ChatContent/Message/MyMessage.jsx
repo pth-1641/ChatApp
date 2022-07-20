@@ -70,6 +70,7 @@ function MyMessage({ message, theme, setLink }) {
                             <time className='text-xs text-gray-300'>
                                 {formatDate(time)}
                             </time>
+
                             {chatContent}
                         </p>
                     </div>

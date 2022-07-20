@@ -1,19 +1,8 @@
-import { useState, useEffect } from 'react';
 import { MdClose } from 'react-icons/md';
 import { useStore } from '../../../store';
 
 function ModalShowImage({ link }) {
     const setModalName = useStore((state) => state.setModalName);
-
-    const [opacity, setOpacity] = useState(0);
-
-    useEffect(() => {
-        const timeout = setTimeout(() => {
-            setOpacity(100);
-        }, 100);
-
-        return () => clearTimeout(timeout);
-    }, [link]);
 
     return (
         <div className='fixed inset-0 z-20 text-white backdrop-blur-lg flex-center p-7'>
@@ -27,7 +16,6 @@ function ModalShowImage({ link }) {
                 <video
                     src={link.link}
                     className='h-full mx-auto rounded-lg'
-                    style={{ opacity: opacity }}
                     controls
                     autoPlay
                 />
