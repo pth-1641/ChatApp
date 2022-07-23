@@ -20,7 +20,7 @@ function ThemeSetting({ currentTheme }) {
                     style={{ backgroundColor: color }}
                     onClick={() => handleUpdateTheme(color)}
                 >
-                    <span className='absolute inset-0 flex-center text-2xl cursor-pointer'>
+                    <span className='absolute inset-0 flex-center text-2xl cursor-pointer text-white'>
                         {color === currentTheme ? <MdCheck /> : ''}
                     </span>
                 </li>
