@@ -43,7 +43,7 @@ function Input({ roomId, theme, emoji, reply, setDisplayReply, setReply }) {
                 )}
                 <input
                     type='text'
-                    className='input-dark text-white'
+                    className='input-dark'
                     placeholder='Message'
                     value={chatContent}
                     onChange={(e) => setChatContent(e.target.value)}
@@ -61,7 +61,7 @@ function Input({ roomId, theme, emoji, reply, setDisplayReply, setReply }) {
                         >
                             <Picker
                                 set='facebook'
-                                theme='dark'
+                                theme={document.body.classList[0]}
                                 showPreview={false}
                                 useButton={false}
                                 title='pth-1641'

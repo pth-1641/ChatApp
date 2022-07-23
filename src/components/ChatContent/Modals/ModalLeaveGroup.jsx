@@ -30,7 +30,7 @@ function ModalLeaveGroup({ members }) {
             <div className='flex-center gap-3 mt-8'>
                 <button
                     type='button'
-                    className='modal-btn'
+                    className='modal-btn text-black'
                     onClick={() => setModalName('')}
                 >
                     Cancel

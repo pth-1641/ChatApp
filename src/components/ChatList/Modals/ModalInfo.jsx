@@ -36,8 +36,10 @@ function ModalInfo({ user }) {
                         <strong className='text-base'>ID: </strong>
                         {uid ?? 'N/A'}
                         <span
-                            className={`bg-gray-600 p-2 rounded cursor-pointer border ml-3 ${
-                                copied ? 'border-emerald-500' : ''
+                            className={`dark:bg-gray-600 p-2 rounded cursor-pointer border ml-3 ${
+                                copied
+                                    ? 'border-emerald-500'
+                                    : 'dark:border-white border-black'
                             }`}
                             onClick={handleCopyId}
                         >

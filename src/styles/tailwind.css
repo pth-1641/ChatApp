@@ -13,31 +13,31 @@
         @apply px-4 py-2 rounded flex justify-center items-center gap-2 font-medium;
     }
     .input-dark {
-        @apply bg-lightDark px-4 py-2 rounded-xl w-full outline-none;
+        @apply dark:bg-lightDark px-4 py-2 rounded-xl w-full outline-none bg-gray-300 dark:text-white text-black;
     }
     .active {
-        @apply bg-lightDark;
+        @apply dark:bg-lightDark bg-gray-300;
     }
     .friend-message {
-        @apply flex flex-col bg-lightDark rounded-xl text-white p-2 px-3 w-max max-w-lg text-[15px] break-all;
+        @apply flex flex-col bg-gray-300 dark:bg-lightDark rounded-xl dark:text-white p-2 px-3 w-max max-w-lg text-[15px] break-all;
     }
     .my-message {
         @apply rounded-xl text-white p-2 px-3 w-max max-w-lg text-[15px] break-all flex flex-col items-end;
     }
     .chat-image {
-        @apply max-w-xs rounded-xl cursor-pointer w-fit;
+        @apply max-w-xs rounded-xl cursor-pointer w-fit bg-gray-300;
     }
     .chat-video {
         @apply max-w-xs rounded-xl cursor-pointer;
     }
     .dark-hover {
-        @apply rounded-xl hover:bg-lightDark;
+        @apply rounded-xl hover:bg-gray-300 dark:hover:bg-lightDark;
     }
     .modal-btn {
-        @apply bg-gray-700 hover:bg-gray-800 min-w-[112px] py-2 px-4 rounded-lg duration-150;
+        @apply min-w-[112px] py-2 px-4 rounded-lg duration-150 text-white bg-gray-300 hover:bg-gray-400;
     }
     .setting-btn {
-        @apply p-3 rounded-xl bg-lightDark text-white text-2xl;
+        @apply p-3 rounded-xl bg-gray-300 text-gray-800 dark:bg-lightDark dark:text-white text-2xl;
     }
     .setting-media {
         @apply rounded-xl aspect-square h-[5.5rem] object-cover cursor-pointer;

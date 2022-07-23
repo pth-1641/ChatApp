@@ -51,7 +51,7 @@ function ModalNickname({ members, roomId }) {
                 <button
                     type='button'
                     className={`w-full px-8 py-2 ${
-                        role === 'All' && 'bg-lightDark'
+                        role === 'All' && 'dark:bg-lightDark bg-gray-300'
                     }`}
                     onClick={(e) => setRole(e.target.innerText)}
                 >
@@ -60,7 +60,7 @@ function ModalNickname({ members, roomId }) {
                 <button
                     type='button'
                     className={`w-full px-8 py-2 ${
-                        role === 'Admins' && 'bg-lightDark'
+                        role === 'Admins' && 'dark:bg-lightDark bg-gray-300'
                     }`}
                     onClick={(e) => setRole(e.target.innerText)}
                 >
@@ -69,7 +69,7 @@ function ModalNickname({ members, roomId }) {
                 <button
                     type='button'
                     className={`w-full px-8 py-2 ${
-                        role === 'Members' && 'bg-lightDark'
+                        role === 'Members' && 'dark:bg-lightDark bg-gray-300'
                     }`}
                     onClick={(e) => setRole(e.target.innerText)}
                 >
@@ -117,7 +117,7 @@ function ModalNickname({ members, roomId }) {
                             >
                                 <BsThreeDots />
                                 {displayOption === mem.uid && (
-                                    <ul className='z-10 absolute w-max rounded-md bg-lightDark right-0 py-1 px-2 select-none'>
+                                    <ul className='z-10 absolute w-max rounded-md dark:bg-lightDark bg-gray-300 right-0 py-1 px-2 select-none'>
                                         <li
                                             className='duration-150 rounded p-1 px-2 hover:bg-gray-600'
                                             onClick={() =>

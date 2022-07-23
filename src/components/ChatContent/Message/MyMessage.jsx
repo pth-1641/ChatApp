@@ -20,11 +20,16 @@ function MyMessage({ message, theme, setLink }) {
 
     const setModalName = useStore((state) => state.setModalName);
 
+    const handleShowFullScreen = (type, link) => {
+        setLink({ type, link });
+        setModalName('show-full-screen');
+    };
+
     return (
         <>
             {replyMessage !== null && (
                 <p
-                    className='px-3 py-2 rounded-lg w-max max-w-md truncate text-gray-400 border-2 ml-auto mt-0.5'
+                    className='px-3 py-2 rounded-lg w-max max-w-md truncate dark:text-gray-200 text-black bg-gray-200 dark:bg-lightDark border-2 ml-auto mt-0.5'
                     style={{ borderColor: theme }}
                 >
                     {replyMessage ? replyMessage : 'Removed Message'}
@@ -32,7 +37,7 @@ function MyMessage({ message, theme, setLink }) {
             )}
             <div className='flex justify-end group mt-0.5'>
                 {chatContent !== '' && (
-                    <div className='flex-center gap-2 text-lg mr-1 message-option text-white'>
+                    <div className='flex-center gap-2 text-lg mr-1 message-option dark:text-white'>
                         <span
                             className='cursor-pointer'
                             onClick={() => setDisplayRemoveMessage(true)}
@@ -61,13 +66,13 @@ function MyMessage({ message, theme, setLink }) {
                     </div>
                 )}
                 {chatContent === '' ? (
-                    <div className='text-gray-400 rounded-xl border border-gray-600 px-4 py-2'>
+                    <div className='dark:text-gray-400 text-gray-600 rounded-xl border border-gray-600 px-4 py-2'>
                         Removed Message
                     </div>
                 ) : type === 'message' ? (
                     <div className='flex flex-col items-end gap-0.5'>
                         <p className='my-message' style={{ background: theme }}>
-                            <time className='text-xs text-gray-300'>
+                            <time className='text-xs dark:text-gray-300 text-200'>
                                 {formatDate(time)}
                             </time>
 
@@ -86,7 +91,7 @@ function MyMessage({ message, theme, setLink }) {
                         className='my-message flex flex-col items-end'
                         style={{ backgroundColor: theme }}
                     >
-                        <time className='text-xs text-gray-300'>
+                        <time className='text-xs dark:text-gray-300 text-200'>
                             {formatDate(time)}
                         </time>
                         <a
@@ -106,10 +111,9 @@ function MyMessage({ message, theme, setLink }) {
                         src={chatContent}
                         alt=''
                         className='chat-image'
-                        onClick={() => {
-                            setModalName('show-full-screen');
-                            setLink(chatContent);
-                        }}
+                        onClick={() =>
+                            handleShowFullScreen('image', chatContent)
+                        }
                     />
                 )}
             </div>

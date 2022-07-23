@@ -4,5 +4,14 @@ import useMedia from './useMedia';
 import useMessages from './useMessages';
 import useReply from './useReply';
 import useRoomData from './useRoomData';
+import useDarkMode from './useDarkMode';
 
-export { useGiphy, useListRooms, useMessages, useMedia, useReply, useRoomData };
+export {
+    useGiphy,
+    useListRooms,
+    useMessages,
+    useMedia,
+    useReply,
+    useRoomData,
+    useDarkMode,
+};

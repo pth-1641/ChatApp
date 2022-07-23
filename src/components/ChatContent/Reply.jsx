@@ -6,7 +6,7 @@ function Reply({ reply, members, currentUser, setDisplayReply, setReply }) {
     const userReply = members?.find((member) => member.uid === uid);
 
     return (
-        <div className='text-sm relative text-white'>
+        <div className='text-sm relative dark:text-white text-gray-800'>
             <span
                 className='absolute top-0 right-0 text-xl cursor-pointer'
                 onClick={() => {
@@ -24,7 +24,7 @@ function Reply({ reply, members, currentUser, setDisplayReply, setReply }) {
                         : userReply?.nickname || userReply?.displayName}
                 </strong>
             </h4>
-            <p className='truncate max-w-lg text-gray-300'>
+            <p className='truncate max-w-lg dark:text-gray-300 text-gray-500'>
                 {type === 'message' ? (
                     chatContent
                 ) : (

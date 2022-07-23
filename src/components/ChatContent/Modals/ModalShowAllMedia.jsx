@@ -23,7 +23,8 @@ function ModalShowAllMedia({ roomId, setLink }) {
                 <button
                     type='button'
                     className={`flex-1 py-2 ${
-                        mediaType === 'images' && 'bg-lightDark'
+                        mediaType === 'images' &&
+                        'dark:bg-lightDark bg-gray-300'
                     }`}
                     onClick={() => setMediaType('images')}
                 >
@@ -32,7 +33,8 @@ function ModalShowAllMedia({ roomId, setLink }) {
                 <button
                     type='button'
                     className={`flex-1 py-2 ${
-                        mediaType === 'videos' && 'bg-lightDark'
+                        mediaType === 'videos' &&
+                        'dark:bg-lightDark bg-gray-300'
                     }`}
                     onClick={() => setMediaType('videos')}
                 >
@@ -41,7 +43,7 @@ function ModalShowAllMedia({ roomId, setLink }) {
                 <button
                     type='button'
                     className={`flex-1 py-2 ${
-                        mediaType === 'files' && 'bg-lightDark'
+                        mediaType === 'files' && 'dark:bg-lightDark bg-gray-300'
                     }`}
                     onClick={() => setMediaType('files')}
                 >

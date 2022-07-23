@@ -45,17 +45,17 @@ function GiphyEmoji({ roomId, uid }) {
             >
                 <BiFace />
                 {displayStickers && (
-                    <div className='absolute aspect-square h-72 bottom-12 left-0 flex flex-col overflow-auto gap-1 bg-lightDark rounded-md'>
+                    <div className='absolute aspect-square h-72 bottom-12 left-0 flex flex-col overflow-auto gap-1 dark:bg-lightDark bg-gray-300 rounded-md'>
                         <input
                             type='text'
                             value={stickersQuery}
                             ref={stickerInputRef}
                             onChange={(e) => setStickersQuery(e.target.value)}
-                            className='input-dark text-white'
+                            className='input-dark'
                             placeholder='Search'
                             onClick={(e) => e.stopPropagation()}
                         />
-                        <div className='flex-1 flex-center flex-wrap gap-1 text-2xl text-white'>
+                        <div className='flex-1 flex-center flex-wrap gap-1 text-2xl dark:text-white'>
                             {Array.isArray(stickersData)
                                 ? stickersData.map((sticker, key) => (
                                       <img
@@ -83,17 +83,17 @@ function GiphyEmoji({ roomId, uid }) {
             >
                 <AiOutlineGif />
                 {displayGifs && (
-                    <div className='absolute aspect-square h-72 bottom-12 left-0 flex flex-col overflow-auto gap-1 bg-lightDark rounded-md'>
+                    <div className='absolute aspect-square h-72 bottom-12 left-0 flex flex-col overflow-auto gap-1 dark:bg-lightDark bg-gray-300 rounded-md'>
                         <input
                             type='text'
                             ref={gifInputRef}
                             value={gifsQuery}
                             onChange={(e) => setGifsQuery(e.target.value)}
-                            className='input-dark text-white'
+                            className='input-dark'
                             placeholder='Search'
                             onClick={(e) => e.stopPropagation()}
                         />
-                        <div className='flex-1 flex-center flex-wrap gap-1 text-2xl text-white'>
+                        <div className='flex-1 flex-center flex-wrap gap-1 text-2xl dark:text-white'>
                             {Array.isArray(gifsData)
                                 ? gifsData.map((gif, key) => (
                                       <img

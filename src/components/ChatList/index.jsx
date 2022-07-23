@@ -39,7 +39,7 @@ function ChatList() {
                     <ChatItem key={roomId} roomId={roomId} />
                 ))}
             </ul>
-            {modalName === 'user-info' && <ModalInfo />}
+            {modalName === 'user-info' && <ModalInfo user={user} />}
             {modalName === 'log-out' && <ModalSignOut />}
             {modalName === 'create-new-chat' && <ModalConversation />}
         </>

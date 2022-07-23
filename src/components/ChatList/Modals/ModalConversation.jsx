@@ -110,7 +110,7 @@ function ModalConversation() {
                 <button
                     type='button'
                     className={`flex-1 py-2 ${
-                        chatType === 'friend' && 'bg-lightDark'
+                        chatType === 'friend' && 'bg-gray-300 dark:bg-lightDark'
                     }`}
                     onClick={handleFriendType}
                 >
@@ -119,7 +119,7 @@ function ModalConversation() {
                 <button
                     type='button'
                     className={`flex-1 py-2 ${
-                        chatType === 'group' && 'bg-lightDark'
+                        chatType === 'group' && 'bg-gray-300 dark:bg-lightDark'
                     }`}
                     onClick={() => setChatType('group')}
                 >
@@ -180,7 +180,7 @@ function ModalConversation() {
                         </li>
                     ))}
                 </ul>
-                <div className='flex-center justify-end gap-3 mt-6'>
+                <div className='flex-center justify-end gap-2 mt-4'>
                     <button
                         className='modal-btn bg-red-500 hover:bg-red-600'
                         type='button'

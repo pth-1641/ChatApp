@@ -12,7 +12,7 @@ import ModalShowAllMedia from './Modals/ModalShowAllMedia';
 import ModalRole from './Modals/ModalRole';
 import ModalLeaveGroup from './Modals/ModalLeaveGroup';
 import ModalRenameGroupChat from './Modals/ModalRenameGroupChat';
-import ModalNickname from './Modals/ModalRole';
+import ModalNickname from './Modals/ModalNickname';
 
 export const ReplyContext = createContext();
 

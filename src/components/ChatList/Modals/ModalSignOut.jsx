@@ -21,7 +21,10 @@ function ModalSignOut() {
         <ModalTemplate>
             <h3 className='text-2xl font-semibold text-center'>Log Out?</h3>
             <div className='flex-center gap-3 mt-7'>
-                <button className='modal-btn' onClick={() => setModalName('')}>
+                <button
+                    className='modal-btn text-black dark:text-white dark:bg-gray-700 dark:hover:bg-gray-800 bg-gray-300 hover:bg-gray-400'
+                    onClick={() => setModalName('')}
+                >
                     No
                 </button>
                 <button

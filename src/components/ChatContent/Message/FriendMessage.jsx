@@ -16,6 +16,11 @@ function FriendMessage({ message, members, index, listMessages, setLink }) {
         return members?.find((mem) => mem.uid === uid);
     };
 
+    const handleShowFullScreen = (type, link) => {
+        setLink({ type, link });
+        setModalName('show-full-screen');
+    };
+
     return (
         <div className='mt-0.5 flex items-start gap-2'>
             <img
@@ -29,7 +34,7 @@ function FriendMessage({ message, members, index, listMessages, setLink }) {
                             : 'hidden',
                 }}
             />
-            <div className='text-white w-full'>
+            <div className='dark:text-white w-full'>
                 {listMessages[index - 1]?.uid !== uid && (
                     <div className='flex gap-2 items-end text-sm'>
                         {sender(uid)?.nickname
@@ -38,13 +43,13 @@ function FriendMessage({ message, members, index, listMessages, setLink }) {
                     </div>
                 )}
                 {replyMessage !== null && (
-                    <p className='px-3 py-2 rounded-lg w-max max-w-md truncate text-gray-400 border-2 mb-0.5'>
+                    <p className='px-3 py-2 rounded-lg w-max max-w-md truncate dark:text-gray-400 text-gray-600 border-2 border-gray-400 dark:border-gray-300 mb-0.5'>
                         {replyMessage ? replyMessage : 'Removed Message'}
                     </p>
                 )}
                 <div className='flex group'>
                     {chatContent === '' ? (
-                        <div className='text-gray-400 rounded-xl border border-gray-600 px-4 py-2'>
+                        <div className='dark:text-gray-400 text-gray-600 rounded-xl border border-gray-600 px-4 py-2'>
                             Removed Message
                         </div>
                     ) : type === 'images' || type === 'gifs' ? (
@@ -53,8 +58,7 @@ function FriendMessage({ message, members, index, listMessages, setLink }) {
                             alt=''
                             className='chat-image'
                             onClick={() => {
-                                setModalName('show-full-screen');
-                                setLink(chatContent);
+                                handleShowFullScreen('image', chatContent);
                             }}
                         />
                     ) : type === 'videos' ? (
@@ -78,7 +82,7 @@ function FriendMessage({ message, members, index, listMessages, setLink }) {
                     ) : (
                         <div className='flex flex-col gap-0.5'>
                             <p className='friend-message'>
-                                <time className='text-xs text-gray-300'>
+                                <time className='text-xs dark:text-gray-300 text-gray-700'>
                                     {formatDate(time)}
                                 </time>
                                 {chatContent}

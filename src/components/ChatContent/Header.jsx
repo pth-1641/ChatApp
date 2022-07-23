@@ -37,7 +37,7 @@ function Header({ roomInfo, setDisplaySetting, displaySetting }) {
                         </span>
                     )}
                 </div>
-                <h4 className='text-white font-medium'>
+                <h4 className='dark:text-white font-medium'>
                     {chatType === 'friend'
                         ? friend.nickname || friend.displayName
                         : roomName}

@@ -42,7 +42,7 @@ function ChatItem({ roomId }) {
 
     return (
         <li
-            className={`h-max py-2 px-3 rounded-xl hover:bg-lightDark duration-200 cursor-pointer ${
+            className={`h-max py-2 px-3 rounded-xl dark:hover:bg-lightDark hover:bg-gray-300 duration-200 cursor-pointer ${
                 roomId === id && 'active'
             }`}
             onClick={() => navigate('/' + roomId)}
@@ -68,14 +68,14 @@ function ChatItem({ roomId }) {
                 </div>
                 <div className='flex-between flex-1 gap-3'>
                     <div className='w-36'>
-                        <h4 className='text-white font-medium'>
+                        <h4 className='dark:text-white text-black font-medium'>
                             {chatType === 'group'
                                 ? roomName
                                 : friend.nickname
                                 ? friend.nickname
                                 : friend.displayName}
                         </h4>
-                        <p className='text-gray-400 text-sm truncate'>
+                        <p className='text-gray-600 dark:text-gray-400 text-sm truncate'>
                             {sender}
                             {chatContent === ''
                                 ? ' unsent a message'
@@ -90,7 +90,7 @@ function ChatItem({ roomId }) {
                                 : 'No message'}
                         </p>
                     </div>
-                    <div className='text-gray-400'>
+                    <div className='text-gray-600 dark:text-gray-400'>
                         <time className='text-xs'>
                             {time?.length && formatTime(time)}
                         </time>

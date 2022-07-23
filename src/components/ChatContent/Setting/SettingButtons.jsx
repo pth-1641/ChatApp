@@ -55,7 +55,7 @@ function SettingButtons({ theme, chatType, roomId, emoji }) {
             </span>
             <button
                 type='button'
-                className='setting-btn'
+                className='setting-btn text-white'
                 style={{ backgroundColor: theme }}
                 onClick={() => {
                     setDisplayTheme(!displayTheme);
@@ -112,7 +112,7 @@ function SettingButtons({ theme, chatType, roomId, emoji }) {
             {displayEmoji && (
                 <Picker
                     set='facebook'
-                    theme='dark'
+                    theme={document.body.classList[0]}
                     showPreview={false}
                     useButton={false}
                     title=''

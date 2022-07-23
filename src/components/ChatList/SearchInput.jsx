@@ -2,22 +2,21 @@ import { FiSearch } from 'react-icons/fi';
 import { BsChat } from 'react-icons/bs';
 import { useStore } from '../../store';
 
-function SearchInput({ setSearchValue }) {
+function SearchInput() {
     const setModalName = useStore((state) => state.setModalName);
 
     return (
         <>
-            <div className='input-dark flex-center gap-2 text-white mt-4'>
+            <div className='input-dark flex-center gap-2 mt-4'>
                 <FiSearch />
                 <input
                     type='text'
-                    className='bg-lightDark outline-none w-full'
+                    className='dark:bg-lightDark outline-none w-full bg-gray-300'
                     placeholder='Search'
-                    onChange={(e) => setSearchValue(e.target.value)}
                 />
             </div>
             <div
-                className='text-white text-lg flex mt-3 mb-4 gap-2 cursor-pointer w-max'
+                className='dark:text-white text-lg flex mt-3 mb-4 gap-2 cursor-pointer w-max'
                 onClick={() => setModalName('create-new-chat')}
             >
                 <BsChat />
