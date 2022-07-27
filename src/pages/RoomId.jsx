@@ -7,7 +7,7 @@ function RoomId() {
             <div className='md:max-w-[340px] h-full flex-col flex-1 hidden md:block'>
                 <ChatList />
             </div>
-            <div className='flex-1 h-full fixed inset-0 p-3 md:static'>
+            <div className='flex-1 h-full fixed inset-0 p-3 md:static md:p-0'>
                 <ChatContent />
             </div>
         </div>
