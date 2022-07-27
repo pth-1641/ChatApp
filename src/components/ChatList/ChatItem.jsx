@@ -53,7 +53,11 @@ function ChatItem({ roomId }) {
                     style={{ backgroundColor: avatarBgColor }}
                 >
                     {chatType === 'friend' ? (
-                        <img src={friend.photoURL} alt='' />
+                        <img
+                            src={friend.photoURL}
+                            alt=''
+                            className='w-full object-cover'
+                        />
                     ) : chatAvatar ? (
                         <img
                             src={chatAvatar}

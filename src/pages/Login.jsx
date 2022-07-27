@@ -32,7 +32,7 @@ function Login() {
         try {
             const result = await getUser(user.uid);
             if (result.size === 0) {
-                addNewUser(user);
+                await addNewUser(user);
             }
         } catch (err) {
             console.log(err);

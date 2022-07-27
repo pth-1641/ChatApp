@@ -15,7 +15,7 @@ function ModalShowImage({ link }) {
             {link.type === 'video' ? (
                 <video
                     src={link.link}
-                    className='w-full md:h-full mx-auto rounded-lg'
+                    className='w-full md:w-auto md:h-full mx-auto rounded-lg'
                     controls
                     autoPlay
                 />
@@ -23,7 +23,7 @@ function ModalShowImage({ link }) {
                 <img
                     src={link.link}
                     alt=''
-                    className='w-full md:h-full mx-auto rounded-lg'
+                    className='w-full md:w-auto md:h-full mx-auto rounded-lg'
                 />
             )}
         </div>

@@ -29,10 +29,16 @@ export const isCreateRoom = (member) => {
     return getDocs(q);
 };
 
-// ---------------------CREATE----------------------- //
+// --------------------- CREATE ----------------------- //
 export const addNewUser = (userInfo) => {
+    const { displayName, email, phoneNumber, photoURL, uid } = userInfo;
     return addDoc(collection(db, 'users'), {
-        ...userInfo,
+        displayName,
+        email,
+        phoneNumber,
+        photoURL,
+        uid,
+        rooms: [],
     });
 };
 
@@ -157,20 +163,12 @@ export const removeMember = (roomId, memberInfo) => {
     });
 };
 
-async function fetchData() {
-    const ref = doc(db, 'rooms', '17hxUeheBDT1wXKJbbo9');
-    return updateDoc(ref, {
-        rooms: arrayRemove({
-            displayName: 'hung',
-            isAdmin: false,
-            nickname: '',
-            photoURL:
-                'https://images.unsplash.com/photo-1657998623149-8bb43c02e20d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=464&q=80',
-            uid: '123',
-        }),
+function fetchData() {
+    return addDoc(collection(db, 'users'), {
+        name: 'hung',
+        age: 20,
     });
 }
 
-// fetchData();
-
 // console.log(fetchData());
+// fetchData();
