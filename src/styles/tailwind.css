@@ -19,16 +19,16 @@
         @apply dark:bg-lightDark bg-gray-300;
     }
     .friend-message {
-        @apply flex flex-col bg-gray-300 dark:bg-lightDark rounded-xl dark:text-white p-2 px-3 w-max max-w-lg text-[15px] break-all;
+        @apply flex flex-col bg-gray-300 dark:bg-lightDark rounded-xl dark:text-white p-2 px-3 w-max md:max-w-lg text-[15px] break-all;
     }
     .my-message {
-        @apply rounded-xl text-white p-2 px-3 w-max max-w-lg text-[15px] break-all flex flex-col items-end;
+        @apply rounded-xl text-white p-2 px-3 w-full md:max-w-lg text-[15px] break-all flex flex-col items-end;
     }
     .chat-image {
-        @apply max-w-xs rounded-xl cursor-pointer w-fit bg-gray-300;
+        @apply rounded-xl cursor-pointer w-fit bg-gray-300 max-w-[65%];
     }
     .chat-video {
-        @apply max-w-xs rounded-xl cursor-pointer;
+        @apply rounded-xl cursor-pointer max-w-[65%];
     }
     .dark-hover {
         @apply rounded-xl hover:bg-gray-300 dark:hover:bg-lightDark;
@@ -46,6 +46,9 @@
         @apply invisible group-hover:visible opacity-0 group-hover:opacity-100 duration-100;
     }
     .files {
-        @apply flex-between underline hover:bg-lightDark rounded-lg px-3 py-2 duration-200 cursor-pointer gap-1 w-full;
+        @apply flex-between underline dark:hover:bg-lightDark hover:bg-gray-300 rounded-lg px-3 py-2 duration-200 cursor-pointer gap-1 w-full;
+    }
+    .close-modal {
+        @apply dark:bg-[#171616] dark:hover:bg-lightDark bg-gray-300 hover:bg-gray-100 absolute top-2 right-2 text-3xl p-2 rounded-full cursor-pointer duration-100;
     }
 }

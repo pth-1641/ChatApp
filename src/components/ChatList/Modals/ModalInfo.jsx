@@ -13,13 +13,13 @@ function ModalInfo({ user }) {
 
     return (
         <ModalTemplate>
-            <div className='flex-center gap-5'>
+            <div className='md:flex-center gap-5'>
                 <img
                     src={photoURL}
                     alt={displayName}
-                    className='rounded-full'
+                    className='rounded-full mx-auto mb-4 md:m-0'
                 />
-                <div>
+                <div className='w-max mx-auto'>
                     <p className='text-sm'>
                         <strong className='text-base'>Name: </strong>
                         {displayName ?? 'N/A'}
@@ -32,7 +32,7 @@ function ModalInfo({ user }) {
                         <strong className='text-base'>Phone: </strong>
                         {phoneNumber ?? 'N/A'}
                     </p>
-                    <p className='text-sm flex-center gap-x-1'>
+                    <p className='text-sm flex items-center gap-x-1'>
                         <strong className='text-base'>ID: </strong>
                         {uid ?? 'N/A'}
                         <span

@@ -101,7 +101,7 @@ function SettingButtons({ theme, chatType, roomId, emoji }) {
 
                     <button
                         type='button'
-                        className='setting-btn text-red-500'
+                        className='setting-btn dark:text-red-500 text-red-500'
                         onClick={() => setModalName('leave-group')}
                     >
                         <TbLogout />
@@ -119,7 +119,7 @@ function SettingButtons({ theme, chatType, roomId, emoji }) {
                     emoji=''
                     sheetSize={32}
                     recent={['']}
-                    style={{ border: 'none' }}
+                    style={{ border: 'none', width: '100%' }}
                     onClick={(emoji) => updateEmoji(roomId, { ...emoji })}
                 />
             )}

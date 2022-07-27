@@ -43,7 +43,7 @@ function Input({ roomId, theme, emoji, reply, setDisplayReply, setReply }) {
                 )}
                 <input
                     type='text'
-                    className='input-dark'
+                    className='input-dark pl-0'
                     placeholder='Message'
                     value={chatContent}
                     onChange={(e) => setChatContent(e.target.value)}

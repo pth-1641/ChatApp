@@ -1,10 +1,13 @@
 import { useEffect, useState } from 'react';
 import { useStore } from '../../store';
-import { MdInfo } from 'react-icons/md';
+import { MdInfo, MdArrowBackIosNew } from 'react-icons/md';
+import { useNavigate } from 'react-router-dom';
 
 function Header({ roomInfo, setDisplaySetting, displaySetting }) {
     const { roomName, avatarBgColor, chatType, members, theme, chatAvatar } =
         roomInfo;
+
+    const navigate = useNavigate();
 
     const user = useStore((state) => state.user);
     const [friend, setFriend] = useState({});
@@ -19,6 +22,13 @@ function Header({ roomInfo, setDisplaySetting, displaySetting }) {
     return (
         <header className='w-full flex-between pb-2'>
             <div className='flex-center gap-3'>
+                <span
+                    className='text-2xl md:hidden'
+                    style={{ color: theme }}
+                    onClick={() => navigate('/')}
+                >
+                    <MdArrowBackIosNew />
+                </span>
                 <div
                     className='rounded-full w-12 aspect-square overflow-hidden flex-center'
                     style={{ backgroundColor: avatarBgColor }}

@@ -9,7 +9,7 @@ function ModalRemoveMessage({ messageId, setDisplayRemoveMessage }) {
             </h1>
             <div className='flex-center gap-3 mt-4'>
                 <button
-                    className='modal-btn'
+                    className='modal-btn modal-btn text-black dark:text-white dark:bg-gray-700 dark:hover:bg-gray-800 bg-gray-300 hover:bg-gray-400'
                     onClick={() => setDisplayRemoveMessage(false)}
                 >
                     Cancel

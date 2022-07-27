@@ -8,14 +8,15 @@ import { useDarkMode } from '../../hooks';
 function Header({ user }) {
     const setModalName = useStore((state) => state.setModalName);
 
-    const [setTheme, colorTheme] = useDarkMode();
+    const [theme, setCurrentTheme] = useDarkMode();
     const [darkMode, setDarkMode] = useState(true);
     const [displaySetting, setDisplaySetting] = useState(false);
 
     const toggleTheme = (e) => {
         e.stopPropagation();
         setDarkMode(!darkMode);
-        setTheme(colorTheme);
+        setCurrentTheme(theme);
+        localStorage.theme = theme;
     };
 
     return (

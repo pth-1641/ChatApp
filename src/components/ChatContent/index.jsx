@@ -33,7 +33,7 @@ function ChatContent() {
 
     return (
         <ReplyContext.Provider value={{ setReply, setDisplayReply }}>
-            <div className='h-full flex gap-3'>
+            <div className='h-full flex gap-3 relative'>
                 <div className='flex flex-col flex-1'>
                     <Header
                         roomInfo={roomInfo}
@@ -68,7 +68,7 @@ function ChatContent() {
                     />
                 </div>
                 {displaySetting && (
-                    <div className='max-w-[300px] h-full flex-1 relative overflow-auto'>
+                    <div className='lg:max-w-[300px] h-full flex-1 lg:relative overflow-auto fixed inset-0 dark:bg-dark bg-white md:absolute'>
                         <Setting
                             setDisplaySetting={setDisplaySetting}
                             roomInfo={roomInfo}

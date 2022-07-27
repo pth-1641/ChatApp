@@ -34,7 +34,7 @@ function ChatList() {
         <>
             <Header user={user} />
             <SearchInput />
-            <ul className='grid gap-1 text-white pr-2 overflow-auto'>
+            <ul className='grid gap-1 text-white md:pr-2 overflow-auto'>
                 {listRoomsId?.map((roomId) => (
                     <ChatItem key={roomId} roomId={roomId} />
                 ))}

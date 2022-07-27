@@ -13,7 +13,7 @@ function Setting({ setDisplaySetting, roomInfo, setLink }) {
 
     return (
         <>
-            <div className='dark:text-white absolute inset-x-2'>
+            <div className='dark:text-white absolute inset-4 md:inset-x-2'>
                 <div className='flex-between dark:text-gray-400 text-gray-600'>
                     <span>Chat Details</span>
                     <span

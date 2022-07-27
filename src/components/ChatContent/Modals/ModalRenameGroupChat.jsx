@@ -28,7 +28,7 @@ function ModalRenameGroupChat({ roomId, roomName }) {
             <div className='flex items-center justify-end gap-1 mt-2'>
                 <button
                     type='button'
-                    className='modal-btn'
+                    className='modal-btn text-black'
                     onClick={() => setModalName('')}
                 >
                     Cancel

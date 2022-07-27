@@ -35,7 +35,7 @@ function MyMessage({ message, theme, setLink }) {
                     {replyMessage ? replyMessage : 'Removed Message'}
                 </p>
             )}
-            <div className='flex justify-end group mt-0.5'>
+            <div className='flex justify-end group mt-0.5 max-w-[90%] ml-auto'>
                 {chatContent !== '' && (
                     <div className='flex-center gap-2 text-lg mr-1 message-option dark:text-white'>
                         <span
@@ -88,7 +88,7 @@ function MyMessage({ message, theme, setLink }) {
                     />
                 ) : type === 'files' ? (
                     <div
-                        className='my-message flex flex-col items-end'
+                        className='my-message flex flex-col items-end w-max'
                         style={{ backgroundColor: theme }}
                     >
                         <time className='text-xs dark:text-gray-300 text-200'>

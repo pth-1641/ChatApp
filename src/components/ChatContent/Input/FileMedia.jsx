@@ -34,7 +34,7 @@ function FileMedia({ theme, roomId, uid }) {
     };
 
     return (
-        <ul className='flex-center gap-2 text-xl' style={{ color: theme }}>
+        <ul className='flex-center gap-2 text-xl mr-3' style={{ color: theme }}>
             <li className='flex-center relative'>
                 <ImAttachment />
                 <input
