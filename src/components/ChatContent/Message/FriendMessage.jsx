@@ -5,7 +5,14 @@ import { ReplyContext } from '../index';
 import { useReply } from '../../../hooks';
 import { useStore } from '../../../store';
 
-function FriendMessage({ message, members, index, listMessages, setLink }) {
+function FriendMessage({
+    message,
+    members,
+    index,
+    listMessages,
+    setLink,
+    theme,
+}) {
     const { chatContent, fileName, type, time, replyId, uid } = message;
     const { setReply, setDisplayReply } = useContext(ReplyContext);
     const replyMessage = replyId ? useReply(replyId) : null;
@@ -43,7 +50,10 @@ function FriendMessage({ message, members, index, listMessages, setLink }) {
                     </div>
                 )}
                 {replyMessage !== null && (
-                    <p className='px-3 py-2 rounded-lg w-max max-w-md truncate dark:text-gray-400 text-gray-600 border-2 border-gray-400 dark:border-gray-300 mb-0.5'>
+                    <p
+                        className='px-3 py-2 rounded-lg w-max max-w-md truncate dark:text-gray-400 text-gray-600 border-2 mb-0.5'
+                        style={{ borderColor: theme }}
+                    >
                         {replyMessage ? replyMessage : 'Removed Message'}
                     </p>
                 )}

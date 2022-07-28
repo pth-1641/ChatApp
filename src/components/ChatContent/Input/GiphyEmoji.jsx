@@ -45,7 +45,7 @@ function GiphyEmoji({ roomId, uid }) {
             >
                 <BiFace />
                 {displayStickers && (
-                    <div className='absolute aspect-square h-72 bottom-12 left-0 flex flex-col overflow-auto gap-1 dark:bg-lightDark bg-gray-300 rounded-md'>
+                    <div className='md:absolute aspect-square h-72 bottom-12 md:-left-2 flex flex-col overflow-auto gap-1 dark:bg-lightDark bg-gray-300 rounded-md fixed inset-x-0 mb-2 mx-auto'>
                         <input
                             type='text'
                             value={stickersQuery}
@@ -83,7 +83,7 @@ function GiphyEmoji({ roomId, uid }) {
             >
                 <AiOutlineGif />
                 {displayGifs && (
-                    <div className='absolute aspect-square h-72 bottom-12 left-0 flex flex-col overflow-auto gap-1 dark:bg-lightDark bg-gray-300 rounded-md'>
+                    <div className='md:absolute aspect-square h-72 bottom-12 md:-left-10 flex flex-col overflow-auto gap-1 dark:bg-lightDark bg-gray-300 rounded-md fixed inset-x-0 mb-2 mx-auto'>
                         <input
                             type='text'
                             ref={gifInputRef}

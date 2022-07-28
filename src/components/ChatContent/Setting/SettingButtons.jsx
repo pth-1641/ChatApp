@@ -117,7 +117,7 @@ function SettingButtons({ theme, chatType, roomId, emoji }) {
                     useButton={false}
                     title=''
                     emoji=''
-                    sheetSize={32}
+                    sheetSize={64}
                     recent={['']}
                     style={{ border: 'none', width: '100%' }}
                     onClick={(emoji) => updateEmoji(roomId, { ...emoji })}

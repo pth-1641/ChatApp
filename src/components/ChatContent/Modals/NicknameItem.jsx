@@ -49,7 +49,7 @@ function NicknameItem({ member }) {
                 </>
             ) : (
                 <>
-                    <div className='flex flex-col justify-center flex-1'>
+                    <div className='flex flex-col justify-center w-full'>
                         <p className='text-sm'>
                             {nickname ? nickname : displayName}
                         </p>

@@ -49,7 +49,7 @@ function ChatItem({ roomId }) {
         >
             <a className='flex items-center gap-3'>
                 <div
-                    className='rounded-full w-16 aspect-square overflow-hidden flex-center'
+                    className='rounded-full w-14 md:w-16 aspect-square overflow-hidden flex-center'
                     style={{ backgroundColor: avatarBgColor }}
                 >
                     {chatType === 'friend' ? (

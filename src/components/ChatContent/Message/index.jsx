@@ -37,6 +37,7 @@ function Message({ members, theme, setLink }) {
                             index={index}
                             message={message}
                             setLink={setLink}
+                            theme={theme}
                         />
                     )}
                 </div>

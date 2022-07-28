@@ -5,7 +5,6 @@ import { getDownloadURL, ref, uploadBytesResumable } from '@firebase/storage';
 import { storage } from '../../../firebase/config';
 import { addMessage } from '../../../firebase/functionHandler';
 import moment from 'moment';
-import GiphyEmoji from './GiphyEmoji';
 
 function FileMedia({ theme, roomId, uid }) {
     const uploadFile = (file, type) => {
@@ -34,7 +33,7 @@ function FileMedia({ theme, roomId, uid }) {
     };
 
     return (
-        <ul className='flex-center gap-2 text-xl mr-3' style={{ color: theme }}>
+        <>
             <li className='flex-center relative'>
                 <ImAttachment />
                 <input
@@ -62,8 +61,7 @@ function FileMedia({ theme, roomId, uid }) {
                     onChange={(e) => uploadFile(e.target.files[0], 'images')}
                 />
             </li>
-            <GiphyEmoji roomId={roomId} uid={uid} />
-        </ul>
+        </>
     );
 }
 

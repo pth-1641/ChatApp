@@ -29,13 +29,13 @@ function MyMessage({ message, theme, setLink }) {
         <>
             {replyMessage !== null && (
                 <p
-                    className='px-3 py-2 rounded-lg w-max max-w-md truncate dark:text-gray-200 text-black bg-gray-200 dark:bg-lightDark border-2 ml-auto mt-0.5'
+                    className='px-3 py-2 rounded-lg w-56 md:max-w-md truncate dark:text-gray-200 text-black bg-gray-200 dark:bg-lightDark border-2 ml-auto mt-0.5'
                     style={{ borderColor: theme }}
                 >
                     {replyMessage ? replyMessage : 'Removed Message'}
                 </p>
             )}
-            <div className='flex justify-end group mt-0.5 max-w-[90%] ml-auto'>
+            <div className='flex justify-end group mt-0.5 max-w-[80%] ml-auto'>
                 {chatContent !== '' && (
                     <div className='flex-center gap-2 text-lg mr-1 message-option dark:text-white'>
                         <span

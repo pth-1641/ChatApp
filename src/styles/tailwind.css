@@ -19,7 +19,7 @@
         @apply dark:bg-lightDark bg-gray-300;
     }
     .friend-message {
-        @apply flex flex-col bg-gray-300 dark:bg-lightDark rounded-xl dark:text-white p-2 px-3 w-max md:max-w-lg text-[15px] break-all;
+        @apply flex flex-col bg-gray-300 dark:bg-lightDark rounded-xl dark:text-white p-2 px-3 w-full md:max-w-lg text-[15px] break-words;
     }
     .my-message {
         @apply rounded-xl text-white p-2 px-3 w-full md:max-w-lg text-[15px] break-all flex flex-col items-end;

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { IoSend } from 'react-icons/io5';
 import { MdEmojiEmotions } from 'react-icons/md';
 import { useStore } from '../../../store';
@@ -7,11 +7,13 @@ import moment from 'moment';
 import { Picker, Emoji } from 'emoji-mart';
 import 'emoji-mart/css/emoji-mart.css';
 import FileMedia from './FileMedia';
+import GiphyEmoji from './GiphyEmoji';
 
 function Input({ roomId, theme, emoji, reply, setDisplayReply, setReply }) {
     const [displayEmoji, setDisplayEmoji] = useState(false);
     const [chatContent, setChatContent] = useState('');
 
+    const inputRef = useRef();
     const { uid } = useStore((state) => state.user) ?? '';
 
     const handleSendMessage = (e, chatContent) => {
@@ -29,6 +31,7 @@ function Input({ roomId, theme, emoji, reply, setDisplayReply, setReply }) {
             setChatContent('');
             setDisplayReply(false);
             setReply({});
+            inputRef.current.focus();
         }
     };
 
@@ -39,7 +42,13 @@ function Input({ roomId, theme, emoji, reply, setDisplayReply, setReply }) {
         >
             <div className='flex-center input-dark py-0'>
                 {!chatContent && (
-                    <FileMedia theme={theme} roomId={roomId} uid={uid} />
+                    <ul
+                        className='flex-center gap-2 text-xl mr-3'
+                        style={{ color: theme }}
+                    >
+                        <FileMedia theme={theme} roomId={roomId} uid={uid} />
+                        <GiphyEmoji roomId={roomId} uid={uid} />
+                    </ul>
                 )}
                 <input
                     type='text'
@@ -47,6 +56,7 @@ function Input({ roomId, theme, emoji, reply, setDisplayReply, setReply }) {
                     placeholder='Message'
                     value={chatContent}
                     onChange={(e) => setChatContent(e.target.value)}
+                    ref={inputRef}
                 />
                 <span
                     className='text-xl cursor-pointer relative'
@@ -56,7 +66,7 @@ function Input({ roomId, theme, emoji, reply, setDisplayReply, setReply }) {
                     <MdEmojiEmotions />
                     {displayEmoji && (
                         <span
-                            className='absolute right-0 bottom-12'
+                            className='md:absolute right-0 bottom-14 fixed flex-center w-full'
                             onClick={(e) => e.stopPropagation()}
                         >
                             <Picker

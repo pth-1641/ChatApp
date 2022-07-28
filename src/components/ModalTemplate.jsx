@@ -14,7 +14,7 @@ function Modal({ children, setDisplayRemoveMessage }) {
             <span className='close-modal' onClick={handleCloseModal}>
                 <MdClose />
             </span>
-            <div className='dark:bg-dark p-5 md:p-8 rounded-xl w-[448px] bg-white'>
+            <div className='dark:bg-dark p-5 md:p-8 rounded-xl w-full max-w-[448px] bg-white'>
                 {children}
             </div>
         </div>
