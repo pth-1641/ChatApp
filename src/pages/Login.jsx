@@ -19,15 +19,6 @@ function Login() {
         });
     }, []);
 
-    const handleLogin = async (provider) => {
-        try {
-            const { user } = await signInWithPopup(auth, provider);
-            checkUser(user);
-        } catch (error) {
-            console.log(error);
-        }
-    };
-
     const checkUser = async (user) => {
         try {
             const result = await getUser(user.uid);
@@ -39,9 +30,20 @@ function Login() {
         }
     };
 
+    const handleLogin = async (provider) => {
+        try {
+            const { user } = await signInWithPopup(auth, provider);
+            checkUser(user);
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
     return (
         <div className='min-h-screen bg-gradient-to-br from-pink-600 to-indigo-800 flex flex-col justify-center items-center gap-4'>
-            <h1 className='text-white text-6xl font-medium mb-4'>MESSENGER</h1>
+            <h1 className='text-white md:text-6xl font-medium mb-4 text-[12vw]'>
+                MESSENGER
+            </h1>
             <button
                 type='button'
                 className='login-btn bg-white text-black hover:bg-gray-300'

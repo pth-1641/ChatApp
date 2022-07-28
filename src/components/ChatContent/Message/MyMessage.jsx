@@ -1,4 +1,4 @@
-import { useState, useContext } from 'react';
+import { useState, useContext, useEffect } from 'react';
 import { formatDate } from '../../../constants/moment';
 import {
     MdFileDownload,
@@ -29,7 +29,7 @@ function MyMessage({ message, theme, setLink }) {
         <>
             {replyMessage !== null && (
                 <p
-                    className='px-3 py-2 rounded-lg w-56 md:max-w-md truncate dark:text-gray-200 text-black bg-gray-200 dark:bg-lightDark border-2 ml-auto mt-0.5'
+                    className='px-3 py-2 rounded-lg md:max-w-m w-max max-w-[300px] truncate dark:text-gray-200 text-black bg-gray-200 dark:bg-lightDark border-2 ml-auto mt-0.5'
                     style={{ borderColor: theme }}
                 >
                     {replyMessage ? replyMessage : 'Removed Message'}

@@ -10,7 +10,7 @@
         @apply flex items-center justify-between;
     }
     .login-btn {
-        @apply px-4 py-2 rounded flex justify-center items-center gap-2 font-medium;
+        @apply px-4 py-2 rounded flex-center gap-2;
     }
     .input-dark {
         @apply dark:bg-lightDark px-4 py-2 rounded-xl w-full outline-none bg-gray-300 dark:text-white text-black;

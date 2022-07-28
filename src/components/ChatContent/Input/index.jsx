@@ -66,7 +66,7 @@ function Input({ roomId, theme, emoji, reply, setDisplayReply, setReply }) {
                     <MdEmojiEmotions />
                     {displayEmoji && (
                         <span
-                            className='md:absolute right-0 bottom-14 fixed flex-center w-full'
+                            className='md:absolute right-0 bottom-14 fixed flex-center w-full md:w-auto'
                             onClick={(e) => e.stopPropagation()}
                         >
                             <Picker
