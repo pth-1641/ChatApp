@@ -87,6 +87,8 @@ function ChatItem({ roomId }) {
                                 ? ' sent an image'
                                 : type === 'videos'
                                 ? ' sent a video'
+                                    ? type === 'files'
+                                    : ' sent a file'
                                 : type === 'gifs'
                                 ? ' sent a GIF from GIPHY'
                                 : chatContent

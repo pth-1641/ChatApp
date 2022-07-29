@@ -79,16 +79,22 @@ function FriendMessage({
                             className='chat-video'
                         />
                     ) : type === 'files' ? (
-                        <a
-                            className='friend-message flex-center underline'
-                            href={chatContent}
-                            download
-                        >
-                            {fileName}
-                            <span className='text-2xl ml-2'>
-                                <MdFileDownload />
-                            </span>
-                        </a>
+                        <div className='friend-message flex flex-col w-max'>
+                            <time className='text-xs dark:text-gray-300 text-200'>
+                                {formatDate(time)}
+                            </time>
+                            <a
+                                className='flex-center underline'
+                                href={chatContent}
+                                download
+                                target='_blank'
+                            >
+                                {fileName}
+                                <span className='text-2xl ml-2'>
+                                    <MdFileDownload />
+                                </span>
+                            </a>
+                        </div>
                     ) : (
                         <div className='flex flex-col gap-0.5'>
                             <p className='friend-message'>
