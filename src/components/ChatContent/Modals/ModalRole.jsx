@@ -117,9 +117,9 @@ function ModalNickname({ members, roomId }) {
                             >
                                 <BsThreeDots />
                                 {displayOption === mem.uid && (
-                                    <ul className='z-10 absolute w-max rounded-md dark:bg-lightDark bg-gray-300 right-0 py-1 px-2 select-none'>
+                                    <ul className='z-10 absolute w-max rounded-md dark:bg-lightDark bg-gray-200 right-0 py-1 px-2 select-none'>
                                         <li
-                                            className='duration-150 rounded p-1 px-2 hover:bg-gray-600'
+                                            className='duration-150 rounded p-1 px-2 dark:hover:bg-gray-600 hover:bg-slate-400'
                                             onClick={() =>
                                                 removeMember(roomId, mem)
                                             }
@@ -128,7 +128,7 @@ function ModalNickname({ members, roomId }) {
                                         </li>
                                         {!mem.isAdmin && (
                                             <li
-                                                className='duration-150 rounded p-1 px-2 hover:bg-gray-600'
+                                                className='duration-150 rounded p-1 px-2 dark:hover:bg-gray-600 hover:bg-slate-400'
                                                 onClick={() =>
                                                     updateAdmin(roomId, mem)
                                                 }

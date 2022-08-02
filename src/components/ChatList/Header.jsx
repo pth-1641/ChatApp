@@ -29,7 +29,7 @@ function Header({ user }) {
                 <img src={user?.photoURL} alt='' className='rounded-full' />
                 {displaySetting && (
                     <>
-                        <div className='fixed inset-0'></div>
+                        <div className='fixed inset-0 cursor-default'></div>
                         <div className='h-max absolute bg-white dark:bg-dark w-48 p-2 rounded-xl right-0 border-gray-600 border mt-3 grid gap-1 select-none'>
                             <div
                                 className='flex items-center gap-2 dark-hover p-2'
